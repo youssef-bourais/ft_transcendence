@@ -1,0 +1,77 @@
+body {
+  font-family: Arial;
+  color: white;
+}
+
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.left {
+  left: 0;
+  background-color: #111;
+}
+
+.right {
+  right: 0;
+  background-color: red;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.centered img {
+  width: 150px;
+  border-radius: 50%;
+}
+
+.btn {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the buttons appear side by side */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Some margin */
+    cursor: pointer; /* Pointer/hand icon */
+    border-radius: 12px; /* Rounded corners */
+}
+
+.btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+/*.btn {*/
+/*  display: inline-block;*/
+/*  padding: 8px 8px;*/
+/*  font-size: 24px;*/
+/*  cursor: pointer;*/
+/*  text-align: center;*/
+/*  text-decoration: none;*/
+/*  outline: none;*/
+/*  color: #fff;*/
+/*  background-color: #04AA6D;*/
+/*  border: none;*/
+/*  border-radius: 15px;*/
+/*  box-shadow: 0 9px #999;*/
+/*}*/
+/**/
+/*.btn:hover {background-color: #3e8e41}*/
+/**/
+/*.btn:active {*/
+/*  background-color: #3e8e41;*/
+/*  box-shadow: 0 5px #666;*/
+/*  transform: translateY(4px);*/
+/*}*/
