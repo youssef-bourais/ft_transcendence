@@ -4,38 +4,6 @@ body {
   /*background-color:  #010100;*/
 }
 
-/*.small {*/
-/**/
-/*    height: 60%;*/
-/*    width: 80%;*/
-/*    position: fixed;*/
-/*    background-color: #111;*/
-/**/
-/*}*/
-
-.split {
-  height: 100%;
-  width: 50%;
-  position: fixed;
-}
-
-.left {
-  left: 0;
-  background-color: #010100;
-}
-
-.right {
-  right: 0;
-  background-color: #E50914; 
-}
-
-.centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
 
 
 
@@ -71,6 +39,6 @@ body {
 }
 
 /*.btn-3 img {*/
-/*    margin-left: 10px; /* Add some space between the text and the image */*/
-/*}*/
+/*    margin-left: 10px; /* Add some space between the text and the image */
+/* } */
 
