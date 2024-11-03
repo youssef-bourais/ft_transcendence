@@ -1,44 +1,222 @@
+:root {
+    --blue: #1e90ff;
+    --white: #ffffff;
+    --red: #E50914;
 
-body {
-  font-family: Arial;
-  /*background-color:  #010100;*/
+
+
+    --one: #583d26;
+    --two: #9d6834;
+    --black: #010100;
+    --three: #2e2b26;
+    --gray: #b4b6b3;
+
+    --base1: #2e2b26;
+    --base2: #b4b6b3;
 }
 
 
-
-
-.btn {
-    background-color:  #010100;/* Green background */
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-  /*   padding: 16px 32px;*/
-  /*text-align: center;*/
-  /*text-decoration: none;*/
-  /*display: inline-block;*/
-  /*font-size: 16px;*/
-  /*margin: 4px 2px;*/
-  /*transition-duration: 0.4s;*/
-
-    border: 2px solid #555555;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.btn-3 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10 10px; /* Add some padding for better spacing */
-    width: 100%; /* Ensure the button takes full width */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
+html, body {
+    height: 100%;
+    overflow: hidden; /* Prevent scrollbars */
+    /* background-color: var(--white); */
 }
 
-.btn:hover {
-  background-color: #555555;
-  color: white;
-}
-
-/*.btn-3 img {*/
-/*    margin-left: 10px; /* Add some space between the text and the image */
+/**/
+/* .back { */
+/*     width: 100vw; /* Full viewport width */ 
+/*     height: 100vh; /* Full viewport height */ 
+/*     background-color: var(--white); /* Background color */ 
+/*     position: relative; /* Allows absolute positioning of child elements */ 
 /* } */
+
+.left {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  /* background-color: var(--red); */
+  background-image: linear-gradient(var(--red) , var(--black));
+}
+
+.right {
+    height: 100%;
+    width: 50%;
+    background-image: url(images/and.jpg);
+    background-size: cover; /* Make the image cover the entire div */
+    position: fixed;
+    right: 0;
+
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+}
+
+.cart {
+
+    width: 400px;
+    height: 500px;
+
+    /* border: 2px solid var(--black); /* Border color*/  
+    border-radius: 25px;
+    padding: 20px;
+
+    /* background-color: var(--black); /* Background color of the square   */
+    position: absolute;     /* Allows it to be positioned relative to the parent*/  
+    overflow: auto;         /* Allow overflow for resizing  */
+
+    /* Centering the square (uncomment to use)*/ 
+    top: 50%;                /* Position square's top edge at 50% of the parent height*/ 
+    left: 50%;               /* Position square's left edge at 50% of the parent width*/ 
+    transform: translate(-50%, -50%); /* Offset the square by half its width and height to center it*/ 
+    
+    /* background-image: linear-gradient(var(--red) , var(--black)); */
+
+    box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.4), 0 24px 80px 0 rgba(0, 0, 0, 0.38);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* height: 100%; */
+    /* padding: 20px; */
+    /* box-sizing: border-box; */
+
+}
+
+
+.title {
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+}
+
+.form {
+  margin-top: 1.5rem;
+}
+
+.input-group {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.input-group label { 
+   display: block; 
+   color: rgba(156, 163, 175, 1); 
+   margin-bottom: 4px; 
+ } 
+
+.input-group input {
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid rgba(55, 65, 81, 1);
+  outline: 0;
+  background-color: rgba(17, 24, 39, 1);
+  padding: 0.75rem 1rem;
+  color: rgba(243, 244, 246, 1);
+}
+
+.input-group input:focus {
+  border-color: rgba(167, 139, 250);
+}
+
+.forgot {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: rgba(156, 163, 175,1);
+  margin: 8px 0 14px 0;
+}
+
+.forgot a,.signup a {
+  color: rgba(243, 244, 246, 1);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgot a:hover, .signup a:hover {
+  text-decoration: underline rgba(167, 139, 250, 1);
+}
+
+.login {
+  display: block;
+  width: 100%;
+
+  background-color: var(--black);
+  padding: 0.75rem;
+  text-align: center;
+  color: rgba(17, 24, 39, 1);
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.login:hover {
+    transform: scale(1.02);
+    background-color: var(--blue);
+}
+
+
+.intra {
+  display: flex;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.line {
+  height: 1px;
+  flex: 1 1 0%;
+  background-color: rgba(55, 65, 81, 1);
+}
+
+.intra .message {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgba(156, 163, 175, 1);
+}
+
+.signup {
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: rgba(156, 163, 175, 1);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.title {
+    margin-top: 20px;
+}
+
+.intro {
+    max-width: 600px;
+    margin: 20px;
+}
+
+.intro h4 {
+    margin-bottom: 10px;
+}
+
+.intro p {
+    margin: 0;
+}
 
