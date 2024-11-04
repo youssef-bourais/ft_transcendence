@@ -7,9 +7,6 @@
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="style.css">
-        <!-- <style> -->
-        <!---->
-        <!-- </style> -->
     </head>
 
     <body>
@@ -37,6 +34,23 @@
                         <button class="login">login</button>
 
                     </form>
+                    
+                    <form class="form hidden" id="register-form">
+
+                        <div class="input-group">
+                            <label for="new-username">Username</label>
+                            <input type="text" name="new-username" id="new-username" placeholder="">
+
+                            <label for="new-password">Password</label>
+                            <input type="password" name="new-password" id="new-password" placeholder="">
+
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" placeholder="">
+                        </div>
+
+                        <button class="register">Register</button>
+                    </form>
+
 
                     <div class="intra">
                 
@@ -63,38 +77,22 @@
 
             <div class="right">
 
-
-
-            <div class="container">
-
-                <h1 class="title">ft_transedence</h1>
-        
-                <div class="intro">
-            
-                    <h4>Play Ping Pong Games for free</h4>
-            
-                    <p>In the mood for a quick and thrilling challenge? Try this Ping Pong Game, you can experience the excitement and speed of a real table tennis match, right from your computer. It's fast, it's fun, and you don't need a real table!</p>
-        
+                <div id="wrapper">
+                    <div id="container">
+                        <h1>Transcendence</h1>
+                    </div>
                 </div>
 
             </div>
 
+        <script>
+            document.getElementById('signup-link').addEventListener('click', function(event) {
+                event.preventDefault();
+                document.getElementById('login-form').classList.toggle('hidden');
+                document.getElementById('register-form').classList.toggle('hidden');
+            });
+        </script>
 
-                <!-- <div class="blabla"> -->
-                <!--     <h1 class="head"> ft_transedence</h1> -->
-                <!---->
-                <!--     <div class="paragraph"> -->
-                <!--         <h4> Play Ping Pong Games for free In the mood for a quick and thrilling challenge?  -->
-                <!--             Try this Ping Pong Game, you can experience the excitement and speed of a real table tennis match,  -->
-                <!--             right from your computer. It's fast, it's fun, and you don't need a real table! -->
-                <!--         </h4> -->
-                <!--     </div> -->
-                <!---->
-                <!-- </div> -->
-
-            </div>
-
-                  
     </body>
 
 </html>
