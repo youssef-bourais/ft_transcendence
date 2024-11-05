@@ -38,7 +38,7 @@ html, body {
 .right {
     height: 100%;
     width: 50%;
-    background-image: url(images/and.jpg);
+    background-image: url(../images/and.jpg);
     background-size: cover; /* Make the image cover the entire div */
     position: fixed;
     right: 0;
