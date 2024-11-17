@@ -1,5 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:400,700,900,400italic,700italic,900italic);
-
 :root {
     --blue: #1e90ff;
     --white: #ffffff;
@@ -30,7 +28,7 @@ html, body {
     /* background-color: var(--white); */
 }
 
-.login-cart, .register-cart, .forget-cart {
+.cart {
 
     width: 400px;
     height: 500px;
@@ -55,6 +53,11 @@ html, body {
     justify-content: space-between;
 }
 
+#forget-cart {
+    width: 400px;
+    height: 300px;
+}
+
 .profile {
     display: flex;
     justify-content: center;
@@ -70,10 +73,6 @@ h1 {
     color: var(--white);
 }
 
-.forget-cart {
-    width: 400px;
-    height: 300px;
-}
 
 
 #forget-form {
@@ -175,7 +174,7 @@ h1 {
   text-decoration: underline rgba(167, 139, 250, 1);
 }
 
-.login, .register{
+#login, #login-intra ,#submit, .register{
   display: block;
   width: 100%;
 
@@ -190,7 +189,7 @@ h1 {
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.login:hover, .register:hover {
+#login:hover, #login-intra:hover, .register:hover , #submit:hover {
     transform: scale(1.02);
     background-color: var(--blue);
 }
