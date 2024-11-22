@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from types import DynamicClassAttribute
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,8 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure--g4u-s(j+1utbd5ajv0@@7jji=7cur5(+d+d1%6ak%17+lg(^h'
-
 # SECURITY WARNING: don't run with debug turned on in production!
+#
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -43,7 +44,27 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',  # Database engine
+#         'NAME': 'mydatabase',                      # Database name
+#         'USER': 'mydbuser',                        # Username
+#         'PASSWORD': 'mypassword',                  # Password
+#         'HOST': 'localhost',                       # Hostname
+#         'PORT': '5432',                            # Port number
+#     }
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # SQLite database engine
+        'NAME': BASE_DIR / 'db.sqlite3',         # Database file name
+    }
+}
+
 MIDDLEWARE = [
+
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,11 +73,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'corsheaders.middleware.CorsMiddleware',
+
 ]
 
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",  # Frontend URL
+    "http://127.0.0.1:8080",  # Frontend URL
 ]
 
 ROOT_URLCONF = 'app.urls'
