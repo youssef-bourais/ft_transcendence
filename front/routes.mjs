@@ -6,10 +6,10 @@ export const routes = {
                 <form class="form" id="login-form">
                     <div class="input-group">
                         <label for="username">username</label>
-                        <input type="text" name="username" autocomplete="on" id="username" placeholder="">
+                        <input type="text" name="username" autocomplete="on" id="username" placeholder="Username" required>
 
                         <label for="password">password</label>
-                        <input type="password" name="password" autocomplete="on" id="password" placeholder="">
+                        <input type="password" name="password" autocomplete="on" id="password" placeholder="Password" required>
 
                         <div class="forgot">
                             <a rel="noopener noreferrer" href="#" id="forget-passwd" class="inpute" data-view="forget_passwd">forgot password ?</a>
@@ -39,23 +39,22 @@ export const routes = {
                 <form class="form" id="register-form">
                     <div class="input-group" id="reg">
 
-                        <label for="firstname">firstname</label>
-                        <input type="text" name="firstname" autocomplete="on" id="firstname" placeholder="">
-
-                        <label for="lastname">lastname</label>
-                        <input type="text" name="lastname"  autocomplete="on" id="lastname" placeholder="">
+                        <label for="username">username</label>
+                        <input type="text" name="username" autocomplete="on" id="username" placeholder="username" required>
 
                         <label for="email">email</label>
-                        <input type="text" name="email"  autocomplete="on" id="email" placeholder="">
+                        <input type="text" name="email"  autocomplete="on" id="email" placeholder="email" required>
 
                         <label for="password">password</label>
-                        <input type="text" name="password"  autocomplete="on" id="password" placeholder="">
+                        <input type="text" name="password"  autocomplete="on" id="password" placeholder="password" required>
+
+                        <label for="confirm password">confirm password</label>
+                        <input type="text" name="confirm password"  autocomplete="on" id="confirm password" placeholder="confirm password" required>
 
                     </div>
                     <button class="register">register</button>
                 </form>
-            </div>
-`,
+            </div>`,
     setup: setupRegisterPage,
     },
     "/forget_passwd": {
@@ -69,8 +68,7 @@ export const routes = {
                     </div>
                     <button id="submit">Submit</button>
                 </form>
-            </div>
-`,
+            </div>`,
         setup: setupForgetPasswordPage,
         },
     "/login_42" : {
@@ -86,9 +84,6 @@ export const routes = {
     },
     404 : `<h1>404: Page Not Found</h1>`
 };
-
-// import { handleLocation } from './app.js';
-
 
 function setupLoginPage() 
 {
@@ -116,9 +111,79 @@ function setupLoginPage()
     }
 }
 
-function setupRegisterPage()
-{
+// function validateForm(form) 
+// {
+//     for (let element of form.elements) 
+//     {
+//         if (element.name && !element.value) 
+//         {
+//             alert(`${element.name} must be filled out`);
+//             return false; 
+//
+//         }
+//     }
+//     return true;
+// }
 
+function SanitizeInpute(str) 
+{
+    const div = document.createElement('div');
+    const text = document.createTextNode(str);
+    div.appendChild(text); // browser automaticly excape the tags in the text
+    return div.innerHTML;
+}
+
+// <img src="invalid" onerror="alert('XSS')">
+
+function setupRegisterPage() 
+{
+    const form = document.getElementById("register-form");
+
+    form.addEventListener("submit", async (event) => 
+    {
+        event.preventDefault(); 
+
+        const UserData = 
+        {
+            username: SanitizeInpute(document.getElementById("username").value),
+            email: SanitizeInpute(document.getElementById("email").value),
+            password: SanitizeInpute(document.getElementById("password").value),
+        };
+
+        const ConfirmPassword = SanitizeInpute(document.getElementById("confirm password").value);
+
+        if (UserData.password !== ConfirmPassword) 
+        {
+            alert("Passwords do not match!");
+            return; 
+        }
+        
+        try 
+        {
+            const response = await fetch("http://127.0.0.1:8000/users/register/", 
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(UserData),
+            });
+
+            const data = await response.json();
+
+            console.log(data);
+
+            if (response.ok) 
+                alert("User registered successfully!");
+            else 
+                alert("Error: " + (data.error || "Unable to register."));
+        } 
+        catch (error) 
+        {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again.");
+        }
+    });
 }
 
 function setupForgetPasswordPage()

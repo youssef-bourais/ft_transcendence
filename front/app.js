@@ -3,10 +3,10 @@ import { routes } from './routes.mjs';
 let currentState = { view: "login" };
 
 
-
 const handleLocation = () => 
 {
     const path = window.location.pathname;
+    console.log("path", path);
     currentState.view = path;
     const route = routes[path] || routes[404];
 
