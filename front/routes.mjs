@@ -148,11 +148,10 @@ function setupRegisterPage()
             username: SanitizeInpute(document.getElementById("username").value),
             email: SanitizeInpute(document.getElementById("email").value),
             password: SanitizeInpute(document.getElementById("password").value),
+            repeat_password: SanitizeInpute(document.getElementById("confirm password").value),
         };
 
-        const ConfirmPassword = SanitizeInpute(document.getElementById("confirm password").value);
-
-        if (UserData.password !== ConfirmPassword) 
+        if (UserData.password !== UserData.repeat_password) 
         {
             alert("Passwords do not match!");
             return; 
@@ -160,7 +159,7 @@ function setupRegisterPage()
         
         try 
         {
-            const response = await fetch("http://127.0.0.1:8000/users/register/", 
+            const response = await fetch("http://127.0.0.1:8000/api/register/", 
             {
                 method: "POST",
                 headers: {
@@ -171,12 +170,12 @@ function setupRegisterPage()
 
             const data = await response.json();
 
-            console.log(data);
+            console.log("hola   ", data);
 
             if (response.ok) 
                 alert("User registered successfully!");
             else 
-                alert("Error: " + (data.error || "Unable to register."));
+                alert("Registration failed: " + JSON.stringify(result));
         } 
         catch (error) 
         {
