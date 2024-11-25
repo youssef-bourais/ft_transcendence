@@ -26,7 +26,6 @@ function togglePass(id_name)
 const handleLocation = () => 
 {
     const path = window.location.pathname;
-    console.log("path", path);
     currentState.view = path;
     const route = routes[path] || routes[404];
 

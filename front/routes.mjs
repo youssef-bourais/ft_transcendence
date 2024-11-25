@@ -1,9 +1,4 @@
 
-
-
-
-
-
 export const routes = {
 
     "/" : { 
@@ -118,29 +113,9 @@ export const routes = {
     404 : `<h1>404: Page Not Found</h1>`
 };
 
-function togglePass() 
-{
-
-    var x = document.getElementById("password");
-    var l1 = document.getElementById("Layer_1");
-    var l2 = document.getElementById("Layer_2");
-
-    if (x.type === "password") 
-    {
-        x.type = "text";
-        l1.setAttribute('hidden', true);
-        l2.removeAttribute('hidden');
-    } 
-    else 
-    {
-        x.type = "password";
-        l1.removeAttribute('hidden');
-        l2.setAttribute('hidden', true);
-    }
-}
-
 function setupLoginPage() 
 {
+    console.log("login page");
     const form = document.getElementById("login-form");
     if (form) 
     {
@@ -166,20 +141,6 @@ function setupLoginPage()
 }
 
 
-// function validateForm(form) 
-// {
-//     for (let element of form.elements) 
-//     {
-//         if (element.name && !element.value) 
-//         {
-//             alert(`${element.name} must be filled out`);
-//             return false; 
-//
-//         }
-//     }
-//     return true;
-// }
-
 function SanitizeInpute(str) 
 {
     const div = document.createElement('div');
@@ -200,7 +161,7 @@ function showError(message)
     var errorElement = document.getElementById("error");
     errorElement.innerHTML = message;
     errorElement.style.display = 'block';
-    timer = setTimeout(function(){ errorElement.style.display = 'none'; }, 2000);
+    timer = setTimeout(function(){ errorElement.style.display = 'none'; }, 4000);
 }
 
 let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
@@ -221,27 +182,17 @@ function validatePassword(password, password2)
 {
 
     if (password !== password2) 
-    {
         return "Passwords do not match!";
-    }
     if(password.length < 8)
-    {
-        // showError("password must be at least 8 characters long");
         return "password must be at least 8 characters long";
-    }
-    if(checkPasswordStrength(password) === 'weak')
-    {
-        return "password very weak";
-        // showError("password very weak");
-        // return;
-    }
+    // if(checkPasswordStrength(password) === 'weak')
+    //     return "password very weak";
     return null;
 }
 
 function setupRegisterPage() 
 {
-
-
+    console.log("register page");
     const form = document.getElementById("register-form");
     form.addEventListener("submit", async (event) => 
     {
@@ -252,17 +203,16 @@ function setupRegisterPage()
             username: SanitizeInpute(document.getElementById("username").value),
             email: SanitizeInpute(document.getElementById("email").value),
             password: SanitizeInpute(document.getElementById("password").value),
-            password2: SanitizeInpute(document.getElementById("confirm password").value),
+            password2: SanitizeInpute(document.getElementById("password2").value),
         };
 
+        console.log("debuging ");
         var message = validatePassword(UserData.password, UserData.password2);
-        // console.log(message);
         if(message !== null)
         {
             showError(message);
             return;
         }
-
         
         try 
         {
@@ -284,8 +234,7 @@ function setupRegisterPage()
                 let errorMessage = "Registration failed: ";
                 for (const key in data) 
                     if (data[key]) 
-                        errorMessage += `${data[key].join(", ")} `;
-                        // errorMessage += `${key}: ${data[key].join(", ")} `;
+                        errorMessage += `${key} :${data[key].join(", ")} `;
                 showError(errorMessage);
             }
         } 
