@@ -36,6 +36,7 @@ export const routes = {
         html: `
             <div class="cart">
                 <h2 class="title"> register </h2>
+                
                 <form class="form" id="register-form">
                     <div class="input-group" id="reg">
 
@@ -46,14 +47,20 @@ export const routes = {
                         <input type="text" name="email"  autocomplete="on" id="email" placeholder="email" required>
 
                         <label for="password">password</label>
-                        <input type="text" name="password"  autocomplete="on" id="password" placeholder="password" required>
+                        <input type="password" name="password"  autocomplete="on" id="password" placeholder="password" required>
 
                         <label for="confirm password">confirm password</label>
-                        <input type="text" name="confirm password"  autocomplete="on" id="confirm password" placeholder="confirm password" required>
+                        <input type="password" name="confirm password"  autocomplete="on" id="confirm password" placeholder="confirm password" required>
+
+                        <div id="errordiv" align="center" style="margin-left: auto; margin-right: auto;"> 
+                            <span id="error" style="color: white; display: none"></span> 
+                        </div>
 
                     </div>
                     <button class="register">register</button>
                 </form>
+
+                
             </div>`,
     setup: setupRegisterPage,
     },
@@ -135,6 +142,56 @@ function SanitizeInpute(str)
 
 // <img src="invalid" onerror="alert('XSS')">
 
+var timer = null;
+function showError(message) 
+{
+    if (timer !== null) {
+        clearTimeout(timer);
+        timer = null;
+    }
+    var errorElement = document.getElementById("error");
+    errorElement.innerHTML = message;
+    errorElement.style.display = 'block';
+    timer = setTimeout(function(){ errorElement.style.display = 'none'; }, 2000);
+}
+
+let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
+let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))')
+    
+
+const checkPasswordStrength = (inputPassword) => 
+{
+    if(strongPassword.test(inputPassword))
+        return 'strong';
+    else if(mediumPassword.test(inputPassword))
+        return 'medium';
+    else
+        return 'weak';
+}
+
+function validatePassword(password, password2) 
+{
+
+    if (password !== password2) 
+    {
+        // showError("Passwords do not match!");
+        return "Passwords do not match!";
+        // return; 
+    }
+    if(password.length < 8)
+    {
+        // showError("password must be at least 8 characters long");
+        return "password must be at least 8 characters long";
+    }
+    if(checkPasswordStrength(password) === 'weak')
+    {
+        return "password very weak";
+        // showError("password very weak");
+        // return;
+    }
+    return null;
+}
+
 function setupRegisterPage() 
 {
     const form = document.getElementById("register-form");
@@ -148,15 +205,16 @@ function setupRegisterPage()
             username: SanitizeInpute(document.getElementById("username").value),
             email: SanitizeInpute(document.getElementById("email").value),
             password: SanitizeInpute(document.getElementById("password").value),
-            repeat_password: SanitizeInpute(document.getElementById("confirm password").value),
+            password2: SanitizeInpute(document.getElementById("confirm password").value),
         };
 
-        if (UserData.password !== UserData.repeat_password) 
+        var message = validatePassword(UserData.password, UserData.password2);
+        console.log(message);
+        if(message !== null)
         {
-            alert("Passwords do not match!");
-            return; 
+            showError(message);
+            return;
         }
-        
         try 
         {
             const response = await fetch("http://127.0.0.1:8000/api/register/", 
@@ -170,16 +228,20 @@ function setupRegisterPage()
 
             const data = await response.json();
 
-            console.log("hola   ", data);
-
-            if (response.ok) 
+            if (response.ok)
                 alert("User registered successfully!");
-            else 
-                alert("Registration failed: " + JSON.stringify(result));
+            else
+            {
+                let errorMessage = "Registration failed: ";
+                for (const key in data) 
+                    if (data[key]) 
+                        errorMessage += `${data[key].join(", ")} `;
+                        // errorMessage += `${key}: ${data[key].join(", ")} `;
+                showError(errorMessage);
+            }
         } 
         catch (error) 
         {
-            console.error("Error:", error);
             alert("An error occurred. Please try again.");
         }
     });

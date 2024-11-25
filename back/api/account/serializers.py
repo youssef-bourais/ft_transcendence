@@ -22,10 +22,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("This username is already taken.")
         return value
 
-    def validate(self, data):
-        if data['password'] != data['password2']:
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError("Passwords do not match.")
-        return data
+        return attrs
 
     def create(self, validated_data):
         validated_data.pop('password2') 

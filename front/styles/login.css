@@ -31,7 +31,7 @@ html, body {
 .cart {
 
     width: 400px;
-    height: 500px;
+    height: 520px;
 
     /* border: 2px solid var(--black); /* Border color*/  
     border-radius: 25px;
@@ -88,7 +88,6 @@ h1 {
     flex-direction: column; /* Arrange items vertically */
     gap: 50px; 
     overflow: hidden;
-
 }
 
 #login-form {
