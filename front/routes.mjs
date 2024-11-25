@@ -1,4 +1,11 @@
+
+
+
+
+
+
 export const routes = {
+
     "/" : { 
     html: `
             <div class="cart">
@@ -8,9 +15,13 @@ export const routes = {
                         <label for="username">username</label>
                         <input type="text" name="username" autocomplete="on" id="username" placeholder="Username" required>
 
-                        <label for="password">password</label>
-                        <input type="password" name="password" autocomplete="on" id="password" placeholder="Password" required>
+                        <div class="form-group">
+                            <label for="password">password</label>
+                            <input type="password" name="password" autocomplete="on" id="password" placeholder="Password" required>
 
+                            <svg onclick="togglePass('password')" id="Layer_1password" data-name="Layer 1" width="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>eye-glyph</title><path d="M320,256a64,64,0,1,1-64-64A64.07,64.07,0,0,1,320,256Zm189.81,9.42C460.86,364.89,363.6,426.67,256,426.67S51.14,364.89,2.19,265.42a21.33,21.33,0,0,1,0-18.83C51.14,147.11,148.4,85.33,256,85.33s204.86,61.78,253.81,161.25A21.33,21.33,0,0,1,509.81,265.42ZM362.67,256A106.67,106.67,0,1,0,256,362.67,106.79,106.79,0,0,0,362.67,256Z"/></svg>
+                            <svg onclick="togglePass('password')" hidden id="Layer_2password" data-name="Layer 2" width="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>eye-disabled-glyph</title><path d="M409.84,132.33l95.91-95.91A21.33,21.33,0,1,0,475.58,6.25L6.25,475.58a21.33,21.33,0,1,0,30.17,30.17L140.77,401.4A275.84,275.84,0,0,0,256,426.67c107.6,0,204.85-61.78,253.81-161.25a21.33,21.33,0,0,0,0-18.83A291,291,0,0,0,409.84,132.33ZM256,362.67a105.78,105.78,0,0,1-58.7-17.8l31.21-31.21A63.29,63.29,0,0,0,256,320a64.07,64.07,0,0,0,64-64,63.28,63.28,0,0,0-6.34-27.49l31.21-31.21A106.45,106.45,0,0,1,256,362.67ZM2.19,265.42a21.33,21.33,0,0,1,0-18.83C51.15,147.11,148.4,85.33,256,85.33a277,277,0,0,1,70.4,9.22l-55.88,55.88A105.9,105.9,0,0,0,150.44,270.52L67.88,353.08A295.2,295.2,0,0,1,2.19,265.42Z"/></svg>
+                        </div>
                         <div class="forgot">
                             <a rel="noopener noreferrer" href="#" id="forget-passwd" class="inpute" data-view="forget_passwd">forgot password ?</a>
                         </div>
@@ -46,11 +57,26 @@ export const routes = {
                         <label for="email">email</label>
                         <input type="text" name="email"  autocomplete="on" id="email" placeholder="email" required>
 
-                        <label for="password">password</label>
-                        <input type="password" name="password"  autocomplete="on" id="password" placeholder="password" required>
 
-                        <label for="confirm password">confirm password</label>
-                        <input type="password" name="confirm password"  autocomplete="on" id="confirm password" placeholder="confirm password" required>
+
+                        <div class="form-group">
+                            <label for="password">password</label>
+                            <input type="password" name="password"  autocomplete="on" id="password" placeholder="password" required>
+
+                            <svg onclick="togglePass('password')" id="Layer_1password" data-name="Layer 1" width="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>eye-glyph</title><path d="M320,256a64,64,0,1,1-64-64A64.07,64.07,0,0,1,320,256Zm189.81,9.42C460.86,364.89,363.6,426.67,256,426.67S51.14,364.89,2.19,265.42a21.33,21.33,0,0,1,0-18.83C51.14,147.11,148.4,85.33,256,85.33s204.86,61.78,253.81,161.25A21.33,21.33,0,0,1,509.81,265.42ZM362.67,256A106.67,106.67,0,1,0,256,362.67,106.79,106.79,0,0,0,362.67,256Z"/></svg>
+                            <svg onclick="togglePass('password')" hidden id="Layer_2password" data-name="Layer 2" width="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>eye-disabled-glyph</title><path d="M409.84,132.33l95.91-95.91A21.33,21.33,0,1,0,475.58,6.25L6.25,475.58a21.33,21.33,0,1,0,30.17,30.17L140.77,401.4A275.84,275.84,0,0,0,256,426.67c107.6,0,204.85-61.78,253.81-161.25a21.33,21.33,0,0,0,0-18.83A291,291,0,0,0,409.84,132.33ZM256,362.67a105.78,105.78,0,0,1-58.7-17.8l31.21-31.21A63.29,63.29,0,0,0,256,320a64.07,64.07,0,0,0,64-64,63.28,63.28,0,0,0-6.34-27.49l31.21-31.21A106.45,106.45,0,0,1,256,362.67ZM2.19,265.42a21.33,21.33,0,0,1,0-18.83C51.15,147.11,148.4,85.33,256,85.33a277,277,0,0,1,70.4,9.22l-55.88,55.88A105.9,105.9,0,0,0,150.44,270.52L67.88,353.08A295.2,295.2,0,0,1,2.19,265.42Z"/></svg>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="confirm password">confirm password</label>
+                            <input type="password" name="confirm password"  autocomplete="on" id="password2" placeholder="confirm password" required>
+
+                        
+                            <svg onclick="togglePass('password2')" id="Layer_1password2" data-name="Layer 1" width="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>eye-glyph</title><path d="M320,256a64,64,0,1,1-64-64A64.07,64.07,0,0,1,320,256Zm189.81,9.42C460.86,364.89,363.6,426.67,256,426.67S51.14,364.89,2.19,265.42a21.33,21.33,0,0,1,0-18.83C51.14,147.11,148.4,85.33,256,85.33s204.86,61.78,253.81,161.25A21.33,21.33,0,0,1,509.81,265.42ZM362.67,256A106.67,106.67,0,1,0,256,362.67,106.79,106.79,0,0,0,362.67,256Z"/></svg>
+                            <svg onclick="togglePass('password2')" hidden id="Layer_2password2" data-name="Layer 2" width="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>eye-disabled-glyph</title><path d="M409.84,132.33l95.91-95.91A21.33,21.33,0,1,0,475.58,6.25L6.25,475.58a21.33,21.33,0,1,0,30.17,30.17L140.77,401.4A275.84,275.84,0,0,0,256,426.67c107.6,0,204.85-61.78,253.81-161.25a21.33,21.33,0,0,0,0-18.83A291,291,0,0,0,409.84,132.33ZM256,362.67a105.78,105.78,0,0,1-58.7-17.8l31.21-31.21A63.29,63.29,0,0,0,256,320a64.07,64.07,0,0,0,64-64,63.28,63.28,0,0,0-6.34-27.49l31.21-31.21A106.45,106.45,0,0,1,256,362.67ZM2.19,265.42a21.33,21.33,0,0,1,0-18.83C51.15,147.11,148.4,85.33,256,85.33a277,277,0,0,1,70.4,9.22l-55.88,55.88A105.9,105.9,0,0,0,150.44,270.52L67.88,353.08A295.2,295.2,0,0,1,2.19,265.42Z"/></svg>
+                        </div>
+
 
                         <div id="errordiv" align="center" style="margin-left: auto; margin-right: auto;"> 
                             <span id="error" style="color: white; display: none"></span> 
@@ -92,6 +118,27 @@ export const routes = {
     404 : `<h1>404: Page Not Found</h1>`
 };
 
+function togglePass() 
+{
+
+    var x = document.getElementById("password");
+    var l1 = document.getElementById("Layer_1");
+    var l2 = document.getElementById("Layer_2");
+
+    if (x.type === "password") 
+    {
+        x.type = "text";
+        l1.setAttribute('hidden', true);
+        l2.removeAttribute('hidden');
+    } 
+    else 
+    {
+        x.type = "password";
+        l1.removeAttribute('hidden');
+        l2.setAttribute('hidden', true);
+    }
+}
+
 function setupLoginPage() 
 {
     const form = document.getElementById("login-form");
@@ -117,6 +164,7 @@ function setupLoginPage()
         });
     }
 }
+
 
 // function validateForm(form) 
 // {
@@ -174,9 +222,7 @@ function validatePassword(password, password2)
 
     if (password !== password2) 
     {
-        // showError("Passwords do not match!");
         return "Passwords do not match!";
-        // return; 
     }
     if(password.length < 8)
     {
@@ -194,8 +240,9 @@ function validatePassword(password, password2)
 
 function setupRegisterPage() 
 {
-    const form = document.getElementById("register-form");
 
+
+    const form = document.getElementById("register-form");
     form.addEventListener("submit", async (event) => 
     {
         event.preventDefault(); 
@@ -209,12 +256,14 @@ function setupRegisterPage()
         };
 
         var message = validatePassword(UserData.password, UserData.password2);
-        console.log(message);
+        // console.log(message);
         if(message !== null)
         {
             showError(message);
             return;
         }
+
+        
         try 
         {
             const response = await fetch("http://127.0.0.1:8000/api/register/", 

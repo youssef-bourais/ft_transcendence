@@ -96,6 +96,12 @@ h1 {
   gap: 10px;
 }
 
+/* form i { */
+/*     margin-left: -30px; */
+/*     cursor: pointer; */
+/* } */
+
+
 .title {
     text-align: center;
     font-size: 1.5rem;
@@ -113,6 +119,7 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 7px;
+    color: var(--white);
 
     margin-top: 0.25rem;
     font-size: 0.875rem;
@@ -206,3 +213,21 @@ h1 {
   color: rgba(156, 163, 175, 1);
 }
 
+[hidden] { display: none; }
+
+.form-group {
+  position: relative;
+  width: 370px;
+}
+
+.form-group svg {
+    position: absolute;
+
+    right: 30px;
+    bottom: 10px;
+
+    width: 20px;
+    height: auto;
+    
+    fill: gray; /* Color of the icon */
+}
