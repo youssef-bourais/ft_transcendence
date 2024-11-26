@@ -6,27 +6,49 @@ from .serializers import UserRegistrationSerializer
 import json
 
 from django.contrib.auth.models import User
-from django.http import JsonResponse
 
 
 @api_view(['POST'])
 def register_user(request):
-    print("debug", request.data)
+    print("register_user===========POST", request.data)
     serializer = UserRegistrationSerializer(data=request.data)
     
     if serializer.is_valid():
         serializer.save()
+        print("good trip============")
         return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
     data = json.dumps(serializer.errors)
-    print("debug", data)
+    print("bad trip============", data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def list_users(request):
-    users = User.objects.all().values('id', 'username', 'email', 'password')
-    users_list = list(users)
-    return Response(users_list)
+def get_user(request, id):
+    print("get_user===========GET", request.data)
+    if id == 0:
+        users = User.objects.all().values('id', 'username', 'email') 
+        return Response({'users': list(users)})
+    else:
+        try:
+            user = User.objects.get(id=id).values('id', 'username', 'email')
+            user_list = list(user)
+            return Response({'user': user_list})
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
     # return Response({'message': 'Hi mom!'}, status=status.HTTP_200_OK)
 
+@api_view(['DELETE'])
+def delete_user(request, id):
+    print("delete_user===========DELETE", request.data)
+    try:
+        if(id == 0):
+            print("Deleting all users")
+            user = User.objects.all()
+            user.delete();
+            return Response({'message': 'All users deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+        user = User.objects.get(id=id)
+        user.delete()
+        return Response({'message': 'User deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)  
 

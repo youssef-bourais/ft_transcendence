@@ -1,4 +1,36 @@
 
+let currentState = { view: "login" };
+
+export const handleLocation = () => 
+{
+    console.log("handleLocation");
+    const path = window.location.pathname;
+    currentState.view = path;
+    const route = routes[path] || routes[404];
+
+    document.getElementById("content").innerHTML = route.html;
+
+    if (route.setup) 
+    {
+            route.setup();
+            // handleLocation();
+    }
+
+    const buttons = document.querySelectorAll(".inpute");
+
+    buttons.forEach(button => 
+    {
+        button.addEventListener("click", (event) => 
+        {
+            event.preventDefault(); 
+            const targetView = event.target.dataset.view;
+            history.pushState({}, "", targetView); 
+            handleLocation();
+        });
+    });
+
+};
+
 export const routes = {
 
     "/" : { 
@@ -129,7 +161,7 @@ function setupLoginPage()
             if (username === "user" && password === "pass") 
             {
                 console.log("Login successful");
-                history.pushState({}, "", "/profile"); // Navigate to profile
+                history.pushState({}, "", "/profile"); 
                 handleLocation();
             } 
             else 
@@ -178,15 +210,22 @@ const checkPasswordStrength = (inputPassword) =>
         return 'weak';
 }
 
-function validatePassword(password, password2) 
+function isEmptyOrSpaces(str)
+{
+    return str === null || str.match(/^ *$/) !== null;
+}
+
+function validatePassword(password, password2, email) 
 {
 
     if (password !== password2) 
         return "Passwords do not match!";
     if(password.length < 8)
         return "password must be at least 8 characters long";
-    // if(checkPasswordStrength(password) === 'weak')
-    //     return "password very weak";
+    if(checkPasswordStrength(password) === 'weak')
+        return "password very weak";
+    if (isEmptyOrSpaces(email))
+        return 'Email cannot be empty';
     return null;
 }
 
@@ -206,14 +245,12 @@ function setupRegisterPage()
             password2: SanitizeInpute(document.getElementById("password2").value),
         };
 
-        console.log("debuging ");
-        var message = validatePassword(UserData.password, UserData.password2);
+        var message = validatePassword(UserData.password, UserData.password2, UserData.email);
         if(message !== null)
         {
             showError(message);
             return;
         }
-        
         try 
         {
             const response = await fetch("http://127.0.0.1:8000/api/register/", 
@@ -228,7 +265,13 @@ function setupRegisterPage()
             const data = await response.json();
 
             if (response.ok)
+            {
+
                 alert("User registered successfully!");
+                console.log("Registration successful");
+                history.pushState({}, "", "/");
+                handleLocation();
+            }
             else
             {
                 let errorMessage = "Registration failed: ";

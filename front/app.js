@@ -1,10 +1,9 @@
-import { routes } from './routes.mjs';
+import { routes, handleLocation} from './routes.mjs';
 
-let currentState = { view: "login" };
 
 function togglePass(id_name) 
 {
-    console.log("hello");
+    // console.log("hello");
 
     var x = document.getElementById(id_name);
     var l1 = document.getElementById("Layer_1" + id_name);
@@ -23,33 +22,7 @@ function togglePass(id_name)
     }
 }
 
-const handleLocation = () => 
-{
-    const path = window.location.pathname;
-    currentState.view = path;
-    const route = routes[path] || routes[404];
 
-    document.getElementById("content").innerHTML = route.html;
-
-    if (route.setup) 
-        route.setup();
-
-    const buttons = document.querySelectorAll(".inpute");
-
-    buttons.forEach(button => 
-    {
-        button.addEventListener("click", (event) => 
-        {
-            event.preventDefault(); 
-            const targetView = event.target.dataset.view;
-            history.pushState({}, "", targetView); 
-            handleLocation();
-            
-            
-        });
-    });
-
-};
 window.togglePass = togglePass;
 window.addEventListener("popstate", handleLocation);
 
