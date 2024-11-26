@@ -4,9 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserRegistrationSerializer
 import json
-
-from django.contrib.auth.models import User
-
+# from django.contrib.auth.models import User
+from account.models import CustomUser
 
 @api_view(['POST'])
 def register_user(request):
@@ -21,18 +20,19 @@ def register_user(request):
     print("bad trip============", data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET'])
 def get_user(request, id):
     print("get_user===========GET", request.data)
     if id == 0:
-        users = User.objects.all().values('id', 'username', 'email') 
+        users = CustomUser.objects.all().values('id', 'username', 'email', 'password')
         return Response({'users': list(users)})
     else:
         try:
-            user = User.objects.get(id=id).values('id', 'username', 'email')
+            user = CustomUser.objects.get(id=id).values('id', 'username', 'email')
             user_list = list(user)
             return Response({'user': user_list})
-        except User.DoesNotExist:
+        except CustomUser.DoesNotExist:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
     # return Response({'message': 'Hi mom!'}, status=status.HTTP_200_OK)
@@ -43,12 +43,12 @@ def delete_user(request, id):
     try:
         if(id == 0):
             print("Deleting all users")
-            user = User.objects.all()
+            user = CustomUser.objects.all()
             user.delete();
             return Response({'message': 'All users deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
-        user = User.objects.get(id=id)
+        user = CustomUser.objects.get(id=id)
         user.delete()
         return Response({'message': 'User deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
-    except User.DoesNotExist:
+    except CustomUser.DoesNotExist:
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)  
 
