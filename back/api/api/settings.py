@@ -44,9 +44,22 @@ INSTALLED_APPS = [
     'rest_framework',
     'account',
     'corsheaders',
+    'rest_framework_simplejwt',
+
 ]
 
 #new
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',  # SQLite database engine
