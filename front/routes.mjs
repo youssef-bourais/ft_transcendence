@@ -1,6 +1,9 @@
 
 let currentState = { view: "login" };
 
+
+const BASE_URL = "http://127.0.0.1:8000/api/"; // Your Django backend URL
+
 export const handleLocation = () => 
 {
     console.log("handleLocation");
@@ -55,6 +58,11 @@ export const routes = {
                     </div>
                     <button type="submit" id="login"  data-view="profile">login</button>
                 </form>
+                
+                <div id="errordiv" align="center" style="margin-left: auto; margin-right: auto;"> 
+                    <span id="error" style="color: white; display: none"></span> 
+                </div>
+
                 <div class="intra">
                     <div class="line"></div>
                     <p class="message">or</p> 
@@ -137,41 +145,180 @@ export const routes = {
         },
     "/profile" : {
         html:`
-            <div class="profile">
-                <h1 class="title"> welcome to ur profile !!</h1>
-            </div>`,
+        <div id="profile-container">
+            <div id="avatar-section">
+                <img id="avatar" src="https://via.placeholder.com/150" alt="Default Avatar">
+                <input type="file" id="avatar-upload" accept="image/*" onchange="uploadAvatar(event)">
+            </div>
+            <div id="info-section">
+                <h2 id="display-name">${localStorage.username}</h2>
+                <button id="edit-name" onclick="editDisplayName()">Edit</button>
+                <p id="stats">
+                    Wins: <span id="wins">0</span> | Losses: <span id="losses">0</span>
+                </p>
+            </div>
+            <div id="friends-section">
+                <h3>Friends</h3>
+                <ul id="friends-list">
+                    <li>John Doe <span class="status online">Online</span></li>
+                    <li>Jane Smith <span class="status offline">Offline</span></li>
+                </ul>
+            </div>
+            <div id="history-section">
+                <h3>Match History</h3>
+                <ul id="history-list">
+                    <li>1v1 with Jane Smith - Won on 2024-11-25</li>
+                    <li>1v1 with John Doe - Lost on 2024-11-20</li>
+                </ul>
+            </div>
+            <button id="logoutButton" onclick="logout()">Logout</button>
+        </div>`,
         setup: setupProfilepage,
     },
     404 : `<h1>404: Page Not Found</h1>`
 };
 
+
+async function refreshAccessToken() 
+{
+    try 
+    {
+        const refreshToken = localStorage.getItem("refreshToken");
+
+        const response = await fetch(`${BASE_URL}/token/refresh/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ refresh: refreshToken }),
+        });
+
+        if (!response.ok) 
+        {
+            alert("Failed to refresh the access token. Please log in again.");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            return; 
+        }
+        const data = await response.json();
+
+        localStorage.removeItem("accessToken");
+        localStorage.setItem("accessToken", data.access);
+        console.log("Access token successfully refreshed.");
+    } 
+    catch (error) 
+    {
+        console.error("Error occurred while refreshing the access token:", error.message);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        alert("Session expired. Please log in again.");
+    }
+}
+
+
+async function SecureApiRequest(endpoint, method = "GET", body = null) 
+{
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+    };
+
+    const request = 
+    {
+        method,
+        headers,
+    };
+
+    if (body) 
+        request.body = JSON.stringify(body);
+
+    try 
+    {
+        const response = await fetch(`${BASE_URL}${endpoint}`, request);
+
+        if (response.status === 401) 
+        {
+            try 
+            {
+                await refreshAccessToken(); 
+                return SecureApiRequest(endpoint, method, body); 
+            } 
+            catch 
+            {
+                console.error("Error refreshing access token.");
+                alert("Authentication failed. Please log in again.");
+                throw new Error("Authentication failed.");
+            }
+        }
+        if (response.ok) 
+        {
+            const data = await response.json();
+            console.log("SecureApiRequest successful:", data);
+            return data;
+        }
+
+        const errorData = await response.json();
+        console.error("API error:", errorData);
+        throw new Error(errorData.detail || "API error occurred.");
+    } 
+    catch (error) 
+    {
+        console.error("Error in SecureApiRequest:", error.message);
+        alert("An error occurred. Please try again.");
+        throw error; 
+    }
+}
+
 function setupLoginPage() 
 {
     console.log("login page");
     const form = document.getElementById("login-form");
-    if (form) 
+    form.addEventListener("submit", async (event) => 
     {
-        form.addEventListener("submit", (event) => 
+        event.preventDefault();
+        const UserData = 
         {
-            event.preventDefault();
+            username : SanitizeInpute(document.getElementById("username").value),
+            password : SanitizeInpute(document.getElementById("password").value),
+        };
+        try
+        {
+            const response = await fetch("http://127.0.0.1:8000/api/token/", 
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(UserData),
+            });
 
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+            const data = await response.json();
 
-            if (username === "user" && password === "pass") 
+            localStorage.setItem("username", UserData.username);
+            localStorage.setItem("refreshToken", data.refresh);
+            localStorage.setItem("accessToken", data.access);
+            console.log("username:", localStorage.getItem("username"));
+
+            if(response.ok)
             {
                 console.log("Login successful");
+                alert("login successful");
                 history.pushState({}, "", "/profile"); 
                 handleLocation();
-            } 
-            else 
-            {
-                alert("Invalid username or password");
             }
-        });
-    }
+            else
+            {
+                showError("invalid username or passsword");
+            }
+        }
+        catch (error)
+        {
+            alert("An error occurred. Please try again.");
+        }
+        
+    });
 }
-
 
 function SanitizeInpute(str) 
 {
@@ -293,13 +440,31 @@ function setupForgetPasswordPage()
 
 }
 
-function setupLogin42Page()
+
+async function setupLogin42Page() 
 {
+    try 
+    {
+        const response = await fetch('http://127.0.0.1:8000/api/auth/login/', {
+            method: 'GET',
+            credentials: 'include'  // Make sure cookies are sent with the request
+        });
 
+        if (!response.ok) 
+            throw new Error('OAuth2 initiation failed');
+
+    } 
+    catch (error) 
+    {
+        console.error('Error initiating OAuth2:', error);
+        alert('An error occurred while initiating OAuth2. Please try again later.');
+    }
 }
-
 
 function setupProfilepage()
 {
+
+    console.log("from profile.....");
+    // window.location.href = "/login";
 
 }

@@ -231,3 +231,119 @@ h1 {
     
     fill: gray; /* Color of the icon */
 }
+
+Reset styles
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#profile-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#avatar-section {
+    margin-bottom: 20px;
+}
+
+#avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 2px solid #ddd;
+}
+
+#avatar-upload {
+    display: block;
+    margin: 10px auto;
+}
+
+#info-section {
+    margin-bottom: 20px;
+}
+
+#display-name {
+    font-size: 24px;
+    color: #333;
+}
+
+#edit-name {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#edit-name:hover {
+    background-color: #0056b3;
+}
+
+#stats {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #555;
+}
+
+#friends-section, #history-section {
+    text-align: left;
+    margin-top: 20px;
+}
+
+#friends-list, #history-list {
+    list-style: none;
+    margin-top: 10px;
+}
+
+.status {
+    float: right;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: white;
+}
+
+.online {
+    background-color: #28a745;
+}
+
+.offline {
+    background-color: #dc3545;
+}
+
+#logoutButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff4b5c;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#logoutButton:hover {
+    background-color: #e43d4c;
+}
+
