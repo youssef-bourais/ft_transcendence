@@ -140,7 +140,7 @@ export const routes = {
         setup: setupForgetPasswordPage,
         },
     "/login_42" : {
-        html: `<h2> hola </h2>`,
+        html: ``,
         setup: setupLogin42Page,
         },
     "/profile" : {
@@ -316,7 +316,7 @@ function setupLoginPage()
         {
             alert("An error occurred. Please try again.");
         }
-        
+
     });
 }
 
@@ -440,19 +440,28 @@ function setupForgetPasswordPage()
 
 }
 
-
 async function setupLogin42Page() 
 {
     try 
     {
         const response = await fetch('http://127.0.0.1:8000/api/auth/login/', {
-            method: 'GET',
-            credentials: 'include'  // Make sure cookies are sent with the request
+            // mode: 'no-cors',
+            // method: 'GET',
         });
+        console.log("status============", response.status);
 
         if (!response.ok) 
-            throw new Error('OAuth2 initiation failed');
+            throw new Error('OAuth2 initiation failed + ' + response.status);
 
+        const data = await response.json();
+
+        if (data.redirectUrl) 
+        {
+            console.log("data:", data);
+            window.location.href = data.redirectUrl;  // Redirect to OAuth2 authorization page
+            history.pushState({}, "", "/profile");
+            handleLocation();
+        }
     } 
     catch (error) 
     {

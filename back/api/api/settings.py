@@ -15,6 +15,14 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+CLIENT_UID = 'u-s4t2ud-dc848eccf79afcafddf78e724d4c67b4dd6014c95adcaf84e059eafb375b7e7c'
+CLIENT_SECRET = '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'
+REDIRECT_URI = 'http://127.0.0.1:8000/api/auth/callback/'
+
+AUTHORIZE_URL = "https://api.intra.42.fr/oauth/authorize"
+TOKEN_URL = "https://api.intra.42.fr/oauth/token"
+USER_INFO_URL = "https://api.intra.42.fr/v2/me"
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -26,7 +34,7 @@ SECRET_KEY = 'django-insecure-3zx9dv0$+jukk6+@z^f_4r%s29hz%2za461o-06+)7dx&$g%k^
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be sent with the request
 
 # Application definition
 
@@ -39,13 +47,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
-
     #new 
     'rest_framework',
     'account',
     'corsheaders',
     'rest_framework_simplejwt',
-
+    'django_extensions',
 ]
 
 #new
@@ -77,11 +84,11 @@ DATABASES = {
 MIDDLEWARE = [
     #new 
     'corsheaders.middleware.CorsMiddleware',
-
+    'django.middleware.common.CommonMiddleware',  # You may want to keep this for handling redirects
     #-----
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -92,6 +99,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8080",  # Frontend URL
 ]
+
 
 ROOT_URLCONF = 'api.urls'
 
