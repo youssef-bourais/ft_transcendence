@@ -175,6 +175,10 @@ export const routes = {
         </div>`,
         setup: setupProfilepage,
     },
+    "/bridg" : {
+        html :`<h1> loginnnn..........</h1>`,
+        setup: handleRedirect,
+    },
     404 : `<h1>404: Page Not Found</h1>`
 };
 
@@ -284,7 +288,7 @@ function setupLoginPage()
         };
         try
         {
-            const response = await fetch("http://127.0.0.1:8000/api/token/", 
+            const response = await fetch("/api/token/", 
             {
                 method: "POST",
                 headers: {
@@ -457,10 +461,11 @@ async function setupLogin42Page()
 
         if (data.redirectUrl) 
         {
-            console.log("data:", data);
+            console.log("data, ", data);
+            console.log("redirectUrl:  ", data.redirectUrl);
             window.location.href = data.redirectUrl;  // Redirect to OAuth2 authorization page
-            history.pushState({}, "", "/profile");
-            handleLocation();
+            // history.pushState({}, "", "/profile");
+            // handleLocation();
         }
     } 
     catch (error) 
@@ -470,10 +475,32 @@ async function setupLogin42Page()
     }
 }
 
+function getCookie(name) 
+{
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+function handleRedirect() 
+{
+    const email = getCookie('email');
+    const username = getCookie('username');
+    const photo = getCookie('photo');
+
+    localStorage.setItem("username", username);
+    // localStorage.setItem("refreshToken", data.refresh);
+    // localStorage.setItem("accessToken", data.access);
+
+    console.log('User Info from Cookies:', email, username, photo);
+    history.pushState({}, "", "/profile");
+    handleLocation();
+
+    // window.location.href = "/login";
+}
+
 function setupProfilepage()
 {
-
-    console.log("from profile.....");
+    console.log("from profile.....hah", localStorage.getItem("username"));
     // window.location.href = "/login";
-
 }

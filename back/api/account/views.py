@@ -70,6 +70,7 @@ def login_with_42(request):
     """
     Redirect to the 42 OAuth2 authorization page.
     """
+    print("login with intra:")
     client_id = settings.CLIENT_UID
     redirect_uri = settings.REDIRECT_URI
     authorization_url = f'{settings.AUTHORIZE_URL}?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code'
@@ -103,13 +104,18 @@ def callback_from_42(request):
     user_response = GetUserInfoFromProvider(access_token)
     if not user_response or not user_response.data:
         return Response({"error": "Failed to fetch user information"}, status=400)
-
     response_data = user_response.data
-
-
     spa_url = "http://127.0.0.1:8080/profile"
     redirect_url = f"{spa_url}?email={response_data['email']}&username={response_data['username']}&photo={response_data['photo']}"
-    return HttpResponseRedirect(redirect_url)
+
+    response = HttpResponseRedirect("http://127.0.0.1:8080/bridg")
+    response.set_cookie('email', response_data['email'])
+    response.set_cookie('username', response_data['username'])
+    response.set_cookie('photo', response_data['photo'])
+    return response
+
+
+    # return HttpResponseRedirect(spa_url)
     # return Response(
     #     response_data, 
     #     headers={"Access-Control-Allow-Origin": "http://127.0.0.1:8080"}
