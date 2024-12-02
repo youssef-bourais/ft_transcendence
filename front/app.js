@@ -24,6 +24,7 @@ function togglePass(id_name)
 
 
 window.togglePass = togglePass;
+// window.logout = logout;
 window.addEventListener("popstate", handleLocation);
 
 window.addEventListener("DOMContentLoaded", handleLocation);

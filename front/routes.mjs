@@ -151,7 +151,7 @@ export const routes = {
                 <input type="file" id="avatar-upload" accept="image/*" onchange="uploadAvatar(event)">
             </div>
             <div id="info-section">
-                <h2 id="display-name">${localStorage.username}</h2>
+                <h2 id="display-name">${localStorage.getItem("username")}</h2>
                 <button id="edit-name" onclick="editDisplayName()">Edit</button>
                 <p id="stats">
                     Wins: <span id="wins">0</span> | Losses: <span id="losses">0</span>
@@ -176,12 +176,18 @@ export const routes = {
         setup: setupProfilepage,
     },
     "/bridg" : {
-        html :`<h1> loginnnn..........</h1>`,
+        html :``,
         setup: handleRedirect,
     },
     404 : `<h1>404: Page Not Found</h1>`
 };
 
+// function logout() 
+// {
+//     // Remove the logged-in token
+//     // localStorage.removeItem('access');
+//     alert('Logged out! Access to /profile is restricted.');
+// }
 
 async function refreshAccessToken() 
 {
@@ -189,7 +195,7 @@ async function refreshAccessToken()
     {
         const refreshToken = localStorage.getItem("refreshToken");
 
-        const response = await fetch(`${BASE_URL}/token/refresh/`, {
+            const response = await fetch(`/token/refresh/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -204,6 +210,7 @@ async function refreshAccessToken()
             localStorage.removeItem("refreshToken");
             return; 
         }
+
         const data = await response.json();
 
         localStorage.removeItem("accessToken");
@@ -239,7 +246,7 @@ async function SecureApiRequest(endpoint, method = "GET", body = null)
 
     try 
     {
-        const response = await fetch(`${BASE_URL}${endpoint}`, request);
+        const response = await fetch(`${endpoint}`, request);
 
         if (response.status === 401) 
         {
@@ -387,7 +394,6 @@ function setupRegisterPage()
     form.addEventListener("submit", async (event) => 
     {
         event.preventDefault(); 
-
         const UserData = 
         {
             username: SanitizeInpute(document.getElementById("username").value),
@@ -404,7 +410,7 @@ function setupRegisterPage()
         }
         try 
         {
-            const response = await fetch("http://127.0.0.1:8000/api/register/", 
+            const response = await fetch("/api/register/", 
             {
                 method: "POST",
                 headers: {
@@ -448,9 +454,7 @@ async function setupLogin42Page()
 {
     try 
     {
-        const response = await fetch('http://127.0.0.1:8000/api/auth/login/', {
-            // mode: 'no-cors',
-            // method: 'GET',
+        const response = await fetch('/api/auth/login/', {
         });
         console.log("status============", response.status);
 
@@ -478,25 +482,28 @@ async function setupLogin42Page()
 function getCookie(name) 
 {
     const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+    const parts = value.split(`; ${name}=`); 
+    if (parts.length === 2) 
+        return parts.pop().split(';').shift();
+}
+
+function deleteCookie(name) 
+{
+    document.cookie = `${name}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
 }
 
 function handleRedirect() 
 {
     const email = getCookie('email');
+    deleteCookie("email");
     const username = getCookie('username');
+    deleteCookie("username");
     const photo = getCookie('photo');
-
+    deleteCookie("photo");
     localStorage.setItem("username", username);
-    // localStorage.setItem("refreshToken", data.refresh);
-    // localStorage.setItem("accessToken", data.access);
-
-    console.log('User Info from Cookies:', email, username, photo);
+    // console.log('User Info from Cookies:', email, username, photo);
     history.pushState({}, "", "/profile");
     handleLocation();
-
-    // window.location.href = "/login";
 }
 
 function setupProfilepage()
@@ -504,3 +511,4 @@ function setupProfilepage()
     console.log("from profile.....hah", localStorage.getItem("username"));
     // window.location.href = "/login";
 }
+
