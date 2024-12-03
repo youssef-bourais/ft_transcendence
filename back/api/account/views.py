@@ -28,20 +28,34 @@ def register_user(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 @permission_classes([AllowAny])
-def get_user(request, id):
-    print("get_user===========GET", request.data)
-    if id == 0:
-        users = CustomUser.objects.all().values('id', 'username', 'email', 'password')
-        return Response({'users': list(users)})
-    else:
-        try:
-            user = CustomUser.objects.get(id=id).values('id', 'username', 'email')
-            user_list = list(user)
-            return Response({'user': user_list})
-        except CustomUser.DoesNotExist:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+@permission_classes([IsAuthenticated])
+def get_user(request, id_or_name):
+    """
+    Retrieve user information by ID or username.
+    If the request contains a number, it will search by ID.
+    If it contains a string, it will search by username.
+    """
+
+    if id_or_name == "0":
+        users = CustomUser.objects.all().values('id', 'username', 'email', 'photo')
+        return Response({'users': list(users)}, status=status.HTTP_200_OK)
+
+    try:
+        if id_or_name.isdigit():
+            user = CustomUser.objects.get(id=int(id_or_name))
+        else:
+            user = CustomUser.objects.get(username=id_or_name)
+        
+        user_data = {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'photo': user.photo
+        }
+        return Response(user_data, status=status.HTTP_200_OK)
+    except CustomUser.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['DELETE'])
 @permission_classes([IsDeveloper])
@@ -76,7 +90,7 @@ def login_with_42(request):
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def callback_from_42(request):
-    print("Received callback from OAuth provider...")
+    # print("Received callback from OAuth provider...")
     code = request.GET.get('code')
     token_response = exchange_code_for_token(code)
     access_token = token_response.data['access_token']
@@ -92,9 +106,9 @@ def callback_from_42(request):
     username = response_data['username']
 
     response = HttpResponseRedirect("http://127.0.0.1:8080/bridg")
-    response.set_cookie('email', email)
+    # response.set_cookie('email', email)
     response.set_cookie('username', username)
-    response.set_cookie('photo', photo)
+    # response.set_cookie('photo', photo)
 
     user = CustomUser.objects.filter(email=email).first()
 

@@ -1,38 +1,7 @@
+import { SanitizeInpute, GoLogin, showError, validatePassword, getCookie, deleteCookie} from './utils.js';
+import { handleLocation } from './app.js';
+import { SecureApiRequest} from './api.js';
 
-let currentState = { view: "login" };
-
-
-const BASE_URL = "http://127.0.0.1:8000/api/"; // Your Django backend URL
-
-export const handleLocation = () => 
-{
-    console.log("handleLocation");
-    const path = window.location.pathname;
-    currentState.view = path;
-    const route = routes[path] || routes[404];
-
-    document.getElementById("content").innerHTML = route.html;
-
-    if (route.setup) 
-    {
-            route.setup();
-            // handleLocation();
-    }
-
-    const buttons = document.querySelectorAll(".inpute");
-
-    buttons.forEach(button => 
-    {
-        button.addEventListener("click", (event) => 
-        {
-            event.preventDefault(); 
-            const targetView = event.target.dataset.view;
-            history.pushState({}, "", targetView); 
-            handleLocation();
-        });
-    });
-
-};
 
 export const routes = {
 
@@ -151,7 +120,7 @@ export const routes = {
                 <input type="file" id="avatar-upload" accept="image/*" onchange="uploadAvatar(event)">
             </div>
             <div id="info-section">
-                <h2 id="display-name">${localStorage.getItem("username")}</h2>
+                <h2 id="display-name">name</h2>
                 <button id="edit-name" onclick="editDisplayName()">Edit</button>
                 <p id="stats">
                     Wins: <span id="wins">0</span> | Losses: <span id="losses">0</span>
@@ -182,104 +151,6 @@ export const routes = {
     404 : `<h1>404: Page Not Found</h1>`
 };
 
-// function logout() 
-// {
-//     // Remove the logged-in token
-//     // localStorage.removeItem('access');
-//     alert('Logged out! Access to /profile is restricted.');
-// }
-
-async function refreshAccessToken() 
-{
-    try 
-    {
-        const refreshToken = localStorage.getItem("refreshToken");
-
-            const response = await fetch(`/token/refresh/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ refresh: refreshToken }),
-        });
-
-        if (!response.ok) 
-        {
-            alert("Failed to refresh the access token. Please log in again.");
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
-            return; 
-        }
-
-        const data = await response.json();
-
-        localStorage.removeItem("accessToken");
-        localStorage.setItem("accessToken", data.access);
-        console.log("Access token successfully refreshed.");
-    } 
-    catch (error) 
-    {
-        console.error("Error occurred while refreshing the access token:", error.message);
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        alert("Session expired. Please log in again.");
-    }
-}
-
-
-async function SecureApiRequest(endpoint, method = "GET", body = null) 
-{
-    const token = localStorage.getItem("accessToken");
-    const headers = {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-    };
-
-    const request = 
-    {
-        method,
-        headers,
-    };
-
-    if (body) 
-        request.body = JSON.stringify(body);
-
-    try 
-    {
-        const response = await fetch(`${endpoint}`, request);
-
-        if (response.status === 401) 
-        {
-            try 
-            {
-                await refreshAccessToken(); 
-                return SecureApiRequest(endpoint, method, body); 
-            } 
-            catch 
-            {
-                console.error("Error refreshing access token.");
-                alert("Authentication failed. Please log in again.");
-                throw new Error("Authentication failed.");
-            }
-        }
-        if (response.ok) 
-        {
-            const data = await response.json();
-            console.log("SecureApiRequest successful:", data);
-            return data;
-        }
-
-        const errorData = await response.json();
-        console.error("API error:", errorData);
-        throw new Error(errorData.detail || "API error occurred.");
-    } 
-    catch (error) 
-    {
-        console.error("Error in SecureApiRequest:", error.message);
-        alert("An error occurred. Please try again.");
-        throw error; 
-    }
-}
 
 function setupLoginPage() 
 {
@@ -331,61 +202,6 @@ function setupLoginPage()
     });
 }
 
-function SanitizeInpute(str) 
-{
-    const div = document.createElement('div');
-    const text = document.createTextNode(str);
-    div.appendChild(text); // browser automaticly excape the tags in the text
-    return div.innerHTML;
-}
-
-// <img src="invalid" onerror="alert('XSS')">
-
-var timer = null;
-function showError(message) 
-{
-    if (timer !== null) {
-        clearTimeout(timer);
-        timer = null;
-    }
-    var errorElement = document.getElementById("error");
-    errorElement.innerHTML = message;
-    errorElement.style.display = 'block';
-    timer = setTimeout(function(){ errorElement.style.display = 'none'; }, 4000);
-}
-
-let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
-let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))')
-    
-
-const checkPasswordStrength = (inputPassword) => 
-{
-    if(strongPassword.test(inputPassword))
-        return 'strong';
-    else if(mediumPassword.test(inputPassword))
-        return 'medium';
-    else
-        return 'weak';
-}
-
-function isEmptyOrSpaces(str)
-{
-    return str === null || str.match(/^ *$/) !== null;
-}
-
-function validatePassword(password, password2, email) 
-{
-
-    if (password !== password2) 
-        return "Passwords do not match!";
-    if(password.length < 8)
-        return "password must be at least 8 characters long";
-    if(checkPasswordStrength(password) === 'weak')
-        return "password very weak";
-    if (isEmptyOrSpaces(email))
-        return 'Email cannot be empty';
-    return null;
-}
 
 function setupRegisterPage() 
 {
@@ -468,8 +284,7 @@ async function setupLogin42Page()
             console.log("data, ", data);
             console.log("redirectUrl:  ", data.redirectUrl);
             window.location.href = data.redirectUrl;  // Redirect to OAuth2 authorization page
-            // history.pushState({}, "", "/profile");
-            // handleLocation();
+            console.log("by");
         }
     } 
     catch (error) 
@@ -479,36 +294,34 @@ async function setupLogin42Page()
     }
 }
 
-function getCookie(name) 
-{
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`); 
-    if (parts.length === 2) 
-        return parts.pop().split(';').shift();
-}
-
-function deleteCookie(name) 
-{
-    document.cookie = `${name}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
-}
-
 function handleRedirect() 
 {
-    const email = getCookie('email');
-    deleteCookie("email");
-    const username = getCookie('username');
-    deleteCookie("username");
-    const photo = getCookie('photo');
-    deleteCookie("photo");
+    console.log("bridg====================");
+    const access_token = getCookie('access_token');
+    deleteCookie("access_token");
+
+    const refresh_token = getCookie('refresh_token');
+    deleteCookie("refresh_token");
+
+    const username = getCookie('username')
+    deleteCookie('username');
+
+    localStorage.setItem("accessToken", access_token);
+    localStorage.setItem("refreshToken", refresh_token);
     localStorage.setItem("username", username);
-    // console.log('User Info from Cookies:', email, username, photo);
+
     history.pushState({}, "", "/profile");
     handleLocation();
 }
 
-function setupProfilepage()
+async function setupProfilepage()
 {
-    console.log("from profile.....hah", localStorage.getItem("username"));
-    // window.location.href = "/login";
+    const data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
+
+    // document.getElementById('user-id').innerText = data.user.id;
+    // document.getElementById('user-username').innerText = data.user.username;
+    // document.getElementById('user-email').innerText = data.user.email;
+    // document.getElementById('user-photo').src = data.user.photo;
+
 }
 

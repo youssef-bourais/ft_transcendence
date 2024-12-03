@@ -12,7 +12,7 @@ def GetUserInfoFromProvider(access):
             })
 
         user_info = response.json()
-        print(user_info)
+        # print(user_info)
         user_data = {
             "email": user_info.get("email"),
             "username": user_info.get("login"),
