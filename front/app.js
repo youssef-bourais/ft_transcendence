@@ -14,7 +14,7 @@ export const handleLocation = () =>
 
     if (route.setup) 
     {
-            route.setup();
+        route.setup();
     }
 
     const buttons = document.querySelectorAll(".inpute");
@@ -24,7 +24,7 @@ export const handleLocation = () =>
         button.addEventListener("click", (event) => 
         {
             event.preventDefault(); 
-            const targetView = event.target.dataset.view;
+            const targetView = event.target.dataset.view; //get data-view  from button
             history.pushState({}, "", targetView); 
             handleLocation();
         });
