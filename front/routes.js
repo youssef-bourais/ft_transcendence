@@ -37,7 +37,7 @@ export const routes = {
                     <p class="message">or</p> 
                     <div class="line"></div>
                 </div>
-                <button id="login-intra" class="inpute"data-view="login_42">login with 42 intra</button>
+                <button id="login-intra" class="inpute" data-view="login_42">login with 42 intra</button>
 
                 <div class="social-icons">
                     <p class="signup"><br/>don't have an account?
@@ -148,7 +148,10 @@ export const routes = {
         html :``,
         setup: handleRedirect,
     },
-    404 : `<h1>404: Page Not Found</h1>`
+    "/404": {
+        html: `<h1>404: Page Not Found</h1><br><h4>The page you're looking for doesn't exist.</h4>`,
+        setup: () => console.log("404 page loaded"),
+    },
 };
 
 
@@ -316,7 +319,7 @@ function handleRedirect()
 
 async function setupProfilepage()
 {
-    const data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
+    // const data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
 
     // document.getElementById('user-id').innerText = data.user.id;
     // document.getElementById('user-username').innerText = data.user.username;

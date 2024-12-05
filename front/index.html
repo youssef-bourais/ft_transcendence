@@ -2,22 +2,105 @@
 
 <html lang="en">
     <head>
+
+        <meta name="view-transition" content="same-origin" />
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="styles/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
         <title>ft_transendence</title>
     </head>
     <body>
-        
+
+        <!-- <header id="search-bar"> -->
+        <!---->
+        <!-- </header> -->
+        <div class="sidebar" id="navbar">
+            <div class="top">
+                <div class="logo">
+                    <!-- <i class='bx bx-fast-forward'></i> -->
+                    <i class="bx bxl-codepen"></i>
+                     &nbsp;
+                     &nbsp;
+                     &nbsp;
+                    <span>Transendence</span>
+                </div>
+                <i class="bx bx-menu"id="btn"></i>
+            </div>
+
+            <div class="user">
+                <img src="./images/42-logo.png" alt="me" class="user-img">
+                <div>
+                    <p class="bold">youssef</p>
+                    <p>bourais</p>
+                </div>
+            </div>
+
+            <ul>
+                <li class="nav-icons">
+                    <a href="/profile" data-view="/profile" class="barinpute">
+                        <i class='bx bxs-group'></i>
+                        <span class="nav-item">Profile</span>
+
+                    </a>
+                    <span class="tooltip">Profile</span>
+
+                </li>
+
+                <li class="nav-icons">
+                    <a  href="/chat" data-view="/chat" class="barinpute">
+                        <i class='bx bxs-conversation'></i>
+                        <span class="nav-item">Chat</span>
+                    </a>
+                    <span class="tooltip">Chat</span>
+                </li>
+
+
+                <li class="nav-icons">
+                    <a  href="/game" data-view="/game" class="barinpute">
+                        <i class='bx bxs-game' ></i>
+                        <span class="nav-item">Game</span>
+                    </a>
+                    <span class="tooltip">Game</span>
+                </li>
+
+                <li class="nav-icons">
+                    <a  href="/tournament" data-view="/tournament" class="barinpute">
+                        <i class='bx bxs-trophy'></i>
+                        <span class="nav-item">Tournament</span>
+                    </a>
+                    <span class="tooltip">Tournament</span>
+                </li>
+
+                <li href="/" onclick="logout()" class="last-item">
+                    <a href="">
+                        <i class="bx bx-log-out"></i>
+                        <span class="nav-item">Logout</span>
+
+                    </a>
+                    <span class="tooltip">logout</span>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- <nav class="navbar"> -->
+
+
+        <!-- </nav> -->
+
         <div id="content">
 
         </div>
-        <script type="module" src="app.js"> </script>
-    </body>
 
+        <script type="module" src="app.js"> </script>
+
+    </body>
+ 
 </html>
 
 
