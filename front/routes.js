@@ -148,6 +148,10 @@ export const routes = {
         html :``,
         setup: handleRedirect,
     },
+    "/chat" : {
+        html : `<h1>Hi</h1>`, 
+        setup:() => console.log("hola"),
+    },
     "/404": {
         html: `<h1>404: Page Not Found</h1><br><h4>The page you're looking for doesn't exist.</h4>`,
         setup: () => console.log("404 page loaded"),
@@ -283,18 +287,25 @@ async function setupLogin42Page()
         const data = await response.json();
 
         if (data.redirectUrl) 
-        {
-            console.log("data, ", data);
-            console.log("redirectUrl:  ", data.redirectUrl);
             window.location.href = data.redirectUrl;  // Redirect to OAuth2 authorization page
-            console.log("by");
-        }
     } 
     catch (error) 
     {
         console.error('Error initiating OAuth2:', error);
         alert('An error occurred while initiating OAuth2. Please try again later.');
     }
+}
+
+
+function decodeImage(photo)
+{
+
+    const tempElement = document.createElement('textarea');
+    tempElement.innerHTML = photo;
+
+    // Decode the string
+    const decodedPhoto = tempElement.value;
+    return decodedPhoto;
 }
 
 function handleRedirect() 
@@ -309,9 +320,30 @@ function handleRedirect()
     const username = getCookie('username')
     deleteCookie('username');
 
+    const photo = getCookie('photo')
+    deleteCookie('photo');
+
+    const email = getCookie('email')
+    deleteCookie('email');
+
     localStorage.setItem("accessToken", access_token);
     localStorage.setItem("refreshToken", refresh_token);
+    localStorage.setItem("photo", photo);
+    localStorage.setItem("email", email);
     localStorage.setItem("username", username);
+
+    // const userPhoto = document.getElementById("user-photo");
+    // const userName = document.getElementById("user-name");
+    // const userLastName = document.getElementById("user-email");
+    //
+    // const image = decodeImage(photo).replace(/^"(.*)"$/, '$1');
+    // console.log("image::: ", image);
+    // userPhoto.src = image;
+    // console.log(username);
+    // console.log(email);
+
+    // userName.textContent = username;
+    // userLastName.textContent = email.replace(/^"(.*)"$/, '$1');
 
     history.pushState({}, "", "/profile");
     handleLocation();

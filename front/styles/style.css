@@ -397,10 +397,10 @@ body {
 
 }
 
-.sidebar.active ~ #content { 
-     left: 250px; 
-     width: calc(100% - 250px); 
- } 
+/* .sidebar.active ~ #content {  */
+/*      left: 250px;  */
+/*      width: calc(100% - 250px);  */
+/*  }  */
 
 .sidebar.active {
     width: 250px;
@@ -503,7 +503,7 @@ body {
 }
 
 .sidebar ul li .tooltip {
-    color: var(--white);
+    /* color: var(--white); */
     position: absolute;
     left: 125px;
 
@@ -542,4 +542,10 @@ body {
 .sidebar.active .last-item {
     width: 90%;
 }
+
+.sidebar.active #user-email
+{
+  font-size: 13px;
+}
+
 
