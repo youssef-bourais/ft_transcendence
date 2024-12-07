@@ -1,6 +1,0 @@
-{
-    "venvPath": "./env",  // Path to virtual environments folder
-    "venv": "env",        // Name of the virtual environment
-    "include": ["api"],    // Include paths for analysis
-    "typeCheckingMode": "basic" // Set type-checking level
-}

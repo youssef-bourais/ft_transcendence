@@ -149,8 +149,16 @@ export const routes = {
         setup: handleRedirect,
     },
     "/chat" : {
-        html : `<h1>Hi</h1>`, 
-        setup:() => console.log("hola"),
+        html : `<h1>loading.....</h1>`, 
+        setup:() => console.log("chat veiw...."),
+    },
+    "/game" : {
+        html : `<h1>comming soon.....</h1>`, 
+        setup:() => console.log("Game veiw...."),
+    },
+   "/tournament" : {
+        html : `<h1>bad Trip......</h1>`, 
+        setup:() => console.log("Tournament veiw...."),
     },
     "/404": {
         html: `<h1>404: Page Not Found</h1><br><h4>The page you're looking for doesn't exist.</h4>`,
