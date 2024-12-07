@@ -116,11 +116,12 @@ export const routes = {
         html:`
         <div id="profile-container">
             <div id="avatar-section">
-                <img id="avatar" src="https://via.placeholder.com/150" alt="Default Avatar">
+
+                <img id="avatar" src="${localStorage.getItem("photo")}" alt="Default Avatar">
                 <input type="file" id="avatar-upload" accept="image/*" onchange="uploadAvatar(event)">
             </div>
             <div id="info-section">
-                <h2 id="display-name">name</h2>
+                <h2 id="display-name">${localStorage.getItem("username")}</h2>
                 <button id="edit-name" onclick="editDisplayName()">Edit</button>
                 <p id="stats">
                     Wins: <span id="wins">0</span> | Losses: <span id="losses">0</span>
@@ -140,7 +141,6 @@ export const routes = {
                     <li>1v1 with John Doe - Lost on 2024-11-20</li>
                 </ul>
             </div>
-            <button id="logoutButton" onclick="logout()">Logout</button>
         </div>`,
         setup: setupProfilepage,
     },
@@ -192,14 +192,17 @@ function setupLoginPage()
 
             const data = await response.json();
 
+    
             localStorage.setItem("username", UserData.username);
             localStorage.setItem("refreshToken", data.refresh);
             localStorage.setItem("accessToken", data.access);
-            console.log("username:", localStorage.getItem("username"));
 
+            const info = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
+
+            localStorage.setItem("photo", info.photo);
+            localStorage.setItem("email", info.email);
             if(response.ok)
             {
-                console.log("Login successful");
                 alert("login successful");
                 history.pushState({}, "", "/profile"); 
                 handleLocation();
@@ -331,35 +334,31 @@ function handleRedirect()
     const photo = getCookie('photo')
     deleteCookie('photo');
 
-    const email = getCookie('email')
+    const image = photo.replace(/^"(.*)"$/, '$1');
+
+    const email = getCookie('email');
     deleteCookie('email');
+
+    const mail = email.replace(/^"(.*)"$/, '$1');
 
     localStorage.setItem("accessToken", access_token);
     localStorage.setItem("refreshToken", refresh_token);
-    localStorage.setItem("photo", photo);
-    localStorage.setItem("email", email);
+    localStorage.setItem("email", mail);
     localStorage.setItem("username", username);
-
-    // const userPhoto = document.getElementById("user-photo");
-    // const userName = document.getElementById("user-name");
-    // const userLastName = document.getElementById("user-email");
-    //
-    // const image = decodeImage(photo).replace(/^"(.*)"$/, '$1');
-    // console.log("image::: ", image);
-    // userPhoto.src = image;
-    // console.log(username);
-    // console.log(email);
-
-    // userName.textContent = username;
-    // userLastName.textContent = email.replace(/^"(.*)"$/, '$1');
-
+    localStorage.setItem("photo", image);
+    
     history.pushState({}, "", "/profile");
     handleLocation();
 }
 
 async function setupProfilepage()
 {
+
     // const data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
+
+    console.log("data, ", localStorage.getItem("photo"));
+    console.log("data, ", localStorage.getItem("email"));
+
 
     // document.getElementById('user-id').innerText = data.user.id;
     // document.getElementById('user-username').innerText = data.user.username;

@@ -18,15 +18,15 @@ let isNavigating = false;
 
 function handleEvent(selector, isNavbar = false)
 {
-    const navbarButton = document.querySelectorAll(selector);
-    if(navbarButton)
+    const Button = document.querySelectorAll(selector);
+    if(Button)
     {
-        navbarButton.forEach(navbutton => 
+        Button.forEach(button => 
         {
-            if (!navbutton.hasAttribute('data-listener-attached'))
+            if (!button.hasAttribute('data-listener-attached'))
             {
 
-                navbutton.addEventListener("click", (event) => 
+                button.addEventListener("click", (event) => 
                 {
                     event.preventDefault(); 
 
@@ -45,7 +45,7 @@ function handleEvent(selector, isNavbar = false)
                         }, 100);
                     }
                 });
-                navbutton.setAttribute('data-listener-attached', 'true');
+                button.setAttribute('data-listener-attached', 'true');
             }
         });
     }
@@ -68,6 +68,19 @@ export const handleLocation = () =>
     handleEvent(".inpute");
     handleEvent(".barinpute", true);
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const username = localStorage.getItem("username");
+    const email = localStorage.getItem("email");
+    const photo = localStorage.getItem("photo"); 
+
+    document.getElementById("user-username").textContent = username;
+    document.getElementById("user-email").textContent = email;
+    document.getElementById("user-photo").src = photo;
+});
+
+
 
 
 let btn = document.querySelector('#btn');
