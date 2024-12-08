@@ -28,7 +28,7 @@ def register_user(request):
 
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
+# @permission_classes([AllowAny])
 @permission_classes([IsAuthenticated])
 def get_user(request, id_or_name):
     """

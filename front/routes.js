@@ -169,7 +169,7 @@ export const routes = {
 
 function setupLoginPage() 
 {
-    console.log("login page");
+    // console.log("login page");
     const form = document.getElementById("login-form");
     form.addEventListener("submit", async (event) => 
     {
@@ -192,24 +192,22 @@ function setupLoginPage()
 
             const data = await response.json();
 
-    
-            localStorage.setItem("username", UserData.username);
-            localStorage.setItem("refreshToken", data.refresh);
-            localStorage.setItem("accessToken", data.access);
-
-            const info = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
-
-            localStorage.setItem("photo", info.photo);
-            localStorage.setItem("email", info.email);
-            if(response.ok)
+            if(!response.ok)
+                showError("invalid username or passsword");
+            else
             {
+                localStorage.setItem("username", UserData.username);
+                localStorage.setItem("refreshToken", data.refresh);
+                localStorage.setItem("accessToken", data.access);
+            
+                const info = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
+
+                localStorage.setItem("photo", info.photo);
+                localStorage.setItem("email", info.email);
+
                 alert("login successful");
                 history.pushState({}, "", "/profile"); 
                 handleLocation();
-            }
-            else
-            {
-                showError("invalid username or passsword");
             }
         }
         catch (error)

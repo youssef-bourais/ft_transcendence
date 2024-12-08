@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt',
     'django_extensions',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 #new
@@ -70,8 +71,12 @@ REST_FRAMEWORK = {
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+
+    'ROTATE_REFRESH_TOKENS': True,  # creates a new refresh token on use
+    'BLACKLIST_AFTER_ROTATION': True,  # Automatically blacklist the old token
+    'UPDATE_LAST_LOGIN': False,
 }
 
 DATABASES = {

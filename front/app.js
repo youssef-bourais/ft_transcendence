@@ -90,6 +90,11 @@ btn.onclick = function() {
     sidebar.classList.toggle('active'); 
 };   
 
+document.getElementById("logout").addEventListener("click", function(event) {
+    event.preventDefault(); 
+    logout(); 
+});
+
 window.togglePass = togglePass;
 window.logout = logout;
 

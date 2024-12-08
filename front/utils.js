@@ -1,4 +1,5 @@
 
+import { SecureApiRequest } from './api.js';
 import { handleLocation } from './app.js';
 
 export function togglePass(id_name) 
@@ -22,16 +23,45 @@ export function togglePass(id_name)
     }
 }
 
-export function logout() 
+export async function logout() 
 {
-    // Remove the logged-in token
+    const refreshToken = localStorage.getItem('refreshToken');
+    // alert(refreshToken);
+    try 
+    {
+        // const response = SecureApiRequest("/api/token/blacklist/");
+        const response = await fetch(`/api/token/blacklist/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify({ refresh: refreshToken }),
+         });
+
+        console.log("hello, ", response);
+        if (!response.ok) 
+        {
+            console.log('BAD TRIPJ');
+            const errorData = await response.json();
+            console.error('Error blacklisting token:', errorData);
+            return ;
+        } 
+        else 
+            console.log('Refresh token successfully blacklisted.');
+    } 
+    catch (error) 
+    {
+        console.error('Network or server error while blacklisting token:', error);
+        throw error;
+    }
+
     localStorage.removeItem('accessToken');
     localStorage.removeItem('username');
     localStorage.removeItem('refreshToken');
-    alert('Logged out! Access to /profile is restricted.');
-    history.pushState({}, "", "/"); 
-    handleLocation();
 
+    alert('Logged out!');
+    history.pushState({}, "", "/");
+    handleLocation();
 }
 
 export function GoLogin()
