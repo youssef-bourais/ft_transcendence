@@ -96,7 +96,6 @@ document.getElementById("logout").addEventListener("click", function(event) {
 });
 
 window.togglePass = togglePass;
-window.logout = logout;
 
 window.addEventListener("popstate", handleLocation);
 

@@ -44,7 +44,7 @@ export async function logout()
             console.log('BAD TRIPJ');
             const errorData = await response.json();
             console.error('Error blacklisting token:', errorData);
-            return ;
+            // return ;
         } 
         else 
             console.log('Refresh token successfully blacklisted.');
