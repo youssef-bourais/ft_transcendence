@@ -6,6 +6,7 @@ from account.models import CustomUser
 import bleach
 from django.core.validators import RegexValidator, EmailValidator
 from django.contrib.auth.password_validation import validate_password
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
@@ -54,3 +55,14 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user = CustomUser.objects.create_user(**validated_data) 
         return user
 
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        username = attrs.get('username', '')
+        password = attrs.get('password', '')
+
+        username = bleach.clean(username)
+        attrs['username'] = username
+
+        data = super().validate(attrs)
+
+        return data

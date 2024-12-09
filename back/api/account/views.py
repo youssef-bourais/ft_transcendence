@@ -11,6 +11,7 @@ from .serializers import UserRegistrationSerializer
 import json
 from .permissions import IsDeveloper
 from account.models import CustomUser
+from .serializers import CustomTokenObtainPairSerializer
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -24,6 +25,14 @@ def register_user(request):
         return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
     data = json.dumps(serializer.errors)
     print("bad trip============", data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def custom_token_obtain_pair(request):
+    serializer = CustomTokenObtainPairSerializer(data=request.data)
+    if serializer.is_valid():
+        return Response(serializer.validated_data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
