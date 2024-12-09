@@ -13,6 +13,12 @@ from .permissions import IsDeveloper
 from account.models import CustomUser
 from .serializers import CustomTokenObtainPairSerializer
 
+from django.contrib.auth import authenticate
+from django.utils.timezone import now
+from datetime import timedelta
+from .utils import generate_otp, send_otp_email
+
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_user(request):
@@ -27,18 +33,58 @@ def register_user(request):
     print("bad trip============", data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# @api_view(['POST'])
+# @permission_classes([AllowAny])
+# def custom_token_obtain_pair(request):
+#     serializer = CustomTokenObtainPairSerializer(data=request.data)
+#     if serializer.is_valid():
+#         return Response(serializer.validated_data, status=status.HTTP_200_OK)
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def custom_token_obtain_pair(request):
-    serializer = CustomTokenObtainPairSerializer(data=request.data)
-    if serializer.is_valid():
-        return Response(serializer.validated_data, status=status.HTTP_200_OK)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    username = request.data.get('username', '')
+    password = request.data.get('password', '')
+    otp = request.data.get('otp', None)
+    print("one====================================")
+
+    user = authenticate(username=username, password=password)
+    if not user:
+        return Response({"error": "Invalid username or password."}, status=status.HTTP_400_BAD_REQUEST)
+    # if user.is_2fa_enabled:
+    bool = True
+    if(bool):
+        if not otp:
+            generate_otp(user)
+            send_otp_email(user)
+            bool = False
+            return Response({"message": "OTP sent. Please provide it to complete login."}, status=status.HTTP_200_OK)
+        else:
+            if not user.otp_code or user.otp_code != otp:
+                return Response({"error": "Invalid OTP provided."}, status=status.HTTP_400_BAD_REQUEST)
+            if user.otp_created_at + timedelta(minutes=5) < now():
+                return Response({"error": "OTP has expired. Please request a new one."}, status=status.HTTP_400_BAD_REQUEST)
+
+    refresh = RefreshToken.for_user(user)
+    return Response({
+        "refresh": str(refresh),
+        "access": str(refresh.access_token),
+    }, status=status.HTTP_200_OK)
+
+
+
+
+
+
+
+
+
 
 
 @api_view(['GET'])
-# @permission_classes([AllowAny])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
+# @permission_classes([IsAuthenticated])
 def get_user(request, id_or_name):
     """
     Retrieve user information by ID or username.
@@ -47,7 +93,7 @@ def get_user(request, id_or_name):
     """
 
     if id_or_name == "0":
-        users = CustomUser.objects.all().values('id', 'username', 'email', 'photo')
+        users = CustomUser.objects.all().values('id', 'username', 'email', 'photo', 'otp_code', 'otp_created_at', 'is_2fa_enabled')
         return Response({'users': list(users)}, status=status.HTTP_200_OK)
 
     try:
@@ -67,7 +113,8 @@ def get_user(request, id_or_name):
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['DELETE'])
-@permission_classes([IsDeveloper])
+@permission_classes([AllowAny])
+# @permission_classes([IsDeveloper])
 def delete_user(request, id):
     print("delete_user===========DELETE", request.data)
     try:

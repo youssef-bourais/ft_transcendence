@@ -1,6 +1,10 @@
 import requests
 from django.conf import settings
 from rest_framework.response import Response
+import random
+from django.utils.timezone import now
+from django.core.mail import send_mail
+from django.conf import settings
 
 def GetUserInfoFromProvider(access):
     """
@@ -59,3 +63,35 @@ def exchange_code_for_token(code):
             )
     except requests.exceptions.RequestException as e:
         return Response({"error": "Network error", "details": str(e)}, status=500)
+
+
+
+def generate_otp(user):
+    """
+    Generate opt code and updated otp creation time and save them to db
+    """
+    user.otp_code = str(random.randint(100000, 999999)) 
+    print("otp generated ", user.otp_code)
+    user.otp_created_at = now() 
+    print("time at  ", user.otp_created_at)
+    user.save()
+
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+def send_otp_email(user):
+    """
+    Generate opt code and updated otp creation time and save them to db
+    """
+    try:
+        subject = "Your OTP Code"
+        message = f"Your OTP code is: {user.otp_code}. It is valid for 5 minutes."
+
+        from_email = settings.EMAIL_HOST_USER
+        # from_email = settings.OTP_EMAIL
+        recipient_list = [user.email]
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+    except Exception as e:
+        logger.error(f"Error sending email to {user.email}: {e}")

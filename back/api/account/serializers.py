@@ -58,11 +58,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         username = attrs.get('username', '')
-        password = attrs.get('password', '')
-
+        # password = attrs.get('password', '')
         username = bleach.clean(username)
         attrs['username'] = username
-
         data = super().validate(attrs)
-
         return data

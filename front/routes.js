@@ -160,6 +160,20 @@ export const routes = {
         html : `<h1>bad Trip......</h1>`, 
         setup:() => console.log("Tournament veiw...."),
     },
+   "/OTP" : {
+        html : `
+            <div class="cart" id="forget-cart">
+                <h2 class="title"> an otp sent to your email, please enter it ..</h2>
+                <form class="form" id="forget-form">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" autocomplete="on" id="email" placeholder="">
+                    </div>
+                    <button id="submit">Submit</button>
+                </form>
+            </div>`, 
+        setup:() => console.log("Tournament veiw...."),
+    },
     "/404": {
         html: `<h1>404: Page Not Found</h1><br><h4>The page you're looking for doesn't exist.</h4>`,
         setup: () => console.log("404 page loaded"),

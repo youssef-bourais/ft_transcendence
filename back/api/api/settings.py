@@ -9,14 +9,18 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
+from dotenv import load_dotenv
 from pathlib import Path
 
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-CLIENT_UID = 'u-s4t2ud-dc848eccf79afcafddf78e724d4c67b4dd6014c95adcaf84e059eafb375b7e7c'
-CLIENT_SECRET = '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'
+os.getenv('EMAIL_HOST')  
+
+CLIENT_UID = os.getenv('CLIENT_UID')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 REDIRECT_URI = 'http://127.0.0.1:8000/api/auth/callback/'
 
 AUTHORIZE_URL = "https://api.intra.42.fr/oauth/authorize"
@@ -57,6 +61,17 @@ INSTALLED_APPS = [
 ]
 
 #new
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST')  
+
+EMAIL_PORT = 587  # Use 587 for TLS or 465 for SSL
+EMAIL_USE_TLS = True  
+EMAIL_USE_SSL = False  # Use SSL if EMAIL_PORT is 465
+
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER') 
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') 
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL') 
 
 REST_FRAMEWORK = {
 
