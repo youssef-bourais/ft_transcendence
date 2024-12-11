@@ -18,9 +18,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True}, #not included in the response
         }
-
+    # get_or_create
     def validate_email(self, value):
+        print("value", value)
         value = bleach.clean(value)
+        print("value 2", value)
         EmailValidator()(value)
         if CustomUser.objects.filter(email=value).exists():
             raise serializers.ValidationError("A user with this email already exists.")

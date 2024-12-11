@@ -17,8 +17,10 @@ from django.contrib.auth import authenticate
 from django.utils.timezone import now
 from datetime import timedelta
 from .utils import generate_otp, send_otp_email
+# from django.views.decorators.csrf import csrf_exempt
 
 
+# @csrf_exempt
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_user(request):
@@ -33,6 +35,7 @@ def register_user(request):
     print("bad trip============", data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# @csrf_exempt
 # @api_view(['POST'])
 # @permission_classes([AllowAny])
 # def custom_token_obtain_pair(request):
@@ -48,6 +51,11 @@ def custom_token_obtain_pair(request):
     password = request.data.get('password', '')
     otp = request.data.get('otp', None)
     print("one====================================")
+    print("username: ", username)
+    print("password: ", password)
+    print("otp: ", otp)
+    print("one====================================")
+
 
     user = authenticate(username=username, password=password)
     if not user:
@@ -71,15 +79,6 @@ def custom_token_obtain_pair(request):
         "refresh": str(refresh),
         "access": str(refresh.access_token),
     }, status=status.HTTP_200_OK)
-
-
-
-
-
-
-
-
-
 
 
 @api_view(['GET'])

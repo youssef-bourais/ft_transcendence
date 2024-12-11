@@ -85,13 +85,19 @@ def send_otp_email(user):
     """
     Generate opt code and updated otp creation time and save them to db
     """
+    print("sned_otp_email=======================================\n")
     try:
         subject = "Your OTP Code"
-        message = f"Your OTP code is: {user.otp_code}. It is valid for 5 minutes."
+        message = f"Hi {user.username}, Your OTP code is: {user.otp_code}. It is valid for 5 minutes."
 
         from_email = settings.EMAIL_HOST_USER
         # from_email = settings.OTP_EMAIL
         recipient_list = [user.email]
+        print("subject: ", subject)
+        print("message: ", message)
+        print("from_email: ", from_email)
+        print("recipient_list: ", recipient_list)
+
         send_mail(subject, message, from_email, recipient_list, fail_silently=False)
     except Exception as e:
         logger.error(f"Error sending email to {user.email}: {e}")
