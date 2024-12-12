@@ -1,4 +1,4 @@
-import { SanitizeInpute, GoLogin, showError, validatePassword, getCookie, deleteCookie} from './utils.js';
+import { SanitizeInpute, GoLogin, showError, validatePassword, getCookie, deleteCookie, clickEvent} from './utils.js';
 import { handleLocation } from './app.js';
 import { SecureApiRequest} from './api.js';
 
@@ -162,17 +162,28 @@ export const routes = {
     },
    "/OTP" : {
         html : `
-            <div class="cart" id="forget-cart">
-                <h2 class="title"> an otp sent to your email, please enter it ..</h2>
+            <div class="cart" id="otp-cart">
+                <h2 class="title"> OTP</h2>
+                <p> ${localStorage.getItem("message")}</p>
                 <form class="form" id="forget-form">
-                    <div class="input-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" autocomplete="on" id="email" placeholder="">
+
+                    <div class="otpuserInput">
+                        <input class="otpinput" type="text" id='ist' maxlength="1" onkeyup="clickEvent(this,'sec')">
+                        <input class="otpinput" type="text" id="sec" maxlength="1" onkeyup="clickEvent(this,'third')">
+                        <input class="otpinput" type="text" id="third" maxlength="1" onkeyup="clickEvent(this,'fourth')">
+                        <input class="otpinput" type="text" id="fourth" maxlength="1" onkeyup="clickEvent(this,'fifth')">
+                        <input class="otpinput" type="text" id="fifth" maxlength="1" onkeyup="clickEvent(this,'sixth')">
+                        <input class="otpinput" type="text" id="sixth" maxlength="1">
                     </div>
-                    <button id="submit">Submit</button>
+
+                <div id="errordiv" align="center" style="margin-left: auto; margin-right: auto;"> 
+                    <span id="error" style="color: white; display: none"></span> 
+                </div>
+
+                    <button id="submit">CONFIRM</button>
                 </form>
             </div>`, 
-        setup:() => console.log("Tournament veiw...."),
+        setup: handleOTPpage,
     },
     "/404": {
         html: `<h1>404: Page Not Found</h1><br><h4>The page you're looking for doesn't exist.</h4>`,
@@ -180,6 +191,97 @@ export const routes = {
     },
 };
 
+function isOnlyDigits(str) {
+    return /^\d+$/.test(str);
+}
+
+
+async function OTPauth(value)
+{
+    const password = localStorage.getItem("password");
+    localStorage.removeItem("password");
+    const UserData = 
+    {
+        username : localStorage.getItem("username"),
+        password : password,
+        otp: value
+    };       
+
+    console.log("userdata: ", UserData.username);
+    console.log("password: ", UserData.password);
+    try
+    {
+
+        const response = await fetch(`/api/token/`, 
+        {
+            method : "POST", 
+            headers: {
+                "Content-Type" : "application/json",
+            }, 
+            body : JSON.stringify(UserData),
+        });
+
+        const data = await response.json();
+        if(!response.ok)
+        {
+            showError(data.error);
+        }
+        else
+        {
+            console.log("access token: ",data.access);
+            console.log("refresh token: ", data.refresh);
+
+            localStorage.setItem("refreshToken", data.refresh);
+            localStorage.setItem("accessToken", data.access);
+
+            const info = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
+
+            localStorage.setItem("photo", info.photo);
+            localStorage.setItem("email", info.email);
+
+            history.pushState({}, "", "/profile"); 
+            handleLocation();
+        }
+    }
+    catch (error)
+    {
+        alert("An error occurred. Please try again.");
+    }
+}
+
+function handleOTPpage() 
+{
+    document.getElementById('sixth').addEventListener('input', function() {
+
+        const otp = [
+            document.getElementById('ist'),
+            document.getElementById('sec'),
+            document.getElementById('third'),
+            document.getElementById('fourth'),
+            document.getElementById('fifth'),
+            document.getElementById('sixth')
+        ];
+
+        const otpValues = otp.map(input => input.value);
+        const otpString = otpValues.join('');
+
+        if (!isOnlyDigits(otpString)) 
+        {
+            showError("OTP must contain only digits.");
+
+            otp.forEach(input => {
+                input.value = ""; 
+            });
+            document.getElementById('ist').focus();
+        } 
+        else 
+        {
+            showError("Sending OTP...");
+            OTPauth(otpString);
+        }
+
+    });
+}
 
 function setupLoginPage() 
 {
@@ -210,18 +312,20 @@ function setupLoginPage()
                 showError("invalid username or passsword");
             else
             {
+                console.log("data: ", data.message);
+
+                localStorage.setItem("message", data.message)
                 localStorage.setItem("username", UserData.username);
-                localStorage.setItem("refreshToken", data.refresh);
-                localStorage.setItem("accessToken", data.access);
-            
-                const info = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
+                localStorage.setItem("password", UserData.password);
 
-                localStorage.setItem("photo", info.photo);
-                localStorage.setItem("email", info.email);
-
-                alert("login successful");
-                history.pushState({}, "", "/profile"); 
+                //
+                // alert("login successful");
+                history.pushState({}, "", "/OTP"); 
                 handleLocation();
+
+                // history.pushState({}, "", "/profile"); 
+                // handleLocation();
+
             }
         }
         catch (error)
@@ -231,7 +335,6 @@ function setupLoginPage()
 
     });
 }
-
 
 function setupRegisterPage() 
 {

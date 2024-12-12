@@ -23,6 +23,14 @@ export function togglePass(id_name)
     }
 }
 
+export function clickEvent(first,last)
+{
+    if(first.value.length)
+    {
+        document.getElementById(last).focus();
+    }
+}
+
 export async function logout() 
 {
     const refreshToken = localStorage.getItem('refreshToken');
@@ -58,6 +66,8 @@ export async function logout()
     localStorage.removeItem('accessToken');
     localStorage.removeItem('username');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('photo');
+    localStorage.removeItem('email');
 
     alert('Logged out!');
     history.pushState({}, "", "/");

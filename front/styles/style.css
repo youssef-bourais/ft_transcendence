@@ -231,7 +231,7 @@ h1 {
 
 
 /* fake profile*/
-Reset styles
+/* Reset styles */
 * {
     margin: 0;
     padding: 0;
@@ -532,4 +532,32 @@ body {
   font-size: 13px;
 }
 
+/*otp*/
 
+#otp-cart {
+    width: 550px;
+    height: 400px;
+}
+
+
+p
+{
+    color: var(--white);
+
+}
+.otpuserInput{
+  display: flex;
+  justify-content: center;
+}
+
+.otpinput{
+  margin: 10px;
+  height: 35px;
+  width: 65px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  font-family: arimo;
+  font-size: 1.2rem;
+
+}

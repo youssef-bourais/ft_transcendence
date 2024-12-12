@@ -1,12 +1,12 @@
 import { routes} from './routes.js';
-import { togglePass, logout } from './utils.js';
+import { togglePass, logout, clickEvent } from './utils.js';
 
 let currentState = { view: "login" };
 
 
 function toggleNavbarAndSearchBar(path) 
 {
-    const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42"];
+    const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP"];
 
     if (!isAuthenticatedRoutes.includes(path)) 
         navbar.classList.add("visible");
@@ -96,6 +96,7 @@ document.getElementById("logout").addEventListener("click", function(event) {
 });
 
 window.togglePass = togglePass;
+window.clickEvent = clickEvent;
 
 window.addEventListener("popstate", handleLocation);
 
