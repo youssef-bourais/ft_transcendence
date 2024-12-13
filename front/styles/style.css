@@ -417,7 +417,7 @@ body {
     opacity: 1;
 
     font-weight: bold;
-    transition-delay: 0.2s;
+    transition-delay: 0.3s;
 }
 
 .user {
@@ -542,13 +542,13 @@ body {
 .sidebar.active #user-email
 {
     font-size: 13px;
-    transition-delay: 0.2s;
+    transition-delay: 0.3s;
 }
 
 
 .sidebar.active #user-username
 {
-    transition-delay: 0.2s;
+    transition-delay: 0.3s;
 }
 
 /*otp*/

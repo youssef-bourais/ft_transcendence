@@ -75,6 +75,7 @@ def generate_otp(user):
     user.otp_created_at = now() 
     print("time at  ", user.otp_created_at)
     user.save()
+    return 
 
 
 import logging
@@ -97,7 +98,6 @@ def send_otp_email(user):
         print("message: ", message)
         print("from_email: ", from_email)
         print("recipient_list: ", recipient_list)
-
         send_mail(subject, message, from_email, recipient_list, fail_silently=False)
     except Exception as e:
         logger.error(f"Error sending email to {user.email}: {e}")

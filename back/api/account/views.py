@@ -1,3 +1,5 @@
+from json.encoder import py_encode_basestring
+from logging import exception
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -50,29 +52,37 @@ def custom_token_obtain_pair(request):
     username = request.data.get('username', '')
     password = request.data.get('password', '')
     otp = request.data.get('otp', None)
-    print("one====================================")
+
+
     print("username: ", username)
     print("password: ", password)
     print("otp: ", otp)
-    print("one====================================")
 
+    if not username or not password:
+        return Response(
+            {"error": "Username and password are required."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
     user = authenticate(username=username, password=password)
     if not user:
         return Response({"error": "Invalid username or password."}, status=status.HTTP_400_BAD_REQUEST)
-    # if user.is_2fa_enabled:
-    bool = True
-    if(bool):
+    useremail = user.email
+    # bool = True
+    # if(bool):
+    if user.is_2fa_enabled:
         if not otp:
             generate_otp(user)
             send_otp_email(user)
             bool = False
-            return Response({"message": "OTP sent. Please provide it to complete login."}, status=status.HTTP_200_OK)
+            return Response({"message": f"OTP sent to your email {useremail}, Please provide it to complete login."}, status=status.HTTP_200_OK)
         else:
+            if user.otp_created_at + timedelta(minutes=1) < now():
+                return Response({"error": "OTP has expired. Please request a new one by trying to login again."}, status=status.HTTP_410_GONE)
             if not user.otp_code or user.otp_code != otp:
+                print("code didnt match", user.otp_code, otp)
                 return Response({"error": "Invalid OTP provided."}, status=status.HTTP_400_BAD_REQUEST)
-            if user.otp_created_at + timedelta(minutes=5) < now():
-                return Response({"error": "OTP has expired. Please request a new one."}, status=status.HTTP_400_BAD_REQUEST)
+
 
     refresh = RefreshToken.for_user(user)
     return Response({
@@ -105,7 +115,8 @@ def get_user(request, id_or_name):
             'id': user.id,
             'username': user.username,
             'email': user.email,
-            'photo': user.photo
+            'photo': user.photo,
+            'is_2fa_enabled':user.is_2fa_enabled
         }
         return Response(user_data, status=status.HTTP_200_OK)
     except CustomUser.DoesNotExist:
