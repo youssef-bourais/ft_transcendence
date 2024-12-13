@@ -117,7 +117,7 @@ export const routes = {
         <div id="profile-container">
             <div id="avatar-section">
 
-                <img id="avatar" src="${localStorage.getItem("photo")}" alt="Default Avatar">
+                <img id="avatar" src="./images/42-logo.png" alt="Default Avatar">
                 <input type="file" id="avatar-upload" accept="image/*" onchange="uploadAvatar(event)">
             </div>
             <div id="info-section">
