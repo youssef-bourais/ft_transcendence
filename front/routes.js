@@ -114,7 +114,159 @@ export const routes = {
         },
     "/profile" : {
         html:`
-        <div id="profile-container">
+
+        <div class="container-chat">
+        <div class="block-container-nav-bar"></div>
+       
+        <!-- main -->
+        <div class="container-main">
+            
+            <!-- start top nav bat -->
+            <div class="container-top">
+                <div class="container-title">
+                    <img src="./front/images/Pingo.svg" alt="" srcset="">
+                </div>
+                <div class="container-search">
+                    <div class="search">
+                        <input type="search" placeholder="Serach for people" id="input-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i class="fa-solid fa-delete-left" id="delete"></i> 
+                    </div>
+                </div>
+                
+                <div class="container-profile">
+                    <div class="profile">
+                        <img src="./front/images/avatar.png" alt="">
+                        <div class="container-notification">
+                            <p>Abdelkarim hajji</p>
+                            <p>2 unread notifacation</p>
+                        </div>
+                        <div class="icon-down">
+                            <div class="container-icon">
+                                <i class="fa-solid fa-caret-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- finish end nav bar --> 
+
+            <!-- start main -->
+            <div class="container-main-home">
+                <div class="child-container-main-home">
+                    <!-- start make the left side of main -->
+                    <div class="left-side">
+                        <div class="title"><p>Settings</p></div>
+                        <div class="container-profile">
+                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>settings</p>
+                            </div>
+                        </div>
+                        <div class="container-setting">
+                            <div class="container-img"><img src="./front/images/setting.svg" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>Settings about name and password</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- finish make the left side of main -->
+
+                    <!-- start make the midle of main -->
+                    <div class="midle-side">
+                        <div class="container-bg">
+                            <div class="child-bg">
+                                <img src="./front/images/avatar.png" alt="karim">
+                            </div>
+                        </div>
+                        <div class="container-update-info">
+                            <div class="container-form">
+                                <div class="container-switch">
+                                    <div class="profile"><p>Profile</p></div>
+                                    <div class="security"><p>Security</p></div>
+                                </div>
+                                <div class="container-inputs">
+                                    <div class="container-input">
+                                        <p>First Name</p>
+                                        <div class="group">
+                                            <input type="text">
+                                            <i class="fa-solid fa-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="container-input">
+                                        <p>Last Name</p>
+                                        <div class="group">
+                                            <input type="text">
+                                            <i class="fa-solid fa-user"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-email">
+                                    <p>Username</p>
+                                    <div class="group">
+                                        <input type="text" >
+                                        <i class="fa-solid fa-at"></i>
+                                    </div>
+                                </div>
+                                <div class="container-save">
+                                    <button><i class="fa-solid fa-check"></i> Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- finish make the midle of main -->
+
+                    <!-- start make the end of main -->
+                    <div class="end-side">
+                        <div class="container-profile-left">
+                            <div class="child-container-profile-left">
+                                <div class="container-background-profile">
+                                    <img src="./front/images/background.jpg" alt="">
+                                    <img src="./front/images/avatar.png" alt="">
+                                </div>
+                                <div class="container-name-profile-left">
+                                    <p>Abdelkarim hajji</p>
+                                    <p>Not in your friends list</p>
+                                </div>
+                                <div class="container-send-request">
+                                    <div class="container-send"><i class="fa-solid fa-link"></i></i> <p>Chalange</p></div>
+                                    <div class="container-block"><i class="fa-solid fa-user-slash"></i><p>Block</p></div>
+                                </div>
+                                <div class="container-history-friends">
+                                    <div class="contaienr-history-profile"><p>History</p></div>
+                                    <div class="container-friends-profile"><p>Friends</p></div>
+                                </div>
+                                <div class="container-chalange">
+                                    <div class="child-container-chalange">
+                                        <div class="contaienr-chalange-img-left"><img src="./front/images/avatar.png" alt=""><p>1</p></div>
+                                        <div class="container-VS">VS</div>
+                                        <div class="contaienr-chalange-img-right"><p>1</p><img src="./front/images/avatar.png" alt=""> </div>
+                                    </div>
+                                    <div class="child-container-chalange">
+                                        <div class="contaienr-chalange-img-left"><img src="./front/images/avatar.png" alt=""><p>1</p></div>
+                                        <div class="container-VS">VS</div>
+                                        <div class="contaienr-chalange-img-right"><p>1</p><img src="./front/images/avatar.png" alt=""> </div>
+                                    </div>
+                                   
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- finish make the end of main -->
+                </div>
+            </div>
+            <!-- end main -->
+        </div>
+    </div>
+
+
+
+
+
+        <!-- <div id="profile-container">
             <div id="avatar-section">
 
                 <img id="avatar" src="${localStorage.getItem("photo")}" alt="Default Avatar">
@@ -141,7 +293,7 @@ export const routes = {
                     <li>1v1 with John Doe - Lost on 2024-11-20</li>
                 </ul>
             </div>
-        </div>`,
+        </div> -->`,
         setup: setupProfilepage,
     },
     "/bridg" : {
@@ -157,7 +309,308 @@ export const routes = {
         setup:() => console.log("Game veiw...."),
     },
    "/tournament" : {
-        html : `<h1>bad Trip......</h1>`, 
+        html : `
+        <div class="container-chat">
+    <div class="block-container-nav-bar"></div>
+    
+    <!-- main -->
+    <div class="container-main">
+        
+        <!-- start top nav bat -->
+        <div class="container-top">
+            <div class="container-title">
+                <img src="./front/images/Pingo.svg" alt="" srcset="">
+            </div>
+            <div class="container-search">
+                <div class="search">
+                    <input type="search" placeholder="Serach for people" id="input-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <i class="fa-solid fa-delete-left" id="delete"></i> 
+                </div>
+            </div>
+            
+            <div class="container-profile">
+                <div class="profile">
+                    <img src="./front/images/avatar.png" alt="">
+                    <div class="container-notification">
+                        <p>Abdelkarim hajji</p>
+                        <p>2 unread notifacation</p>
+                    </div>
+                    <div class="icon-down">
+                        <div class="container-icon">
+                            <i class="fa-solid fa-caret-down"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- finish end nav bar --> 
+
+        <!-- start main -->
+        <div class="container-main-home">
+            <div class="child-container-main-home">
+                <!-- start make the left side of main -->
+                <div class="left-side">
+                    <div class="titles">
+                        <p>Global Ranking</p>
+                        <p>Best players</p>
+                    </div>
+                    <div class="container-best-players">
+                        <div class="container-best-player">
+                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>54823XP</p>
+                            </div>
+                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                        </div>
+                        <div class="container-best-player">
+                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>54823XP</p>
+                            </div>
+                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                        </div>
+                        <div class="container-best-player">
+                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>54823XP</p>
+                            </div>
+                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                        </div>
+                        <div class="container-best-player">
+                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>54823XP</p>
+                            </div>
+                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                        </div>
+                        <div class="container-best-player">
+                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>54823XP</p>
+                            </div>
+                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                        </div>
+                        <div class="container-best-player">
+                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>54823XP</p>
+                            </div>
+                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                        </div>
+                        <div class="container-best-player">
+                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>54823XP</p>
+                            </div>
+                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                        </div><div class="container-best-player">
+                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>54823XP</p>
+                            </div>
+                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                        </div>
+
+                        <div class="container-best-player">
+                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>54823XP</p>
+                            </div>
+                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                        </div>
+                        <div class="container-best-player">
+                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>54823XP</p>
+                            </div>
+                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                        </div>
+                        <div class="container-best-player">
+                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-name">
+                                <p>Abdelkarim hajji</p>
+                                <p>54823XP</p>
+                            </div>
+                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- finish make the left side of main -->
+
+                <!-- start main the midle side -->
+                <div class="midle-side">
+                    <div class="top">
+                        <div class="first-halef">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            <p>Pinger's Room</p>
+                        </div>
+                        <div class="second-halef">
+                            <button>Join tournament</button>
+                        </div>
+                    </div>
+                    <div class="midle">
+                        <div class="container-midle">
+                            <svg width="90%" height="100%" viewBox="0 0 3768 834"  fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <rect x="1" y="23" width="694" height="178" rx="89" fill="#D9D9D9" fill-opacity="0.55" stroke="white" stroke-width="2"/>
+                                <rect x="1" y="633" width="694" height="178" rx="89" fill="#D9D9D9" fill-opacity="0.55" stroke="white" stroke-width="2"/>
+                                <rect x="697" y="328" width="694" height="178" rx="89" fill="#D9D9D9" fill-opacity="0.55" stroke="white" stroke-width="2"/>
+                                <rect opacity="0.55" x="1537.5" y="1.5" width="693" height="831" rx="106.5" fill="#D9D9D9" stroke="white" stroke-width="3"/>
+                                <rect x="-1" y="1" width="694" height="178" rx="89" transform="matrix(-1 0 0 1 3766 22)" fill="#D9D9D9" fill-opacity="0.55" stroke="white" stroke-width="2"/>
+                                <rect x="-1" y="1" width="694" height="178" rx="89" transform="matrix(-1 0 0 1 3766 632)" fill="#D9D9D9" fill-opacity="0.55" stroke="white" stroke-width="2"/>
+                                <rect x="-1" y="1" width="694" height="178" rx="89" transform="matrix(-1 0 0 1 3070 327)" fill="#D9D9D9" fill-opacity="0.55" stroke="white" stroke-width="2"/>
+                                <path d="M1056 327V194C1056 150.37 1020.63 115 977 115H696" stroke="white" stroke-opacity="0.55" stroke-width="4"/>
+                                <path d="M2712 327V194C2712 150.37 2747.37 115 2791 115H3072" stroke="white" stroke-opacity="0.55" stroke-width="4"/>
+                                <path d="M1056 507V640C1056 683.63 1020.63 719 977 719H696" stroke="white" stroke-opacity="0.55" stroke-width="4"/>
+                                <path d="M2712 507V640C2712 683.63 2747.37 719 2791 719H3072" stroke="white" stroke-opacity="0.55" stroke-width="4"/>
+                                <path d="M1392 417H1536" stroke="white" stroke-opacity="0.55" stroke-width="4"/>
+                                <path d="M2232 417H2376" stroke="white" stroke-opacity="0.55" stroke-width="4"/>
+                                
+                                <mask id="rounded-mask">
+                                    <rect x="30" y="40" width="150" height="150" rx="50%" ry="50%" fill="white"/>
+                                </mask>
+                                <image xlink:href="./front/images/avatar.png" x="30" y="40" width="150" height="150" mask="url(#rounded-mask)" />
+                                <text x="220" y="130" font-family="Arial" font-size="50" fill="white">Abdelkarim hajji</text>
+
+                                <mask id="rounded-mask2">
+                                    <rect x="30" y="650" width="150" height="150" rx="50%" ry="50%" fill="white"/>
+                                </mask>
+                                <image xlink:href="./front/images/avatar.png" x="30" y="650" width="150" height="150" mask="url(#rounded-mask2)" />
+                                <text x="220" y="740" font-family="Arial" font-size="50" fill="white">Abdelkarim hajji</text>
+                                <mask id="rounded-mask3">
+                                    <rect x="730" y="345" width="150" height="150" rx="50%" ry="50%" fill="white"/>
+                                </mask>
+                                <image xlink:href="./front/images/avatar.png" x="730" y="345" width="150" height="150" mask="url(#rounded-mask3)" />
+                                <text x="920" y="435" font-family="Arial" font-size="50" fill="white">Abdelkarim hajji</text>
+                                <mask id="rounded-mask4">
+                                    <rect x="1690" y="70" width="400" height="400" rx="50%" ry="50%" fill="white"/>
+                                </mask>
+                                <image xlink:href="./front/images/avatar.png" x="1690" y="70" width="400" height="400" mask="url(#rounded-mask4)" />
+                                <text x="1660" y="585" font-family="Arial" font-size="60" fill="white">Abdelkarim hajji</text>
+
+                                <mask id="rounded-mask5">
+                                    <rect x="2400" y="345" width="150" height="150" rx="50%" ry="50%" fill="white"/>
+                                </mask>
+                                <image xlink:href="./front/images/avatar.png" x="2400" y="345" width="150" height="150" mask="url(#rounded-mask5)" />
+                                <text x="3295" y="130" font-family="Arial" font-size="50" fill="white">Abdelkarim hajji</text>
+
+                                <mask id="rounded-mask6">
+                                    <rect x="3100" y="650" width="150" height="150" rx="50%" ry="50%" fill="white"/>
+                                </mask>
+                                <image xlink:href="./front/images/avatar.png" x="3100" y="650" width="150" height="150" mask="url(#rounded-mask6)" />
+                                <text x="3295" y="745" font-family="Arial" font-size="50" fill="white">Abdelkarim hajji</text>
+                                <mask id="rounded-mask7">
+                                    <rect x="3100" y="40" width="150" height="150" rx="50%" ry="50%" fill="white"/>
+                                </mask>
+                                <image xlink:href="./front/images/avatar.png" x="3100" y="40" width="150" height="150" mask="url(#rounded-mask7)" />
+                                <text x="2590" y="435" font-family="Arial" font-size="50" fill="white">Abdelkarim hajji</text>
+                                <defs>
+                                <pattern id="pattern0_677_886" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                <use xlink:href="#image0_677_886" transform="scale(0.00133333)"/>
+                                </pattern>
+                                <pattern id="pattern1_677_886" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                <use xlink:href="#image1_677_886" transform="scale(0.00133333)"/>
+                                </pattern>
+                                <pattern id="pattern2_677_886" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                <use xlink:href="#image2_677_886" transform="scale(0.00133333)"/>
+                                </pattern>
+                                <pattern id="pattern3_677_886" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                <use xlink:href="#image3_677_886" transform="scale(0.00133333)"/>
+                                </pattern>
+                                <pattern id="pattern4_677_886" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                <use xlink:href="#image3_677_886" transform="scale(0.00133333)"/>
+                                </pattern>
+                                <pattern id="pattern5_677_886" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                <use xlink:href="#image2_677_886" transform="scale(0.00133333)"/>
+                                </pattern>
+                                <pattern id="pattern6_677_886" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                <use xlink:href="#image2_677_886" transform="scale(0.00133333)"/>
+                                </pattern>
+                                
+                                </defs>
+                                </svg>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <div class="container-bottom">
+                            <div class="container-title"><p>Match details</p></div>
+                            <div class="container-details">
+                                <div class="first-side">
+                                    <div class="container-row">
+                                        <div class="child-container-row">
+                                            <div class="first-part">
+                                                <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                                                <p>1</p>
+                                            </div>
+                                            <div class="second-part">
+                                                <p>VS</p>
+                                                <div class="container-time">20 mints ago</div>
+                                            </div>
+                                            <div class="third-part">
+                                                <p>1</p>
+                                                <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container-row">
+                                        <div class="child-container-row">
+                                            <div class="first-part">
+                                                <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                                                <p>1</p>
+                                            </div>
+                                            <div class="second-part">
+                                                <p>VS</p>
+                                                <div class="container-time">20 mints ago</div>
+                                            </div>
+                                            <div class="third-part">
+                                                <p>1</p>
+                                                <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="second-halef">
+                                    <div class="container-row">
+                                        <div class="child-container-row">
+                                            <div class="first-part">
+                                                <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                                                <p>1</p>
+                                            </div>
+                                            <div class="second-part">
+                                                <p>VS</p>
+                                                <div class="container-time">20 mints ago</div>
+                                            </div>
+                                            <div class="third-part">
+                                                <p>1</p>
+                                                <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- finish main the midle side -->
+            </div>
+        </div>
+
+        <!-- end main -->
+    </div>
+</div>
+        `, 
         setup:() => console.log("Tournament veiw...."),
     },
    "/OTP" : {

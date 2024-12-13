@@ -7,6 +7,14 @@ let currentState = { view: "login" };
 function toggleNavbarAndSearchBar(path) 
 {
     const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42"];
+    // const style = ["/profile", "/forget_passwd", "/bridg", "/login_42"];
+
+
+    // if(path === '/profile')
+    // {
+    //     document.getElementById("css").href = "styles/profile.css";
+    // }
+
 
     if (!isAuthenticatedRoutes.includes(path)) 
         navbar.classList.add("visible");
@@ -58,8 +66,11 @@ export const handleLocation = () =>
     currentState.view = path;
     const route = routes[path] ? routes[path] : routes["/404"];
 
+
+     
     toggleNavbarAndSearchBar(path);
-    
+
+
     document.getElementById("content").innerHTML = route.html;
 
     if (route.setup) 
@@ -95,9 +106,9 @@ document.getElementById("logout").addEventListener("click", function(event) {
     logout(); 
 });
 
+
 window.togglePass = togglePass;
 
 window.addEventListener("popstate", handleLocation);
 
 window.addEventListener("DOMContentLoaded", handleLocation);
-

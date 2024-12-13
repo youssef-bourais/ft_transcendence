@@ -1,3 +1,9 @@
+@font-face {
+    font-family:'Exo2';
+    src: url('../Exo_2/Exo2-Italic-VariableFont_wght.ttf');
+    font-weight: 100 900; /* Range of weights */
+    font-style: normal;
+  }
 :root {
     --blue: #1e90ff;
     --white: #ffffff;
@@ -378,6 +384,7 @@ body {
     background-color: var(--black);
     padding: 0.4rem 0.8rem;
     transition: all 0.5s ease;
+    z-index: 5;
 
 }
 
@@ -533,3 +540,8 @@ body {
 }
 
 
+#content
+{
+    width: 100%;
+    height: auto;
+}
