@@ -163,7 +163,7 @@ export const routes = {
    "/OTP" : {
         html : `
             <div class="cart" id="otp-cart">
-                <h2 class="title"> OTP</h2>
+                <h1 class="title"> OTP</h1>
                 <p id=otp-message> ${localStorage.getItem("message")}</p>
                 <form class="form" id="forget-form">
 
@@ -224,7 +224,6 @@ async function OTPauth(value)
 
     try
     {
-
         const response = await fetch(`/api/token/`, 
         {
             method : "POST", 
@@ -390,6 +389,7 @@ async function setupLoginPage()
                 if(!userinfo)
                     console.error("An error accurred whene fetching userdata (photo)");
 
+                //if is_2f_enabled == false
                 if(data.access)
                 {
                     alert("login successful");
@@ -413,7 +413,7 @@ async function setupLoginPage()
         catch (error)
         {
             console.error("error login", error);
-            alert("AAn error occurred. Please try again.", error);
+            alert("An error occurred. Please try again.", error);
         }
     });
 }

@@ -536,15 +536,23 @@ body {
 
 #otp-cart {
     width: 550px;
-    height: 400px;
+    height: 300px;
 }
 
+
+#otp-cart h1
+{
+    font-size: 2rem;
+    color: var(--white);
+    font-weight: bold;
+}
 
 p
 {
     color: var(--white);
-
+    font-weight: bold;
 }
+
 .otpuserInput{
   display: flex;
   justify-content: center;
@@ -559,5 +567,9 @@ p
   text-align: center;
   font-family: arimo;
   font-size: 1.2rem;
+
+    color: var(--black);
+    background: var(--white);
+    font-weight: bold;
 
 }
