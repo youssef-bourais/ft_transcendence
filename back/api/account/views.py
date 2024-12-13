@@ -68,16 +68,16 @@ def custom_token_obtain_pair(request):
     if not user:
         return Response({"error": "Invalid username or password."}, status=status.HTTP_400_BAD_REQUEST)
     useremail = user.email
-    # bool = True
-    # if(bool):
-    if user.is_2fa_enabled:
+    bool = True
+    if(bool):
+    # if user.is_2fa_enabled:
         if not otp:
             generate_otp(user)
             send_otp_email(user)
             bool = False
             return Response({"message": f"OTP sent to your email {useremail}, Please provide it to complete login."}, status=status.HTTP_200_OK)
         else:
-            if user.otp_created_at + timedelta(minutes=1) < now():
+            if user.otp_created_at + timedelta(minutes=10) < now():
                 return Response({"error": "OTP has expired. Please request a new one by trying to login again."}, status=status.HTTP_410_GONE)
             if not user.otp_code or user.otp_code != otp:
                 print("code didnt match", user.otp_code, otp)

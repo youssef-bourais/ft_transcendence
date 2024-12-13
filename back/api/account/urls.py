@@ -13,7 +13,6 @@ urlpatterns = [
     path('delete/<int:id>/', delete_user, name='delete'),
 
     path('token/', custom_token_obtain_pair, name='custom_token_obtain_pair'),   
-    # path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     path('auth/login/', login_with_42, name='login_with_42'),

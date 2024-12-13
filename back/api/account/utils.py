@@ -89,15 +89,74 @@ def send_otp_email(user):
     print("sned_otp_email=======================================\n")
     try:
         subject = "Your OTP Code"
-        message = f"Hi {user.username}, Your OTP code is: {user.otp_code}. It is valid for 5 minutes."
-
+        message = f"Hi {user.username}, Your OTP code is: {user.otp_code}. It is valid for 10 minutes."
         from_email = settings.EMAIL_HOST_USER
-        # from_email = settings.OTP_EMAIL
         recipient_list = [user.email]
+        html_message = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>OTP Verification</title>
+            <style>
+                body {{
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f9;
+                    margin: 0;
+                    padding: 0;
+                }}
+                .container {{
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    background-color: white;
+                    border-radius: 8px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }}
+                h1 {{
+                    color: #4CAF50;
+                    text-align: center;
+                    font-size: 2em;
+                    font-weight: bold;
+                }}
+                p {{
+                    color: #333;
+                    font-size: 1em;
+                    line-height: 1.6;
+                }}
+                .otp {{
+                    font-size: 1.5em;
+                    font-weight: bold;
+                    font-weight: bold;
+                    color: #E50914;
+                }}
+                .footer {{
+                    text-align: center;
+                    font-size: 0.8em;
+                    color: #4CAF50;
+                    margin-top: 20px;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>OTP Verification</h1>
+                <p>Hello, {user.username}</p>
+                <p>Your OTP code is: <span class="otp">{user.otp_code}</span></p>
+                <p>Please use this code to complete your verification process. The code is valid for 10 minutes.</p>
+                <div class="footer">
+                    <p>Thank you!</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
         print("subject: ", subject)
         print("message: ", message)
         print("from_email: ", from_email)
         print("recipient_list: ", recipient_list)
-        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+        send_mail(subject, message, from_email, recipient_list, html_message=html_message, fail_silently=False)
     except Exception as e:
         logger.error(f"Error sending email to {user.email}: {e}")
+
+
+
