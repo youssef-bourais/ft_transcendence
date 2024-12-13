@@ -34,7 +34,6 @@ export function clickEvent(first,last)
 export async function logout() 
 {
     const refreshToken = localStorage.getItem('refreshToken');
-    // alert(refreshToken);
     try 
     {
         const response = await fetch(`/api/token/blacklist/`, {
@@ -45,10 +44,8 @@ export async function logout()
         body: JSON.stringify({ refresh: refreshToken }),
          });
 
-        console.log("hello, ", response);
         if (!response.ok) 
         {
-            console.log('BAD TRIPJ');
             const errorData = await response.json();
             console.error('Error blacklisting token:', errorData);
             // return ;
@@ -68,7 +65,7 @@ export async function logout()
     localStorage.removeItem('photo');
     localStorage.removeItem('email');
 
-    alert('Logged out!');
+    // alert('Logged out!');
     history.pushState({}, "", "/");
     handleLocation();
 }

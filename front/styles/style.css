@@ -377,12 +377,14 @@ body {
     width: 80px;
     background-color: var(--black);
     padding: 0.4rem 0.8rem;
-    transition: all 0.5s ease;
+    /* transition: all 0.5s ease; */
+    transition: width 0.3s;
 }
 
 
 .sidebar.active {
     width: 260px;
+    
 }
 
 .sidebar #btn {
@@ -413,7 +415,7 @@ body {
 
 .sidebar.active .top .logo {
     opacity: 1;
-
+    transition-delay: 0.2s;
 }
 
 .user {
@@ -479,6 +481,7 @@ body {
 
 .sidebar.active .nav-item {
     opacity: 1;
+    transition-delay: 0.2s;
 }
 
 .sidebar ul li .tooltip {
@@ -518,12 +521,21 @@ body {
 }
 
 .sidebar.active .last-item {
+  
+    transition-delay: 0.2s;
     width: 90%;
 }
 
 .sidebar.active #user-email
 {
-  font-size: 13px;
+    font-size: 13px;
+    transition-delay: 0.2s;
+}
+
+
+.sidebar.active #user-username
+{
+    transition-delay: 0.2s;
 }
 
 /*otp*/
