@@ -378,16 +378,11 @@ body {
     background-color: var(--black);
     padding: 0.4rem 0.8rem;
     transition: all 0.5s ease;
-
 }
 
-/* .sidebar.active ~ #content {  */
-/*      left: 250px;  */
-/*      width: calc(100% - 250px);  */
-/*  }  */
 
 .sidebar.active {
-    width: 250px;
+    width: 260px;
 }
 
 .sidebar #btn {
@@ -514,7 +509,6 @@ body {
 }
 
 
-
 /*logout*/
 
 .sidebar .last-item {
@@ -547,7 +541,7 @@ body {
     font-weight: bold;
 }
 
-p
+#otp-message
 {
     color: var(--white);
     font-weight: bold;
