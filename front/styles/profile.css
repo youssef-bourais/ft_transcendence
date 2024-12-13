@@ -351,17 +351,17 @@ input[type="search"]::-webkit-search-cancel-button {
     height: 100%;
     border-radius: 20px;
     position: relative;
-    padding-right: 30px;
+    padding-right: 0px;
 }
 
 .container-main-home .child-container-main-home .left-side::after
 {
-    content: "";
+    /* content: "";
     position: absolute;
     height: 80%;
     right: 0;
     top: 10%;
-    border: 1.5px solid rgb(118, 118, 118);
+    border: 1.5px solid rgb(118, 118, 118); */
 }
 
 .left-side .title
@@ -371,6 +371,7 @@ input[type="search"]::-webkit-search-cancel-button {
     color: white;
     font-weight: bold;
     font-size: 2.5em;
+    padding-top: 10px;
 }
 
 .left-side .container-profile
