@@ -1,4 +1,4 @@
-import { routes} from './routes.js';
+import { routes, populateProfile} from './routes.js';
 import { togglePass, logout, clickEvent } from './utils.js';
 
 let currentState = { view: "login" };
@@ -9,7 +9,18 @@ function toggleNavbarAndSearchBar(path)
     const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP"];
 
     if (!isAuthenticatedRoutes.includes(path)) 
+    {
+        const username = localStorage.getItem("username");
+        const email = localStorage.getItem("email");
+        const photo = localStorage.getItem("photo"); 
+        if(path === '/profile')
+            populateProfile(); 
+
+        document.getElementById("user-username").textContent = username;
+        document.getElementById("user-email").textContent = email;
+        document.getElementById("user-photo").src = photo;
         navbar.classList.add("visible");
+    }
     else 
         navbar.classList.remove("visible");
 }
@@ -57,29 +68,16 @@ export const handleLocation = () =>
     const path = window.location.pathname;
     currentState.view = path;
     const route = routes[path] ? routes[path] : routes["/404"];
-
+      
+    document.getElementById("content").innerHTML = route.html;
     toggleNavbarAndSearchBar(path);
     
-    document.getElementById("content").innerHTML = route.html;
-
     if (route.setup) 
         route.setup();
 
     handleEvent(".inpute");
     handleEvent(".barinpute", true);
 };
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const username = localStorage.getItem("username");
-    const email = localStorage.getItem("email");
-    const photo = localStorage.getItem("photo"); 
-
-    document.getElementById("user-username").textContent = username;
-    document.getElementById("user-email").textContent = email;
-    document.getElementById("user-photo").src = photo;
-});
-
 
 
 
@@ -97,6 +95,7 @@ document.getElementById("logout").addEventListener("click", function(event) {
 
 window.togglePass = togglePass;
 window.clickEvent = clickEvent;
+window.logout = logout;
 
 window.addEventListener("popstate", handleLocation);
 

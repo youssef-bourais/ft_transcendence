@@ -164,7 +164,7 @@ export const routes = {
         html : `
             <div class="cart" id="otp-cart">
                 <h2 class="title"> OTP</h2>
-                <p> ${localStorage.getItem("message")}</p>
+                <p id=otp-message> ${localStorage.getItem("message")}</p>
                 <form class="form" id="forget-form">
 
                     <div class="otpuserInput">
@@ -180,7 +180,6 @@ export const routes = {
                     <span id="error" style="color: white; display: none"></span> 
                 </div>
 
-                    <button id="submit">CONFIRM</button>
                 </form>
             </div>`, 
         setup: handleOTPpage,
@@ -195,11 +194,27 @@ function isOnlyDigits(str) {
     return /^\d+$/.test(str);
 }
 
+function CleanOTPInput()
+{
+    const otp = [
+        document.getElementById('ist'),
+        document.getElementById('sec'),
+        document.getElementById('third'),
+        document.getElementById('fourth'),
+        document.getElementById('fifth'),
+        document.getElementById('sixth')
+    ];
+
+    otp.forEach(input => {
+                input.value = ""; 
+    });
+    document.getElementById('ist').focus();
+}
+
 
 async function OTPauth(value)
 {
     const password = localStorage.getItem("password");
-    localStorage.removeItem("password");
     const UserData = 
     {
         username : localStorage.getItem("username"),
@@ -207,8 +222,6 @@ async function OTPauth(value)
         otp: value
     };       
 
-    console.log("userdata: ", UserData.username);
-    console.log("password: ", UserData.password);
     try
     {
 
@@ -224,13 +237,19 @@ async function OTPauth(value)
         const data = await response.json();
         if(!response.ok)
         {
+            CleanOTPInput();
             showError(data.error);
+
+            if (response.status === 410) 
+            {
+                setTimeout(() => {
+                    history.pushState({}, "", "/");
+                    handleLocation();
+                }, 3000);
+            }
         }
         else
         {
-            console.log("access token: ",data.access);
-            console.log("refresh token: ", data.refresh);
-
             localStorage.setItem("refreshToken", data.refresh);
             localStorage.setItem("accessToken", data.access);
 
@@ -240,6 +259,7 @@ async function OTPauth(value)
             localStorage.setItem("email", info.email);
 
             history.pushState({}, "", "/profile"); 
+            localStorage.removeItem("password");
             handleLocation();
         }
     }
@@ -249,8 +269,12 @@ async function OTPauth(value)
     }
 }
 
-function handleOTPpage() 
+
+async function handleOTPpage() 
 {
+    document.getElementById('otp-message').innerText = localStorage.getItem('message');
+    document.getElementById('ist').focus();
+
     document.getElementById('sixth').addEventListener('input', function() {
 
         const otp = [
@@ -268,11 +292,7 @@ function handleOTPpage()
         if (!isOnlyDigits(otpString)) 
         {
             showError("OTP must contain only digits.");
-
-            otp.forEach(input => {
-                input.value = ""; 
-            });
-            document.getElementById('ist').focus();
+            CleanOTPInput();
         } 
         else 
         {
@@ -283,7 +303,56 @@ function handleOTPpage()
     });
 }
 
-function setupLoginPage() 
+async function getUserData(username)
+{
+    try
+    {
+        const response = await fetch(`/api/get/${username}/`);
+
+        if(!response.ok)
+        {
+            console.error(`2FA : couldnt fetch userdata: ${response.status} - ${response.statusText}`);
+            return null;
+        }
+        else
+        {
+            const data = await response.json();
+            return data;
+        }
+    }
+    catch (error)
+    {
+        console.error('error fetching user info');
+        return null;
+    }
+}
+
+export function populateProfile() 
+{
+    const photo = localStorage.getItem("photo");
+    const username = localStorage.getItem("username");
+    const email = localStorage.getItem("email");
+
+    const avatar = document.getElementById("avatar");
+    if (avatar && photo) 
+    {
+        avatar.src = photo;
+    }
+
+    const displayName = document.getElementById("display-name");
+    if (displayName && username) 
+    {
+        displayName.textContent = username;
+    }
+
+    // const displayemail = document.getElementById("display-name");
+    // if (displayName && username) 
+    // {
+    //     displayName.textContent = username;
+    // }
+}
+
+async function setupLoginPage() 
 {
     // console.log("login page");
     const form = document.getElementById("login-form");
@@ -312,31 +381,44 @@ function setupLoginPage()
                 showError("invalid username or passsword");
             else
             {
-                console.log("data: ", data.message);
-
                 localStorage.setItem("message", data.message)
                 localStorage.setItem("username", UserData.username);
                 localStorage.setItem("password", UserData.password);
 
-                //
-                // alert("login successful");
-                history.pushState({}, "", "/OTP"); 
-                handleLocation();
+                console.log("message: ", data.message);
+                const userinfo = await getUserData(UserData.username); 
+                if(!userinfo)
+                    console.error("An error accurred whene fetching userdata (photo)");
 
-                // history.pushState({}, "", "/profile"); 
-                // handleLocation();
+                if(data.access)
+                {
+                    alert("login successful");
+                    localStorage.removeItem("password");
 
+                    localStorage.setItem("accessToken", data.access);
+                    localStorage.setItem("refreshToken", data.refresh);
+                    localStorage.setItem("email", userinfo.email);
+                    localStorage.setItem("photo", userinfo.photo);
+
+                    history.pushState({}, "", "/profile"); 
+                    handleLocation();
+                }
+                else
+                {
+                    history.pushState({}, "", "/OTP"); 
+                    handleLocation();
+                }
             }
         }
         catch (error)
         {
-            alert("An error occurred. Please try again.");
+            console.error("error login", error);
+            alert("AAn error occurred. Please try again.", error);
         }
-
     });
 }
 
-function setupRegisterPage() 
+async function setupRegisterPage() 
 {
     console.log("register page");
     const form = document.getElementById("register-form");
@@ -368,11 +450,11 @@ function setupRegisterPage()
                 body: JSON.stringify(UserData),
             });
 
-            const data = await response.json();
 
+            const data = await response.json();
             if (response.ok)
             {
-
+            
                 alert("User registered successfully!");
                 console.log("Registration successful");
                 history.pushState({}, "", "/");

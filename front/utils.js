@@ -37,7 +37,6 @@ export async function logout()
     // alert(refreshToken);
     try 
     {
-        // const response = SecureApiRequest("/api/token/blacklist/");
         const response = await fetch(`/api/token/blacklist/`, {
         method: 'POST',
         headers: {
