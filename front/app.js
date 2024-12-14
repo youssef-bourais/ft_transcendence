@@ -10,10 +10,12 @@ function toggleNavbarAndSearchBar(path)
     // const style = ["/profile", "/forget_passwd", "/bridg", "/login_42"];
 
 
-    // if(path === '/profile')
+    // if(path === '/tournament')
     // {
-    //     document.getElementById("css").href = "styles/profile.css";
+    //     document.getElementById("bootstrap-id").href = "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css";
     // }
+    // else
+    //     document.getElementById("bootstrap-id").href = "";
 
 
     if (!isAuthenticatedRoutes.includes(path)) 
