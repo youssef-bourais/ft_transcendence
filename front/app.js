@@ -72,6 +72,8 @@ export const handleLocation = () =>
     document.getElementById("content").innerHTML = route.html;
     toggleNavbarAndSearchBar(path);
     
+
+
     if (route.setup) 
         route.setup();
 
@@ -93,6 +95,7 @@ document.getElementById("logout").addEventListener("click", function(event) {
     logout(); 
 });
 
+
 window.togglePass = togglePass;
 window.clickEvent = clickEvent;
 window.logout = logout;
@@ -100,4 +103,3 @@ window.logout = logout;
 window.addEventListener("popstate", handleLocation);
 
 window.addEventListener("DOMContentLoaded", handleLocation);
-
