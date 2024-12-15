@@ -135,7 +135,7 @@ export const routes = {
                 
                 <div class="container-profile">
                     <div class="profile">
-                        <img src="./front/images/avatar.png" alt="">
+                        <img id="avatars" src="./front/images/avatar.png" alt="">
                         <div class="container-notification">
                             <p>Abdelkarim hajji</p>
                             <p>2 unread notifacation</p>
@@ -268,7 +268,7 @@ export const routes = {
         <!-- <div id="profile-container">
             <div id="avatar-section">
 
-                <img id="avatar" src="./images/42-logo.png" alt="Default Avatar">
+                <img id="avatars" src="./images/42-logo.png" alt="Default Avatar">
                 <input type="file" id="avatar-upload" accept="image/*" onchange="uploadAvatar(event)">
             </div>
             <div id="info-section">
@@ -322,7 +322,7 @@ export const routes = {
                 
                 <div class="container-profile">
                     <div class="profile">
-                        <img src="./front/images/avatar.png" alt="">
+                        <img  id="avatars" src="./front/images/avatar.png" alt="">
                         <div class="container-notification">
                             <p>Abdelkarim hajji</p>
                             <p>2 unread notifacation</p>
@@ -362,7 +362,7 @@ export const routes = {
                 
                 <div class="container-profile">
                     <div class="profile">
-                        <img src="./front/images/avatar.png" alt="">
+                        <img id="avatars" src="./front/images/avatar.png" alt="">
                         <div class="container-notification">
                             <p>Abdelkarim hajji</p>
                             <p>2 unread notifacation</p>
@@ -402,7 +402,7 @@ export const routes = {
             
             <div class="container-profile">
                 <div class="profile">
-                    <img src="./front/images/avatar.png" alt="">
+                    <img id="avatars" src="./front/images/avatar.png" alt="">
                     <div class="container-notification">
                         <p>Abdelkarim hajji</p>
                         <p>2 unread notifacation</p>
@@ -856,7 +856,7 @@ export function populateProfile()
     const username = localStorage.getItem("username");
     const email = localStorage.getItem("email");
 
-    const avatar = document.getElementById("avatar");
+    const avatar = document.getElementById("avatars");
     if (avatar && photo) 
     {
         avatar.src = photo;
