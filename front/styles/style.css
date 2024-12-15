@@ -383,14 +383,10 @@ body {
     width: 80px;
     background-color: var(--black);
     padding: 0.4rem 0.8rem;
-<<<<<<< HEAD
     /* transition: all 0.5s ease; */
     transition: width 0.5s;
-=======
     transition: all 0.5s ease;
     z-index: 5;
-
->>>>>>> karim
 }
 
 
