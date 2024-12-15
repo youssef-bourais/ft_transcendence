@@ -114,7 +114,6 @@ export const routes = {
         },
     "/profile" : {
         html:`
-
         <div class="container-chat">
         <div class="block-container-nav-bar"></div>
        
@@ -301,11 +300,83 @@ export const routes = {
         setup: handleRedirect,
     },
     "/chat" : {
-        html : `<h1>loading.....</h1>`, 
+        html : `
+        <div class="container-chat">
+        <div class="block-container-nav-bar"></div>
+       
+        <!-- main -->
+        <div class="container-main">
+            
+            <!-- start top nav bat -->
+            <div class="container-top">
+                <div class="container-title">
+                    <img src="./front/images/Pingo.svg" alt="" srcset="">
+                </div>
+                <div class="container-search">
+                    <div class="search">
+                        <input type="search" placeholder="Serach for people" id="input-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i class="fa-solid fa-delete-left" id="delete"></i> 
+                    </div>
+                </div>
+                
+                <div class="container-profile">
+                    <div class="profile">
+                        <img src="./front/images/avatar.png" alt="">
+                        <div class="container-notification">
+                            <p>Abdelkarim hajji</p>
+                            <p>2 unread notifacation</p>
+                        </div>
+                        <div class="icon-down">
+                            <div class="container-icon">
+                                <i class="fa-solid fa-caret-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+            `, 
         setup:() => console.log("chat veiw...."),
     },
     "/game" : {
-        html : `<h1>comming soon.....</h1>`, 
+        html : `<div class="container-chat">
+        <div class="block-container-nav-bar"></div>
+       
+        <!-- main -->
+        <div class="container-main">
+            
+            <!-- start top nav bat -->
+            <div class="container-top">
+                <div class="container-title">
+                    <img src="./front/images/Pingo.svg" alt="" srcset="">
+                </div>
+                <div class="container-search">
+                    <div class="search">
+                        <input type="search" placeholder="Serach for people" id="input-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i class="fa-solid fa-delete-left" id="delete"></i> 
+                    </div>
+                </div>
+                
+                <div class="container-profile">
+                    <div class="profile">
+                        <img src="./front/images/avatar.png" alt="">
+                        <div class="container-notification">
+                            <p>Abdelkarim hajji</p>
+                            <p>2 unread notifacation</p>
+                        </div>
+                        <div class="icon-down">
+                            <div class="container-icon">
+                                <i class="fa-solid fa-caret-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>`, 
         setup:() => console.log("Game veiw...."),
     },
    "/tournament" : {

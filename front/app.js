@@ -8,6 +8,7 @@ function toggleNavbarAndSearchBar(path)
 {
     const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP"];
 
+
     if (!isAuthenticatedRoutes.includes(path)) 
     {
         const username = localStorage.getItem("username");
