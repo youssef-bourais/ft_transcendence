@@ -1,2 +1,4 @@
 /back/env
 /back/api/api/.env
+*.pyc
+__pycache__/
