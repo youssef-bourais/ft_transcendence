@@ -135,7 +135,7 @@ export const routes = {
                 
                 <div class="container-profile">
                     <div class="profile">
-                        <img id="avatars" src="./front/images/avatar.png" alt="">
+                        <img class="avatars" src="./front/images/avatar.png" alt="">
                         <div class="container-notification">
                             <p>Abdelkarim hajji</p>
                             <p>2 unread notifacation</p>
@@ -157,7 +157,7 @@ export const routes = {
                     <div class="left-side">
                         <div class="title"><p>Settings</p></div>
                         <div class="container-profile">
-                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img class="avatars" src="./front/images/avatar.png" alt=""></div>
                             <div class="container-name">
                                 <p>Abdelkarim hajji</p>
                                 <p>settings</p>
@@ -177,7 +177,7 @@ export const routes = {
                     <div class="midle-side">
                         <div class="container-bg">
                             <div class="child-bg">
-                                <img src="./front/images/avatar.png" alt="karim">
+                                <img class="avatars" src="./front/images/avatar.png" alt="karim">
                             </div>
                         </div>
                         <div class="container-update-info">
@@ -223,7 +223,7 @@ export const routes = {
                             <div class="child-container-profile-left">
                                 <div class="container-background-profile">
                                     <img src="./front/images/background.jpg" alt="">
-                                    <img src="./front/images/avatar.png" alt="">
+                                    <img class="avatars" src="./front/images/avatar.png" alt="">
                                 </div>
                                 <div class="container-name-profile-left">
                                     <p>Abdelkarim hajji</p>
@@ -268,7 +268,7 @@ export const routes = {
         <!-- <div id="profile-container">
             <div id="avatar-section">
 
-                <img id="avatars" src="./images/42-logo.png" alt="Default Avatar">
+                <img class="avatars" src="./images/42-logo.png" alt="Default Avatar">
                 <input type="file" id="avatar-upload" accept="image/*" onchange="uploadAvatar(event)">
             </div>
             <div id="info-section">
@@ -322,7 +322,7 @@ export const routes = {
                 
                 <div class="container-profile">
                     <div class="profile">
-                        <img  id="avatars" src="./front/images/avatar.png" alt="">
+                        <img  class="avatars" src="./front/images/avatar.png" alt="">
                         <div class="container-notification">
                             <p>Abdelkarim hajji</p>
                             <p>2 unread notifacation</p>
@@ -362,7 +362,7 @@ export const routes = {
                 
                 <div class="container-profile">
                     <div class="profile">
-                        <img id="avatars" src="./front/images/avatar.png" alt="">
+                        <img class="avatars" src="./front/images/avatar.png" alt="">
                         <div class="container-notification">
                             <p>Abdelkarim hajji</p>
                             <p>2 unread notifacation</p>
@@ -402,7 +402,7 @@ export const routes = {
             
             <div class="container-profile">
                 <div class="profile">
-                    <img id="avatars" src="./front/images/avatar.png" alt="">
+                    <img class="avatars" src="./front/images/avatar.png" alt="">
                     <div class="container-notification">
                         <p>Abdelkarim hajji</p>
                         <p>2 unread notifacation</p>
@@ -856,11 +856,16 @@ export function populateProfile()
     const username = localStorage.getItem("username");
     const email = localStorage.getItem("email");
 
-    const avatar = document.getElementById("avatars");
-    if (avatar && photo) 
-    {
-        avatar.src = photo;
-    }
+    const avatar = document.getElementsByClassName("avatars");
+    // if (avatar && photo) 
+    // {
+        let i = 0;
+        while(i < avatar.length)
+        {   
+            avatar[i].src = photo;
+            i++;
+        }
+    // }
 
     const displayName = document.getElementById("display-name");
     if (displayName && username) 
