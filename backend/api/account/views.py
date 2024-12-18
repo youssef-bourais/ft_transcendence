@@ -147,7 +147,7 @@ def login_with_42(request):
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def callback_from_42(request):
-    print("Received callback from OAuth provider...")
+    print("Received callback from OAuth provider...=========================================")
     code = request.GET.get('code')
     token_response = exchange_code_for_token(code)
     access_token = token_response.data['access_token']

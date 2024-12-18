@@ -981,7 +981,10 @@ async function setupLogin42Page()
         const data = await response.json();
 
         if (data.redirectUrl) 
+        {
+            console.log("debuuuuuug intra", data.redirectUrl, data.status);
             window.location.href = data.redirectUrl;  // Redirect to OAuth2 authorization page
+        }
     } 
     catch (error) 
     {

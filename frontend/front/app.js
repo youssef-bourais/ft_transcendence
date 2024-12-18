@@ -54,7 +54,7 @@ function handleEvent(selector, isNavbar = false)
                     {
                         setTimeout(() => {
                             isNavigating = false;
-                        }, 100);
+                        }, 50);
                     }
                 });
                 button.setAttribute('data-listener-attached', 'true');
