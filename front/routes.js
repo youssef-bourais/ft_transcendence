@@ -123,7 +123,7 @@ export const routes = {
             <!-- start top nav bat -->
             <div class="container-top">
                 <div class="container-title">
-                    <img src="./front/images/Pingo.svg" alt="" srcset="">
+                    <img src="./images/Pingo.svg" alt="" srcset="">
                 </div>
                 <div class="container-search">
                     <div class="search">
@@ -135,9 +135,9 @@ export const routes = {
                 
                 <div class="container-profile">
                     <div class="profile">
-                        <img class="avatars" src="./front/images/avatar.png" alt="">
+                        <img class="avatars" src="./images/avatar.png" alt="">
                         <div class="container-notification">
-                            <p>Abdelkarim hajji</p>
+                            <p class="display-name">Abdelkarim hajji</p>
                             <p>2 unread notifacation</p>
                         </div>
                         <div class="icon-down">
@@ -157,16 +157,16 @@ export const routes = {
                     <div class="left-side">
                         <div class="title"><p>Settings</p></div>
                         <div class="container-profile">
-                            <div class="container-img"><img class="avatars" src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img class="avatars" src="./images/avatar.png" alt=""></div>
                             <div class="container-name">
-                                <p>Abdelkarim hajji</p>
+                                <p  class="display-name" >Abdelkarim hajji</p>
                                 <p>settings</p>
                             </div>
                         </div>
                         <div class="container-setting">
-                            <div class="container-img"><img src="./front/images/setting.svg" alt=""></div>
+                            <div class="container-img"><img src="./images/setting.svg" alt=""></div>
                             <div class="container-name">
-                                <p>Abdelkarim hajji</p>
+                                <p class="display-name">Abdelkarim hajji</p>
                                 <p>Settings about name and password</p>
                             </div>
                         </div>
@@ -177,7 +177,7 @@ export const routes = {
                     <div class="midle-side">
                         <div class="container-bg">
                             <div class="child-bg">
-                                <img class="avatars" src="./front/images/avatar.png" alt="karim">
+                                <img class="avatars" src="./images/avatar.png" alt="karim">
                             </div>
                         </div>
                         <div class="container-update-info">
@@ -222,11 +222,11 @@ export const routes = {
                         <div class="container-profile-left">
                             <div class="child-container-profile-left">
                                 <div class="container-background-profile">
-                                    <img src="./front/images/background.jpg" alt="">
-                                    <img class="avatars" src="./front/images/avatar.png" alt="">
+                                    <img src="./images/background.jpg" alt="">
+                                    <img class="avatars" src="./images/avatar.png" alt="">
                                 </div>
                                 <div class="container-name-profile-left">
-                                    <p>Abdelkarim hajji</p>
+                                    <p  class="display-name">Abdelkarim hajji</p>
                                     <p>Not in your friends list</p>
                                 </div>
                                 <div class="container-send-request">
@@ -239,14 +239,14 @@ export const routes = {
                                 </div>
                                 <div class="container-chalange">
                                     <div class="child-container-chalange">
-                                        <div class="contaienr-chalange-img-left"><img src="./front/images/avatar.png" alt=""><p>1</p></div>
+                                        <div class="contaienr-chalange-img-left"><img src="./images/avatar.png" alt=""><p>1</p></div>
                                         <div class="container-VS">VS</div>
-                                        <div class="contaienr-chalange-img-right"><p>1</p><img src="./front/images/avatar.png" alt=""> </div>
+                                        <div class="contaienr-chalange-img-right"><p>1</p><img src="./images/avatar.png" alt=""> </div>
                                     </div>
                                     <div class="child-container-chalange">
-                                        <div class="contaienr-chalange-img-left"><img src="./front/images/avatar.png" alt=""><p>1</p></div>
+                                        <div class="contaienr-chalange-img-left"><img src="./images/avatar.png" alt=""><p>1</p></div>
                                         <div class="container-VS">VS</div>
-                                        <div class="contaienr-chalange-img-right"><p>1</p><img src="./front/images/avatar.png" alt=""> </div>
+                                        <div class="contaienr-chalange-img-right"><p>1</p><img src="./images/avatar.png" alt=""> </div>
                                     </div>
                                    
                                 </div>
@@ -310,7 +310,7 @@ export const routes = {
             <!-- start top nav bat -->
             <div class="container-top">
                 <div class="container-title">
-                    <img src="./front/images/Pingo.svg" alt="" srcset="">
+                    <img src="./images/Pingo.svg" alt="" srcset="">
                 </div>
                 <div class="container-search">
                     <div class="search">
@@ -322,9 +322,9 @@ export const routes = {
                 
                 <div class="container-profile">
                     <div class="profile">
-                        <img  class="avatars" src="./front/images/avatar.png" alt="">
+                        <img  class="avatars" src="./images/avatar.png" alt="">
                         <div class="container-notification">
-                            <p>Abdelkarim hajji</p>
+                            <p class="display-name">Abdelkarim hajji</p>
                             <p>2 unread notifacation</p>
                         </div>
                         <div class="icon-down">
@@ -350,7 +350,7 @@ export const routes = {
             <!-- start top nav bat -->
             <div class="container-top">
                 <div class="container-title">
-                    <img src="./front/images/Pingo.svg" alt="" srcset="">
+                    <img src="./images/Pingo.svg" alt="" srcset="">
                 </div>
                 <div class="container-search">
                     <div class="search">
@@ -362,7 +362,7 @@ export const routes = {
                 
                 <div class="container-profile">
                     <div class="profile">
-                        <img class="avatars" src="./front/images/avatar.png" alt="">
+                        <img class="avatars" src="./images/avatar.png" alt="">
                         <div class="container-notification">
                             <p>Abdelkarim hajji</p>
                             <p>2 unread notifacation</p>
@@ -390,7 +390,7 @@ export const routes = {
         <!-- start top nav bat -->
         <div class="container-top">
             <div class="container-title">
-                <img src="./front/images/Pingo.svg" alt="" srcset="">
+                <img src="./images/Pingo.svg" alt="" srcset="">
             </div>
             <div class="container-search">
                 <div class="search">
@@ -402,7 +402,7 @@ export const routes = {
             
             <div class="container-profile">
                 <div class="profile">
-                    <img class="avatars" src="./front/images/avatar.png" alt="">
+                    <img class="avatars" src="./images/avatar.png" alt="">
                     <div class="container-notification">
                         <p>Abdelkarim hajji</p>
                         <p>2 unread notifacation</p>
@@ -428,92 +428,92 @@ export const routes = {
                     </div>
                     <div class="container-best-players">
                         <div class="container-best-player">
-                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                             <div class="container-name">
                                 <p>Abdelkarim hajji</p>
                                 <p>54823XP</p>
                             </div>
-                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                            <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
                         </div>
                         <div class="container-best-player">
-                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                             <div class="container-name">
                                 <p>Abdelkarim hajji</p>
                                 <p>54823XP</p>
                             </div>
-                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                            <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
                         </div>
                         <div class="container-best-player">
-                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                             <div class="container-name">
                                 <p>Abdelkarim hajji</p>
                                 <p>54823XP</p>
                             </div>
-                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                            <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
                         </div>
                         <div class="container-best-player">
-                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                             <div class="container-name">
                                 <p>Abdelkarim hajji</p>
                                 <p>54823XP</p>
                             </div>
-                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                            <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
                         </div>
                         <div class="container-best-player">
-                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                             <div class="container-name">
                                 <p>Abdelkarim hajji</p>
                                 <p>54823XP</p>
                             </div>
-                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                            <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
                         </div>
                         <div class="container-best-player">
-                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                             <div class="container-name">
                                 <p>Abdelkarim hajji</p>
                                 <p>54823XP</p>
                             </div>
-                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                            <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
                         </div>
                         <div class="container-best-player">
-                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                             <div class="container-name">
                                 <p>Abdelkarim hajji</p>
                                 <p>54823XP</p>
                             </div>
-                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                            <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
                         </div><div class="container-best-player">
-                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                             <div class="container-name">
                                 <p>Abdelkarim hajji</p>
                                 <p>54823XP</p>
                             </div>
-                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                            <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
                         </div>
 
                         <div class="container-best-player">
-                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                             <div class="container-name">
                                 <p>Abdelkarim hajji</p>
                                 <p>54823XP</p>
                             </div>
-                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                            <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
                         </div>
                         <div class="container-best-player">
-                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                             <div class="container-name">
                                 <p>Abdelkarim hajji</p>
                                 <p>54823XP</p>
                             </div>
-                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                            <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
                         </div>
                         <div class="container-best-player">
-                            <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                             <div class="container-name">
                                 <p>Abdelkarim hajji</p>
                                 <p>54823XP</p>
                             </div>
-                            <div class="container-badge"><img src="./front/images/prize_winner.svg" alt=""></div>
+                            <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
                         </div>
                     </div>
                 </div>
@@ -550,40 +550,40 @@ export const routes = {
                                 <mask id="rounded-mask">
                                     <rect x="30" y="40" width="150" height="150" rx="50%" ry="50%" fill="white"/>
                                 </mask>
-                                <image xlink:href="./front/images/avatar.png" x="30" y="40" width="150" height="150" mask="url(#rounded-mask)" />
+                                <image xlink:href="./images/avatar.png" x="30" y="40" width="150" height="150" mask="url(#rounded-mask)" />
                                 <text x="220" y="130" font-family="Arial" font-size="50" fill="white">Abdelkarim hajji</text>
 
                                 <mask id="rounded-mask2">
                                     <rect x="30" y="650" width="150" height="150" rx="50%" ry="50%" fill="white"/>
                                 </mask>
-                                <image xlink:href="./front/images/avatar.png" x="30" y="650" width="150" height="150" mask="url(#rounded-mask2)" />
+                                <image xlink:href="./images/avatar.png" x="30" y="650" width="150" height="150" mask="url(#rounded-mask2)" />
                                 <text x="220" y="740" font-family="Arial" font-size="50" fill="white">Abdelkarim hajji</text>
                                 <mask id="rounded-mask3">
                                     <rect x="730" y="345" width="150" height="150" rx="50%" ry="50%" fill="white"/>
                                 </mask>
-                                <image xlink:href="./front/images/avatar.png" x="730" y="345" width="150" height="150" mask="url(#rounded-mask3)" />
+                                <image xlink:href="./images/avatar.png" x="730" y="345" width="150" height="150" mask="url(#rounded-mask3)" />
                                 <text x="920" y="435" font-family="Arial" font-size="50" fill="white">Abdelkarim hajji</text>
                                 <mask id="rounded-mask4">
                                     <rect x="1690" y="70" width="400" height="400" rx="50%" ry="50%" fill="white"/>
                                 </mask>
-                                <image xlink:href="./front/images/avatar.png" x="1690" y="70" width="400" height="400" mask="url(#rounded-mask4)" />
+                                <image xlink:href="./images/avatar.png" x="1690" y="70" width="400" height="400" mask="url(#rounded-mask4)" />
                                 <text x="1660" y="585" font-family="Arial" font-size="60" fill="white">Abdelkarim hajji</text>
 
                                 <mask id="rounded-mask5">
                                     <rect x="2400" y="345" width="150" height="150" rx="50%" ry="50%" fill="white"/>
                                 </mask>
-                                <image xlink:href="./front/images/avatar.png" x="2400" y="345" width="150" height="150" mask="url(#rounded-mask5)" />
+                                <image xlink:href="./images/avatar.png" x="2400" y="345" width="150" height="150" mask="url(#rounded-mask5)" />
                                 <text x="3295" y="130" font-family="Arial" font-size="50" fill="white">Abdelkarim hajji</text>
 
                                 <mask id="rounded-mask6">
                                     <rect x="3100" y="650" width="150" height="150" rx="50%" ry="50%" fill="white"/>
                                 </mask>
-                                <image xlink:href="./front/images/avatar.png" x="3100" y="650" width="150" height="150" mask="url(#rounded-mask6)" />
+                                <image xlink:href="./images/avatar.png" x="3100" y="650" width="150" height="150" mask="url(#rounded-mask6)" />
                                 <text x="3295" y="745" font-family="Arial" font-size="50" fill="white">Abdelkarim hajji</text>
                                 <mask id="rounded-mask7">
                                     <rect x="3100" y="40" width="150" height="150" rx="50%" ry="50%" fill="white"/>
                                 </mask>
-                                <image xlink:href="./front/images/avatar.png" x="3100" y="40" width="150" height="150" mask="url(#rounded-mask7)" />
+                                <image xlink:href="./images/avatar.png" x="3100" y="40" width="150" height="150" mask="url(#rounded-mask7)" />
                                 <text x="2590" y="435" font-family="Arial" font-size="50" fill="white">Abdelkarim hajji</text>
                                 <defs>
                                 <pattern id="pattern0_677_886" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -620,7 +620,7 @@ export const routes = {
                                     <div class="container-row">
                                         <div class="child-container-row">
                                             <div class="first-part">
-                                                <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                                                <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                                                 <p>1</p>
                                             </div>
                                             <div class="second-part">
@@ -629,14 +629,14 @@ export const routes = {
                                             </div>
                                             <div class="third-part">
                                                 <p>1</p>
-                                                <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                                                <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="container-row">
                                         <div class="child-container-row">
                                             <div class="first-part">
-                                                <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                                                <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                                                 <p>1</p>
                                             </div>
                                             <div class="second-part">
@@ -645,7 +645,7 @@ export const routes = {
                                             </div>
                                             <div class="third-part">
                                                 <p>1</p>
-                                                <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                                                <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                                             </div>
                                         </div>
                                     </div>
@@ -656,7 +656,7 @@ export const routes = {
                                     <div class="container-row">
                                         <div class="child-container-row">
                                             <div class="first-part">
-                                                <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                                                <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                                                 <p>1</p>
                                             </div>
                                             <div class="second-part">
@@ -665,7 +665,7 @@ export const routes = {
                                             </div>
                                             <div class="third-part">
                                                 <p>1</p>
-                                                <div class="container-img"><img src="./front/images/avatar.png" alt=""></div>
+                                                <div class="container-img"><img src="./images/avatar.png" alt=""></div>
                                             </div>
                                         </div>
                                     </div>
@@ -745,6 +745,7 @@ async function OTPauth(value)
         password : password,
         otp: value
     };       
+    console.log("zobi: ", UserData.username, UserData.password, UserData.otp);
 
     try
     {
@@ -857,21 +858,30 @@ export function populateProfile()
     const email = localStorage.getItem("email");
 
     const avatar = document.getElementsByClassName("avatars");
-    // if (avatar && photo) 
-    // {
-        let i = 0;
-        while(i < avatar.length)
-        {   
-            avatar[i].src = photo;
-            i++;
-        }
+    let i = 0;
+    while(i < avatar.length)
+    {   
+        avatar[i].src = photo;
+        i++;
+    }
+
+    document.querySelectorAll(".display-name").forEach(displayName => {
+        console.log("length");
+        displayName.innerText = username;
+    });
+    // const displayName = document.getElementsByClassName("display-name");
+    // let j = 0;
+    // while(j < displayName.length)
+    // {   
+    //     console.log("lenght");
+    //     displayName[j].innerText = username;
+    //     j++;
     // }
 
-    const displayName = document.getElementById("display-name");
-    if (displayName && username) 
-    {
-        displayName.textContent = username;
-    }
+    // if (displayName && username) 
+    // {
+    //     displayName.textContent = username;
+    // }
 
     // const displayemail = document.getElementById("display-name");
     // if (displayName && username) 
