@@ -46,8 +46,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             validate_password(password)
         except serializers.ValidationError as e:
             raise serializers.ValidationError({"password": list(e.messages)})
-        # attrs['password'] = bleach.clean(attrs['password']) 
-        # attrs['password2'] = bleach.clean(attrs['password2'])
+        attrs['password'] = bleach.clean(attrs['password']) 
+        attrs['password2'] = bleach.clean(attrs['password2'])
         if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError("Passwords do not match.")
         return attrs

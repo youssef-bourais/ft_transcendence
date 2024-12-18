@@ -4,7 +4,7 @@ import { togglePass, logout, clickEvent } from './utils.js';
 let currentState = { view: "login" };
 
 
-function toggleNavbarAndSearchBar(path) 
+function toggleNavbar(path) 
 {
     const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP"];
 
@@ -71,10 +71,8 @@ export const handleLocation = () =>
     const route = routes[path] ? routes[path] : routes["/404"];
       
     document.getElementById("content").innerHTML = route.html;
-    toggleNavbarAndSearchBar(path);
+    toggleNavbar(path);
     
-
-
     if (route.setup) 
         route.setup();
 

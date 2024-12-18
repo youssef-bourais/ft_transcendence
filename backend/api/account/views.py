@@ -37,14 +37,6 @@ def register_user(request):
     print("bad trip============", data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# @csrf_exempt
-# @api_view(['POST'])
-# @permission_classes([AllowAny])
-# def custom_token_obtain_pair(request):
-#     serializer = CustomTokenObtainPairSerializer(data=request.data)
-#     if serializer.is_valid():
-#         return Response(serializer.validated_data, status=status.HTTP_200_OK)
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -100,7 +92,6 @@ def get_user(request, id_or_name):
     If the request contains a number, it will search by ID.
     If it contains a string, it will search by username.
     """
-
     if id_or_name == "0":
         users = CustomUser.objects.all().values('id', 'username', 'email', 'photo', 'otp_code', 'otp_created_at', 'is_2fa_enabled')
         return Response({'users': list(users)}, status=status.HTTP_200_OK)

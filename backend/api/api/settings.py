@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from pathlib import Path
 
-load_dotenv()
+# load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -63,14 +63,13 @@ INSTALLED_APPS = [
 #new
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_PORT = 587  # Use 587 for TLS or 465 for SSL
 EMAIL_USE_TLS = True  
-EMAIL_USE_SSL = False  # Use SSL if EMAIL_PORT is 465
+EMAIL_USE_SSL = False
 
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER') 
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') 
-# DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL') 
 
 REST_FRAMEWORK = {
 
@@ -94,16 +93,29 @@ SIMPLE_JWT = {
 }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # SQLite database engine
-        'NAME': BASE_DIR / 'db.sqlite3',         # Database file name
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+
+        "NAME": os.getenv('DB_NAME'),
+        "USER": os.getenv('DB_USER'),
+        "PASSWORD": os.getenv('DB_PASSWD'),
+
+        "HOST": "postgres", 
+        "PORT": 5432,  
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',  # SQLite database engine
+#         'NAME': BASE_DIR / 'db.sqlite3',         # Database file name
+#     }
+# }
 
 MIDDLEWARE = [
     #new 
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',  # You may want to keep this for handling redirects
+    'django.middleware.common.CommonMiddleware',  
     #-----
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
