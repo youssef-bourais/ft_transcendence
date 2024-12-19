@@ -42,10 +42,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         password = attrs.get('password')
-        try:
-            validate_password(password)
-        except serializers.ValidationError as e:
-            raise serializers.ValidationError({"password": list(e.messages)})
+        # try:
+        #     validate_password(password)
+        # except serializers.ValidationError as e:
+        #     raise serializers.ValidationError({"password": list(e.messages)})
         attrs['password'] = bleach.clean(attrs['password']) 
         attrs['password2'] = bleach.clean(attrs['password2'])
         if attrs['password'] != attrs['password2']:

@@ -1,6 +1,6 @@
 
 from django.urls import path, include
-from .views import  get_user, register_user, delete_user, login_with_42, callback_from_42 , custom_token_obtain_pair 
+from .views import  endpoint, get_user, register_user, delete_user, login_with_42, callback_from_42 , custom_token_obtain_pair, logouthttponly 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -20,4 +20,7 @@ urlpatterns = [
     path('auth/callback/', callback_from_42, name='callback_from_42'),
 
     path('token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
+
+    path('token/blacklist2/', logouthttponly, name='token_blacklist2'),
+    path('endpoint/', endpoint, name='endpoint')
 ]

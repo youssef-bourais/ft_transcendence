@@ -30,6 +30,8 @@ let isNavigating = false;
 
 function handleEvent(selector, isNavbar = false)
 {
+
+
     const Button = document.querySelectorAll(selector);
     if(Button)
     {
@@ -54,7 +56,7 @@ function handleEvent(selector, isNavbar = false)
                     {
                         setTimeout(() => {
                             isNavigating = false;
-                        }, 50);
+                        }, 10);
                     }
                 });
                 button.setAttribute('data-listener-attached', 'true');
@@ -73,6 +75,21 @@ export const handleLocation = () =>
     document.getElementById("content").innerHTML = route.html;
     toggleNavbar(path);
     
+    // for debugging
+    const test = document.getElementById("test")
+    if(test)
+        test.addEventListener("click", (e)=>{
+
+    fetch('https://localhost/api/endpoint/', {method:"GET", credentials:"include"}).then(async e=>{
+
+            e.json().then(e=>{
+                console.log(e);
+        });
+});
+
+
+});
+
     if (route.setup) 
         route.setup();
 
@@ -88,6 +105,7 @@ let sidebar = document.querySelector('.sidebar');
 btn.onclick = function() {
     sidebar.classList.toggle('active'); 
 };   
+
 
 document.getElementById("logout").addEventListener("click", function(event) {
     event.preventDefault(); 

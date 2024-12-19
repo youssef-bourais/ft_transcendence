@@ -37,6 +37,7 @@ export async function logout()
     {
         const response = await fetch(`/api/token/blacklist/`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json', 
         },
@@ -142,6 +143,7 @@ export function getCookie(name)
     const parts = value.split(`; ${name}=`); 
     if (parts.length === 2) 
         return parts.pop().split(';').shift();
+    return null;
 }
 
 export function deleteCookie(name) 

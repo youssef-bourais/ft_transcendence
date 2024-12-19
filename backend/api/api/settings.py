@@ -17,14 +17,17 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-os.getenv('EMAIL_HOST')  
 
 CLIENT_UID = os.getenv('CLIENT_UID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
-REDIRECT_URI = 'http://127.0.0.1:8000/api/auth/callback/'
+
+# REDIRECT_URI = 'http://127.0.0.1:8000/api/auth/callback/'
+REDIRECT_URI = 'https://localhost/api/auth/callback/'
 
 AUTHORIZE_URL = "https://api.intra.42.fr/oauth/authorize"
+
 TOKEN_URL = "https://api.intra.42.fr/oauth/token"
+
 USER_INFO_URL = "https://api.intra.42.fr/v2/me"
 
 
@@ -37,8 +40,30 @@ SECRET_KEY = 'django-insecure-3zx9dv0$+jukk6+@z^f_4r%s29hz%2za461o-06+)7dx&$g%k^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "POST",
+    "PUT",
+]
+
+
+MACHINE_URL = os.getenv('MACHINE_URL')
+
+ALLOWED_HOSTS = [
+    "https://localhost", 
+    "localhost", 
+    "127.0.0.1",
+    f"{MACHINE_URL}",
+]
+
 CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be sent with the request
+#
+# CORS_ALLOWED_HEADERS = [
+#     "Content-Type",
+#     "Authorization",
+#     "X-CSRFToken",
+# ]
 
 # Application definition
 
@@ -91,6 +116,9 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,  # Automatically blacklist the old token
     'UPDATE_LAST_LOGIN': False,
 }
+   
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 DATABASES = {
     "default": {
@@ -128,7 +156,7 @@ MIDDLEWARE = [
 
 #new
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:8080",  # Frontend URL
+    "https://localhost",  # Frontend URL
 ]
 
 

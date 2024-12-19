@@ -19,6 +19,7 @@ from django.contrib.auth import authenticate
 from django.utils.timezone import now
 from datetime import timedelta
 from .utils import generate_otp, send_otp_email
+# from django.http import HttpeResponse
 # from django.views.decorators.csrf import csrf_exempt
 
 
@@ -137,12 +138,21 @@ def login_with_42(request):
     """
     Redirect to the 42 OAuth2 authorization page.
     """
-    print("login with intra:")
+    print("login with intra:==============")
     client_id = settings.CLIENT_UID
     redirect_uri = settings.REDIRECT_URI
     authorization_url = f'{settings.AUTHORIZE_URL}?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code'
-    return Response({"redirectUrl": authorization_url})
 
+    # authorization_url = 'https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-47bfe435be9eeebff41fd27554f93254101e013b065f458c57f012657c6a572e&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fapi%2Fauth%2Fcallback%2F&response_type=code'
+    print("client id: ", client_id)
+    print("redirectUrl_url: ", redirect_uri)
+    print("authorization url: ", authorization_url)
+    # requestingIntraApi = reques
+    response = Response({"redirectUrl": authorization_url})
+    response.set_cookie('12345678', 'hello')
+    return response
+
+from django.shortcuts import redirect
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
@@ -162,7 +172,9 @@ def callback_from_42(request):
     photo = response_data['photo']
     username = response_data['username']
 
-    response = HttpResponseRedirect("http://127.0.0.1:8080/bridg")
+    response = HttpResponseRedirect("https://localhost/bridg")
+    # response = redirect("https://localhost/bridg")
+
     response.set_cookie('email', email)
     response.set_cookie('username', username)
     response.set_cookie('photo', photo)
@@ -189,10 +201,28 @@ def callback_from_42(request):
     refresh_token = str(refresh)
 
     response.set_cookie('access_token', access_token)
+    # response.set_cookie('access_token', access_token, httponly=True, path='/')
     response.set_cookie('refresh_token', refresh_token)
     return response
-    # return Response(
-    #     response_data, 
-    # )
-    
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def endpoint(request):  
+    # response = redirect("http://localhost:443/")
+    print("+++++++++++++++++++++++++++", request.COOKIES.get("access_token", ''))
+    response = Response({"message": "Hello, world!"})
+    # response.set_cookie('access_token', 'hello')
+    return response
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def logouthttponly(request):
+    access = request.COOKIES.get('access_token')
+    access = RefreshToken(access)
+    access.blacklist()
+    response = Response({"message": "Logged out successfully"})
+    # response.delete_cookie('access_token')
+    return response
+
 

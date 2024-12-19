@@ -3,6 +3,7 @@ import { handleLocation } from './app.js';
 import { SecureApiRequest} from './api.js';
 
 
+{/* <button id='test' style='z-index:10'>hey</button> */}
 export const routes = {
 
     "/" : { 
@@ -906,6 +907,7 @@ async function setupLoginPage()
 
 async function setupRegisterPage() 
 {
+
     console.log("register page");
     const form = document.getElementById("register-form");
     form.addEventListener("submit", async (event) => 
@@ -919,12 +921,12 @@ async function setupRegisterPage()
             password2: SanitizeInpute(document.getElementById("password2").value),
         };
 
-        var message = validatePassword(UserData.password, UserData.password2, UserData.email);
-        if(message !== null)
-        {
-            showError(message);
-            return;
-        }
+        // var message = validatePassword(UserData.password, UserData.password2, UserData.email);
+        // if(message !== null)
+        // {
+        //     showError(message);
+        //     return;
+        // }
         try 
         {
             const response = await fetch("/api/register/", 
@@ -973,7 +975,6 @@ async function setupLogin42Page()
     {
         const response = await fetch('/api/auth/login/', {
         });
-        console.log("status============", response.status);
 
         if (!response.ok) 
             throw new Error('OAuth2 initiation failed + ' + response.status);
@@ -982,7 +983,6 @@ async function setupLogin42Page()
 
         if (data.redirectUrl) 
         {
-            console.log("debuuuuuug intra", data.redirectUrl, data.status);
             window.location.href = data.redirectUrl;  // Redirect to OAuth2 authorization page
         }
     } 
@@ -1020,12 +1020,12 @@ function handleRedirect()
     const photo = getCookie('photo')
     deleteCookie('photo');
 
-    const image = photo.replace(/^"(.*)"$/, '$1');
+    const image = photo ? photo.replace(/^"(.*)"$/, '$1') : null; 
 
     const email = getCookie('email');
     deleteCookie('email');
 
-    const mail = email.replace(/^"(.*)"$/, '$1');
+    const mail = email ? email.replace(/^"(.*)"$/, '$1') : null; 
 
     localStorage.setItem("accessToken", access_token);
     localStorage.setItem("refreshToken", refresh_token);
