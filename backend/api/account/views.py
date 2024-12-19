@@ -1,5 +1,3 @@
-from json.encoder import py_encode_basestring
-from logging import exception
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -13,7 +11,6 @@ from .serializers import UserRegistrationSerializer
 import json
 from .permissions import IsDeveloper
 from account.models import CustomUser
-from .serializers import CustomTokenObtainPairSerializer
 
 from django.contrib.auth import authenticate
 from django.utils.timezone import now
@@ -27,15 +24,15 @@ from .utils import generate_otp, send_otp_email
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_user(request):
-    print("register_user===========POST", request.data)
+    # print("register_user===========POST", request.data)
     serializer = UserRegistrationSerializer(data=request.data)
     
     if serializer.is_valid():
         serializer.save()
-        print("good trip============")
+        # print("good trip============")
         return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
     data = json.dumps(serializer.errors)
-    print("bad trip============", data)
+    # print("bad trip============", data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -76,7 +73,6 @@ def custom_token_obtain_pair(request):
                 print("code didnt match", user.otp_code, otp)
                 return Response({"error": "Invalid OTP provided."}, status=status.HTTP_400_BAD_REQUEST)
 
-
     refresh = RefreshToken.for_user(user)
     return Response({
         "refresh": str(refresh),
@@ -115,8 +111,8 @@ def get_user(request, id_or_name):
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['DELETE'])
-@permission_classes([AllowAny])
-# @permission_classes([IsDeveloper])
+# @permission_classes([AllowAny])
+@permission_classes([IsDeveloper])
 def delete_user(request, id):
     print("delete_user===========DELETE", request.data)
     try:
@@ -138,21 +134,19 @@ def login_with_42(request):
     """
     Redirect to the 42 OAuth2 authorization page.
     """
-    print("login with intra:==============")
+    # print("login with intra:==============")
     client_id = settings.CLIENT_UID
     redirect_uri = settings.REDIRECT_URI
     authorization_url = f'{settings.AUTHORIZE_URL}?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code'
 
-    # authorization_url = 'https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-47bfe435be9eeebff41fd27554f93254101e013b065f458c57f012657c6a572e&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fapi%2Fauth%2Fcallback%2F&response_type=code'
-    print("client id: ", client_id)
-    print("redirectUrl_url: ", redirect_uri)
-    print("authorization url: ", authorization_url)
+    # print("client id: ", client_id)
+    # print("redirectUrl_url: ", redirect_uri)
+    # print("authorization url: ", authorization_url)
     # requestingIntraApi = reques
     response = Response({"redirectUrl": authorization_url})
     response.set_cookie('12345678', 'hello')
     return response
 
-from django.shortcuts import redirect
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
@@ -205,6 +199,8 @@ def callback_from_42(request):
     response.set_cookie('refresh_token', refresh_token)
     return response
 
+
+#for debugging
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def endpoint(request):  

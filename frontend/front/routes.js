@@ -921,12 +921,12 @@ async function setupRegisterPage()
             password2: SanitizeInpute(document.getElementById("password2").value),
         };
 
-        // var message = validatePassword(UserData.password, UserData.password2, UserData.email);
-        // if(message !== null)
-        // {
-        //     showError(message);
-        //     return;
-        // }
+        var message = validatePassword(UserData.password, UserData.password2, UserData.email);
+        if(message !== null)
+        {
+            showError(message);
+            return;
+        }
         try 
         {
             const response = await fetch("/api/register/", 

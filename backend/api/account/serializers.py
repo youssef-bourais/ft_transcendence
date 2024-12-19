@@ -1,7 +1,6 @@
 
 from rest_framework import serializers
 from django.utils.html import escape
-from django.core.validators import validate_email as django_validate_email
 from account.models import CustomUser
 import bleach
 from django.core.validators import RegexValidator, EmailValidator
@@ -20,9 +19,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         }
     # get_or_create
     def validate_email(self, value):
-        print("value", value)
+        # print("value", value)
         value = bleach.clean(value)
-        print("value 2", value)
+        # print("value 2", value)
         EmailValidator()(value)
         if CustomUser.objects.filter(email=value).exists():
             raise serializers.ValidationError("A user with this email already exists.")
@@ -42,10 +41,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         password = attrs.get('password')
-        # try:
-        #     validate_password(password)
-        # except serializers.ValidationError as e:
-        #     raise serializers.ValidationError({"password": list(e.messages)})
+        try:
+            validate_password(password)
+        except serializers.ValidationError as e:
+            raise serializers.ValidationError({"password": list(e.messages)})
         attrs['password'] = bleach.clean(attrs['password']) 
         attrs['password2'] = bleach.clean(attrs['password2'])
         if attrs['password'] != attrs['password2']:

@@ -8,6 +8,6 @@ class IsDeveloper(BasePermission):
     Allows access only to the developer with a specific username or email.
     """
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.username == "killer56"
+        return request.user.is_authenticated and request.user.username == "hh"
         # Or, based on email:
         # return request.user.is_authenticated and request.user.email == "developer@example.com"
