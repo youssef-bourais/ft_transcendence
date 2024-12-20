@@ -21,6 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 CLIENT_UID = os.getenv('CLIENT_UID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
+MACHINE_URL = os.getenv('MACHINE_URL')
+
 # REDIRECT_URI = 'http://127.0.0.1:8000/api/auth/callback/'
 MACHINE_URL = os.getenv('MACHINE_URL')
 REDIRECT_URI = f'https://{MACHINE_URL}/api/auth/callback/'

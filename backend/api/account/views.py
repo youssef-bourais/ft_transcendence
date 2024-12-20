@@ -165,7 +165,9 @@ def callback_from_42(request):
     intra_id = response_data['id']
     photo = response_data['photo']
     username = response_data['username']
-    response = HttpResponseRedirect(f"https://{MACHINE_URL}/bridg")
+
+    response = HttpResponseRedirect(f"https://{settings.MACHINE_URL}/bridg")
+
     # response = redirect("https://localhost/bridg")
 
     response.set_cookie('email', email)
