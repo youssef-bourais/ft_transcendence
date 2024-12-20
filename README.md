@@ -27,9 +27,6 @@ Update the volume paths to point to your backend directory:
 volumes:
   - /path/to/your/backend:/api/
 ```
-## 3. add `.env` file 
+## 3. add `.env` file in the root of the repo
 
-```
-  .env
-```
 ## 4. run `./rebuild`
