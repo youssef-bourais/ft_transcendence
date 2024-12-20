@@ -26,5 +26,10 @@ Update the volume paths to point to your backend directory:
 ```yaml
 volumes:
   - /path/to/your/backend:/api/
-````
-## 3. run `./rebuild`
+```
+## 3. add `.env` file 
+
+```
+  .env
+```
+## 4. run `./rebuild`
