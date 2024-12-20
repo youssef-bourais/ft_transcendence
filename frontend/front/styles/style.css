@@ -500,11 +500,17 @@ body {
     font-weight: bold;
 }
 
- .sidebar.active .nav-item:hover { 
+ .sidebar.active .nav-item { 
      opacity: 1; 
+    display: block;
  } 
 
+ .sidebar .nav-item { 
+     opacity: 0; 
+    display: none;
+ } 
 
+/*tootip*/
 .sidebar ul li .tooltip {
     /* color: var(--white); */
     position: absolute;
@@ -527,6 +533,15 @@ body {
 .sidebar ul li:hover .tooltip {
     opacity: 1;
 }
+
+
+/**/
+/* span.tooltip:hover() */
+/* { */
+/*     cursor: pointer; */
+/*     display: none; */
+/**/
+/* } */
 
 .sidebar.active ul li .tooltip {
     display: none;
