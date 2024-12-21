@@ -22,14 +22,14 @@ function toggleNavbar(path)
         document.getElementById("user-photo").src = photo;
 
         navbar.classList.add("visible");
-        content.style.visibility = 'visible';     // Show
+        bruh.style.visibility = 'visible';     // Show
 
             
     }
     else 
     {
         navbar.classList.remove("visible");
-        content.style.visibility = 'hidden';      // Hide
+        bruh.style.visibility = 'hidden';      // Hide
     }
 
     
@@ -81,9 +81,10 @@ export const handleLocation = () =>
     currentState.view = path;
     const route = routes[path] ? routes[path] : routes["/404"];
       
-    document.getElementById("con").innerHTML = route.html;
-    if(path == '/' || path == '/register')
-        document.getElementById("loginn").innerHTML = route.html;
+    // if(path === '/' || path === '/register' || path === '/OTP', "/forget_passwd", "/bridg", "/login_42")
+    //     document.getElementById("loginn").innerHTML = route.html;
+    // else
+        document.getElementById("con").innerHTML = route.html;
     
     toggleNavbar(path);
     
@@ -92,7 +93,7 @@ export const handleLocation = () =>
     if(test)
         test.addEventListener("click", (e)=>{
 
-    fetch('https://localhost/api/endpoint/', {method:"GET", credentials:"include"}).then(async e=>{
+        fetch('https://localhost/api/endpoint/', {method:"GET", credentials:"include"}).then(async e=>{
 
             e.json().then(e=>{
                 console.log(e);
