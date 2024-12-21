@@ -1063,3 +1063,96 @@ input[type="search"]::-webkit-search-cancel-button {
     font-size: 0.8em;
 }
 }
+
+.container-chat .container-main .container-outputs
+{
+    position: absolute;
+    top: 150px;
+    left: 28%;
+    width: 36%;
+    height: 80px;
+    border-radius: 15px;
+    background-color: black;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    display: none;
+}
+
+.container-chat .container-main .container-outputs .container-out-image
+{
+    width: 12%;
+    height: 100%;
+    /* background-color: red; */
+    display: flex;
+    /* justify-content: center; */
+    padding-left: 15px;
+    align-items: center;
+    box-sizing: border-box;
+}
+.container-chat .container-main .container-outputs .container-out-image img
+{
+    width: 60px;
+    border-radius: 50%;
+    z-index: 5;
+}
+
+.container-chat .container-main .container-outputs .container-out-name
+{
+    width: 67%;
+    height: 100%;
+    /* background-color: blue; */
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    overflow: hidden;
+    padding-left: 10px;
+}   
+
+.container-chat .container-main .container-outputs .container-out-friend
+{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding-right: 5px;
+}
+
+.container-chat .container-main .container-outputs .container-out-friend button
+{
+    width: 120px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: var(--red);
+    color: white;
+    cursor: pointer;
+}
+
+.container-chat .container-main .container-outputs .container-out-friend button:hover
+{
+    background-color: rgb(173, 1, 1);
+    transition: 0.5s all;
+}
+
+.container-chat .container-main .container-not-found
+{
+    position: absolute;
+    top: 150px;
+    left: 28%;
+    width: 36%;
+    height: 80px;
+    border-radius: 15px;
+    background-color: black;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    display: none;
+}

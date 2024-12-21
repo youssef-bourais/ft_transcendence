@@ -21,9 +21,22 @@ function toggleNavbar(path)
         document.getElementById("user-email").textContent = email;
         document.getElementById("user-photo").src = photo;
         navbar.classList.add("visible");
+        const searchbar = document.getElementById("content");
+        if(searchbar)
+        {
+            alert(1);
+            document.getElementById("content").classList.remove("visible");
+        }
     }
     else 
+    {
+        
+        searchbar.style.display("none");
         navbar.classList.remove("visible");
+
+    }
+
+    
 }
 
 let isNavigating = false;
@@ -72,7 +85,7 @@ export const handleLocation = () =>
     currentState.view = path;
     const route = routes[path] ? routes[path] : routes["/404"];
       
-    document.getElementById("content").innerHTML = route.html;
+    document.getElementById("con").innerHTML = route.html;
     toggleNavbar(path);
     
     // for debugging
@@ -85,6 +98,9 @@ export const handleLocation = () =>
             e.json().then(e=>{
                 console.log(e);
         });
+        
+        const inputSearch = document.getElementById('input-search');
+        inputSearch.style.backgroundColor = "red";
 });
 
 
@@ -112,6 +128,73 @@ document.getElementById("logout").addEventListener("click", function(event) {
     logout(); 
 });
 
+export function createNavBar() {
+    return `
+        <!-- start top nav bar -->
+        <div class="container-top">
+            <div class="container-title">
+                <img src="./images/Pingo.svg" alt="" srcset="">
+            </div>
+            <div class="container-search">
+                <div class="search">
+                    <input type="search" placeholder="Search for people" id="input_search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <i class="fa-solid fa-delete-left" id="delete"></i> 
+                </div>
+            </div>
+            
+            <div class="container-profile">
+                <div class="profile">
+                    <img class="avatars" src="./images/avatar.png" alt="">
+                    <div class="container-notification">
+                        <p>Abdelkarim hajji</p>
+                        <p>2 unread notifications</p>
+                    </div>
+                    <div class="icon-down">
+                        <div class="container-icon">
+                            <i class="fa-solid fa-caret-down"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end top nav bar -->
+    `;
+}
+
+
+
+
+window.onload = () => {
+    const inputSearch = document.getElementById('input_search');
+    if (inputSearch) {
+        // Change background color to red
+    let  output = document.getElementById("container-outputs");
+        
+        // Add 'input' event listener
+        inputSearch.addEventListener('input', (event) => {
+            const username = event.target.value;  // Get the current value of the input
+            
+            // If the username is not empty, send a fetch request
+            if (username.trim()) {
+                fetch(`/api/get/${username}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Response from server:', data);
+                        if(event.target.value != 0)
+                            output.style.display = "flex"
+                        else
+                            output.style.display = "none";
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+            }
+        });
+    } else {
+        console.error("Element with ID 'input-search' not found.");
+    }
+};
 
 window.togglePass = togglePass;
 window.clickEvent = clickEvent;

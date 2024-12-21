@@ -144,6 +144,7 @@
     width: 100%;
     height: 120px;
     display: flex;
+    position: relative;
 }
 
 .container-title
@@ -321,6 +322,8 @@ input[type="search"]::-webkit-search-cancel-button {
     border-radius: 50%;
     cursor: pointer;
 }
+
+
 
 .container-main-home
 {
@@ -520,15 +523,18 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .midle-side .container-update-info .container-form
 {
-    width: 40%;
+    width: 60%;
     height: 500px;
     padding-left: 50px;
     padding-right: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .midle-side .container-update-info .container-switch
 {
-    width: 100%;
+    width: 90%;
     height: 65px;
     border-radius: 20px;
     /* background-color: white; */
@@ -569,7 +575,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 .midle-side .container-update-info .container-inputs
 {
-    width: 100%;
+    width: 90%;
     color: rgba(255, 255, 255, 0.796);
     display: flex;
     padding-top: 30px;
@@ -615,7 +621,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .midle-side .container-update-info .container-email
 {
-    width: 100%;
+    width: 90%;
     height: 100px;
     /* background-color: red; */
     padding-left: 20px; 
@@ -659,7 +665,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .midle-side .container-update-info .container-save
 {
-    width: 100%;
+    width: 90%;
     padding-left: 10px;
     padding-right: 23px;
     display: flex;

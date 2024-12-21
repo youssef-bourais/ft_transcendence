@@ -2,8 +2,9 @@ import { SanitizeInpute, GoLogin, showError, validatePassword, getCookie, delete
 import { handleLocation } from './app.js';
 import { SecureApiRequest} from './api.js';
 
-
 {/* <button id='test' style='z-index:10'>hey</button> */}
+
+
 export const routes = {
 
     "/" : { 
@@ -115,42 +116,7 @@ export const routes = {
         },
     "/profile" : {
         html:`
-            <div class="container-chat">
-            <div class="block-container-nav-bar"></div>
-        
-            <!-- main -->
-            <div class="container-main">
-                
-                <!-- start top nav bat -->
-                <div class="container-top">
-                    <div class="container-title">
-                        <img src="./images/Pingo.svg" alt="" srcset="">
-                    </div>
-                    <div class="container-search">
-                        <div class="search">
-                            <input type="search" placeholder="Serach for people" id="input-search">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <i class="fa-solid fa-delete-left" id="delete"></i> 
-                        </div>
-                    </div>
-                    
-                    <div class="container-profile">
-                        <div class="profile">
-                            <img class="avatars" src="./images/avatar.png" alt="">
-                            <div class="container-notification">
-                                <p class="display-name">Abdelkarim hajji</p>
-                                <p>2 unread notifacation</p>
-                            </div>
-                            <div class="icon-down">
-                                <div class="container-icon">
-                                    <i class="fa-solid fa-caret-down"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- finish end nav bar --> 
-
+            
                 <!-- start main -->
                 <div class="container-main-home">
                     <div class="child-container-main-home">
@@ -258,9 +224,7 @@ export const routes = {
                         <!-- finish make the end of main -->
                     </div>
                 </div>
-                <!-- end main -->
-            </div>
-        </div>`,
+                <!-- end main -->`,
         setup: setupProfilepage,
     },
     "/bridg" : {
@@ -269,122 +233,19 @@ export const routes = {
     },
     "/chat" : {
         html : `
-        <div class="container-chat">
-        <div class="block-container-nav-bar"></div>
-       
-        <!-- main -->
-        <div class="container-main">
-            
-            <!-- start top nav bat -->
-            <div class="container-top">
-                <div class="container-title">
-                    <img src="./images/Pingo.svg" alt="" srcset="">
-                </div>
-                <div class="container-search">
-                    <div class="search">
-                        <input type="search" placeholder="Serach for people" id="input-search">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <i class="fa-solid fa-delete-left" id="delete"></i> 
-                    </div>
-                </div>
-                
-                <div class="container-profile">
-                    <div class="profile">
-                        <img  class="avatars" src="./images/avatar.png" alt="">
-                        <div class="container-notification">
-                            <p class="display-name">Abdelkarim hajji</p>
-                            <p>2 unread notifacation</p>
-                        </div>
-                        <div class="icon-down">
-                            <div class="container-icon">
-                                <i class="fa-solid fa-caret-down"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
+        
             `, 
         setup:() => console.log("chat veiw...."),
     },
-    "/game" : {
-        html : `<div class="container-chat">
-        <div class="block-container-nav-bar"></div>
-       
-        <!-- main -->
-        <div class="container-main">
+    "/game": {
+        html: `
             
-            <!-- start top nav bat -->
-            <div class="container-top">
-                <div class="container-title">
-                    <img src="./images/Pingo.svg" alt="" srcset="">
-                </div>
-                <div class="container-search">
-                    <div class="search">
-                        <input type="search" placeholder="Serach for people" id="input-search">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <i class="fa-solid fa-delete-left" id="delete"></i> 
-                    </div>
-                </div>
-                
-                <div class="container-profile">
-                    <div class="profile">
-                        <img class="avatars" src="./images/avatar.png" alt="">
-                        <div class="container-notification">
-                            <p>Abdelkarim hajji</p>
-                            <p>2 unread notifacation</p>
-                        </div>
-                        <div class="icon-down">
-                            <div class="container-icon">
-                                <i class="fa-solid fa-caret-down"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>`, 
-        setup:() => console.log("Game veiw...."),
+        `,
+        setup: () => console.log("Game view...."),
     },
+    
    "/tournament" : {
         html : `
-        <div class="container-chat">
-        <div class="block-container-nav-bar"></div>
-        
-        <!-- main -->
-        <div class="container-main">
-            
-            <!-- start top nav bat -->
-            <div class="container-top">
-                <div class="container-title">
-                    <img src="./images/Pingo.svg" alt="" srcset="">
-                </div>
-                <div class="container-search">
-                    <div class="search">
-                        <input type="search" placeholder="Serach for people" id="input-search">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <i class="fa-solid fa-delete-left" id="delete"></i> 
-                    </div>
-                </div>
-                
-                <div class="container-profile">
-                    <div class="profile">
-                        <img class="avatars" src="./images/avatar.png" alt="">
-                        <div class="container-notification">
-                            <p>Abdelkarim hajji</p>
-                            <p>2 unread notifacation</p>
-                        </div>
-                        <div class="icon-down">
-                            <div class="container-icon">
-                                <i class="fa-solid fa-caret-down"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- finish end nav bar --> 
-
             <!-- start main -->
             <div class="container-main-home">
                 <div class="child-container-main-home">
@@ -647,8 +508,6 @@ export const routes = {
             </div>
 
             <!-- end main -->
-        </div>
-    </div>
         `, 
         setup:() => console.log("Tournament veiw...."),
     },
@@ -680,7 +539,46 @@ export const routes = {
         html: `<h1>404: Page Not Found</h1><br><h4>The page you're looking for doesn't exist.</h4>`,
         setup: () => console.log("404 page loaded"),
     },
+   
 };
+
+// // search 
+// const inputSearch = document.getElementById('input-search');
+// // if(!inputSearch)
+// //     console.log("hiiiiiiiii");
+// inputSearch.style.backgroundColor = "red";
+
+
+// window.onload = () => {
+//     const inputSearch = document.getElementById('input-search');
+//     if (inputSearch) {
+//         // Change background color to red
+        
+//         // console.log("hooooooo");
+//         // Add 'input' event listener
+//         inputSearch.addEventListener('input', (event) => {
+//             const username = event.target.value;  // Get the current value of the input
+//             inputSearch.style.backgroundColor = "red";
+//             // If the username is not empty, send a fetch request
+//             if (username.trim()) {
+//                 fetch(`/api/get/${username}/`)
+//                     .then(response => response.json())
+//                     .then(data => {
+//                         console.log('Response from server:', data);
+//                         // Do something with the data, like updating the UI
+//                     })
+//                     .catch(error => {
+//                         console.error('Error fetching data:', error);
+//                     });
+//             }
+//         });
+//     } else {
+//         console.error("Element with ID 'input-search' not found.");
+//     }
+// };
+
+
+
 
 function isOnlyDigits(str) {
     return /^\d+$/.test(str);
@@ -921,12 +819,12 @@ async function setupRegisterPage()
             password2: SanitizeInpute(document.getElementById("password2").value),
         };
 
-        var message = validatePassword(UserData.password, UserData.password2, UserData.email);
-        if(message !== null)
-        {
-            showError(message);
-            return;
-        }
+        // var message = validatePassword(UserData.password, UserData.password2, UserData.email);
+        // if(message !== null)
+        // {
+        //     showError(message);
+        //     return;
+        // }
         try 
         {
             const response = await fetch("/api/register/", 
@@ -1052,4 +950,6 @@ async function setupProfilepage()
     // document.getElementById('user-photo').src = data.user.photo;
 
 }
+
+
 
