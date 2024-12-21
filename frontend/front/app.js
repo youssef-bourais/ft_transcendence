@@ -20,20 +20,16 @@ function toggleNavbar(path)
         document.getElementById("user-username").textContent = username;
         document.getElementById("user-email").textContent = email;
         document.getElementById("user-photo").src = photo;
+
         navbar.classList.add("visible");
-        const searchbar = document.getElementById("content");
-        if(searchbar)
-        {
-            alert(1);
-            document.getElementById("content").classList.remove("visible");
-        }
+        content.style.visibility = 'visible';     // Show
+
+            
     }
     else 
     {
-        
-        searchbar.style.display("none");
         navbar.classList.remove("visible");
-
+        content.style.visibility = 'hidden';      // Hide
     }
 
     
@@ -86,6 +82,9 @@ export const handleLocation = () =>
     const route = routes[path] ? routes[path] : routes["/404"];
       
     document.getElementById("con").innerHTML = route.html;
+    if(path == '/' || path == '/register')
+        document.getElementById("loginn").innerHTML = route.html;
+    
     toggleNavbar(path);
     
     // for debugging
