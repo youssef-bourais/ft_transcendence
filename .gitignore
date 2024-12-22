@@ -2,4 +2,4 @@
 __pycache__/
 .env
 docker-compose.yml
-postgres_data 
+postgres_data/
