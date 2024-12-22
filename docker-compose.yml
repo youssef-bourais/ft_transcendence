@@ -35,7 +35,7 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_DB=${DB_NAME}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./postgres_data:/var/lib/postgresql/data
     networks:
       - network
     # restart: always
@@ -43,6 +43,6 @@ services:
 networks:
     network:
 
-volumes:
-  postgres_data:
-    driver: local
+# volumes:
+#   postgres_data:
+#     driver: local

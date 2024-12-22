@@ -73,6 +73,9 @@ CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be sent with the request
 # Application definition
 
 INSTALLED_APPS = [
+
+    # 'rest_framework',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -88,8 +91,17 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_extensions',
     'rest_framework_simplejwt.token_blacklist',
+
+    'friendship',
+    # 'rest_friendship',
 ]
 
+# REST_FRIENDSHIP = {
+#    'PERMISSION_CLASSES': [
+#       'rest_framework.permissions.IsAuthenticated',
+#    ],
+#    'USER_SERIALIZER': 'rest_friendship.serializers.FriendSerializer',
+# },
 #new
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -114,7 +126,7 @@ REST_FRAMEWORK = {
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=20),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 
     'ROTATE_REFRESH_TOKENS': True,  # creates a new refresh token on use

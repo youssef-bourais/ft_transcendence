@@ -19,7 +19,10 @@ export async function refreshAccessToken()
         if (!response.ok) 
         {
             alert("Failed to refresh the access token. Please log in again.");
-            GoLogin();
+    history.pushState({}, "", "/");
+    handleLocation();
+
+            // GoLogin();
         }
 
         const data = await response.json();

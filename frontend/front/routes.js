@@ -935,13 +935,22 @@ function handleRedirect()
     handleLocation();
 }
 
+
+// function refresh_creadentel()
+// {
+//
+// }
+
+
 async function setupProfilepage()
 {
 
-    // const data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
+    const data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
 
-    console.log("data, ", localStorage.getItem("photo"));
-    console.log("data, ", localStorage.getItem("email"));
+    // refresh_creadentel(data);
+
+    // console.log("data, ", localStorage.getItem("photo"));
+    // console.log("data, ", localStorage.getItem("email"));
 
 
     // document.getElementById('user-id').innerText = data.user.id;

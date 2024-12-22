@@ -64,6 +64,7 @@ export async function logout()
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('photo');
     localStorage.removeItem('email');
+    localStorage.removeItem('message');
 
     // alert('Logged out!');
     history.pushState({}, "", "/");
@@ -77,7 +78,6 @@ export function GoLogin()
 
     history.pushState({}, "", "/");
     handleLocation();
-
 }
 
 

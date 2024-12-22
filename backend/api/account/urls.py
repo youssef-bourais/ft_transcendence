@@ -1,6 +1,6 @@
 
 from django.urls import path, include
-from .views import  endpoint, get_user, register_user, delete_user, login_with_42, callback_from_42 , custom_token_obtain_pair, logouthttponly 
+from .views import  endpoint, get_friends, get_user, register_user, delete_user, login_with_42, callback_from_42 , custom_token_obtain_pair, logouthttponly, add_friend, get_friends, list_incoming_requests, remove_friend, respond_friend_request, remove_friend 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -22,5 +22,15 @@ urlpatterns = [
     path('token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
 
     path('token/blacklist2/', logouthttponly, name='token_blacklist2'),
-    path('endpoint/', endpoint, name='endpoint')
+
+
+
+    path('endpoint/', endpoint, name='endpoint'),
+
+    path('friend/add/', add_friend, name='add_friend'),
+    path('friend/list_friends_request/', list_incoming_requests, name='list_incoming_requests'),
+    path('friend/get_friends/', get_friends, name='get_friends'),
+    path('friend/respond_friend_request/', respond_friend_request, name='respond_friend_request'),
+    path('friend/remove_friend/', remove_friend, name='remove_friend'),
+
 ]

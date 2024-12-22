@@ -3,6 +3,14 @@ import { togglePass, logout, clickEvent } from './utils.js';
 
 let currentState = { view: "login" };
 
+function toggle_visibility(id) 
+{
+    var e = document.getElementById(id);
+    if ( e.style.display == 'block' )
+        e.style.display = 'none';
+    else
+        e.style.display = 'block';
+}
 
 function toggleNavbar(path) 
 {
@@ -21,17 +29,29 @@ function toggleNavbar(path)
         document.getElementById("user-email").textContent = email;
         document.getElementById("user-photo").src = photo;
 
-        navbar.classList.add("visible");
-        bruh.style.visibility = 'visible';     // Show
+        // navbar.classList.add("visible");
+        // bruh.classList.add("visible");
 
-            
+        navbar.style.display = 'block';
+        navbar.style.opacity = '1';
+
+        // bruh.style.display = 'block';
+        // bruh.style.opacity = '1';
+        bruh.style.display = 'flex';
+
+        // navbar.offsetHeight; // Trigger a reflow
+        // location.reload();
+        // navbar.style.display = 'block';     // Show
+        // bruh.style.display = 'block';     // Show
     }
     else 
     {
-        navbar.classList.remove("visible");
-        bruh.style.visibility = 'hidden';      // Hide
+        // navbar.classList.remove("visible");
+        // navbar.style.visibility = 'hidden';
+        // bruh.style.visibility = 'hidden';      // Hide
+        bruh.style.display = 'none';
+        navbar.style.display = 'none';
     }
-
     
 }
 
@@ -84,9 +104,10 @@ export const handleLocation = () =>
     // if(path === '/' || path === '/register' || path === '/OTP', "/forget_passwd", "/bridg", "/login_42")
     //     document.getElementById("loginn").innerHTML = route.html;
     // else
-        document.getElementById("con").innerHTML = route.html;
-    
+
     toggleNavbar(path);
+    document.getElementById("con").innerHTML = route.html;
+    
     
     // for debugging
     const test = document.getElementById("test")
