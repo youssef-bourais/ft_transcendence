@@ -1068,8 +1068,8 @@ input[type="search"]::-webkit-search-cancel-button {
 {
     position: absolute;
     top: 150px;
-    left: 28%;
-    width: 36%;
+    left: 5%;
+    width: 90%;
     height: 80px;
     border-radius: 15px;
     background-color: black;
@@ -1083,7 +1083,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .container-chat .container-main .container-outputs .container-out-image
 {
-    width: 12%;
+    width: 80px;
     height: 100%;
     /* background-color: red; */
     display: flex;
@@ -1121,6 +1121,7 @@ input[type="search"]::-webkit-search-cancel-button {
     align-items: center;
     box-sizing: border-box;
     padding-right: 5px;
+    display: none;
 }
 
 .container-chat .container-main .container-outputs .container-out-friend button
@@ -1140,19 +1141,31 @@ input[type="search"]::-webkit-search-cancel-button {
     transition: 0.5s all;
 }
 
-.container-chat .container-main .container-not-found
+
+.container-chat .container-main .container-outputs .container-out-friend2
 {
-    position: absolute;
-    top: 150px;
-    left: 28%;
-    width: 36%;
-    height: 80px;
-    border-radius: 15px;
-    background-color: black;
-    z-index: 1000;
+    width: 20%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
+    padding-right: 5px;
+}
+
+.container-chat .container-main .container-outputs .container-out-friend2 button
+{
+    width: 120px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: var(--red);
     color: white;
-    display: none;
+    cursor: pointer;
+}
+
+.container-chat .container-main .container-outputs .container-out-friend2 button:hover
+{
+    background-color: rgb(173, 1, 1);
+    transition: 0.5s all;
 }
