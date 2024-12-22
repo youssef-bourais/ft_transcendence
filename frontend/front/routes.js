@@ -1,6 +1,7 @@
 import { SanitizeInpute, GoLogin, showError, validatePassword, getCookie, deleteCookie, clickEvent} from './utils.js';
 import { handleLocation } from './app.js';
 import { SecureApiRequest} from './api.js';
+import { loadChatInterface } from './chat.js';
 
 {/* <button id='test' style='z-index:10'>hey</button> */}
 
@@ -233,9 +234,8 @@ export const routes = {
     },
     "/chat" : {
         html : `
-        
-            `, 
-        setup:() => console.log("chat veiw...."),
+        <div class="container-main" id="container-main"><div id="chat-container"></div></div>`, 
+        setup: loadChatInterface,
     },
     "/game": {
         html: `

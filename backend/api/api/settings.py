@@ -81,7 +81,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
-    #new 
+    #new
+    'chat',
+    'channels',
     'rest_framework',
     'account',
     'corsheaders',
@@ -89,6 +91,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework_simplejwt.token_blacklist',
 ]
+
+ASGI_APPLICATION = 'api.asgi.application'
 
 #new
 
@@ -144,6 +148,12 @@ DATABASES = {
 #         'NAME': BASE_DIR / 'db.sqlite3',         # Database file name
 #     }
 # }
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 MIDDLEWARE = [
     #new 

@@ -6,7 +6,7 @@ let currentState = { view: "login" };
 
 function toggleNavbar(path) 
 {
-    const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP"];
+    const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP", "chat"];
 
 
     if (!isAuthenticatedRoutes.includes(path)) 
