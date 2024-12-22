@@ -105,9 +105,8 @@ export const handleLocation = () =>
     //     document.getElementById("loginn").innerHTML = route.html;
     // else
 
-    toggleNavbar(path);
     document.getElementById("con").innerHTML = route.html;
-    
+    toggleNavbar(path);
     
     // for debugging
     const test = document.getElementById("test")

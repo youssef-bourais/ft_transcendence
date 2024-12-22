@@ -98,7 +98,7 @@ def get_user(request, id_or_name):
     If it contains a string, it will search by username.
     """
     if id_or_name == "0":
-        users = CustomUser.objects.all().values('id', 'username', 'email', 'photo', 'otp_code', 'otp_created_at', 'is_2fa_enabled', 'friends')
+        users = CustomUser.objects.all().values('id', 'username', 'email', 'photo', 'otp_code', 'otp_created_at', 'is_2fa_enabled')#, 'friends')
         return Response({'users': list(users)}, status=status.HTTP_200_OK)
 
     try:
@@ -112,15 +112,17 @@ def get_user(request, id_or_name):
             'username': user.username,
             'email': user.email,
             'photo': user.photo,
-            'is_2fa_enabled':user.is_2fa_enabled
+            'is_2fa_enabled':user.is_2fa_enabled,
+            # 'friends': list(user.friends.values('id', 'username', 'email'))
+            # 'friends':user.friends
         }
         return Response(user_data, status=status.HTTP_200_OK)
     except CustomUser.DoesNotExist:
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['DELETE'])
-# @permission_classes([AllowAny])
-@permission_classes([IsDeveloper])
+@permission_classes([AllowAny])
+# @permission_classes([IsDeveloper])
 def delete_user(request, id):
     print("delete_user===========DELETE", request.data)
     try:
@@ -348,7 +350,6 @@ def remove_friend(request):
     except user.DoesNotExist:
         return Response({"error": "Friend not found."}, status=status.HTTP_404_NOT_FOUND)
 
-    # Check if the user is actually friends with the specified user
     if not Friend.objects.are_friends(request.user, friend):
         return Response({"error": "You are not friends with this user."}, status=status.HTTP_400_BAD_REQUEST)
 
