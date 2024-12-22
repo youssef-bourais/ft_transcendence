@@ -101,23 +101,38 @@
                 <!-- main -->
                 <div class="container-main" id="container-main">
                     <!-- start top nav bar -->
-                    <div id="bruh" class="container-top" style="position: relative;">
+                    <div id="bruh" class="container-top" >
                         <div class="container-title">
                             <img src="./images/Pingo.svg" alt="" srcset="">
                         </div>
-                        <div class="container-search">
+                        <div class="container-search" style="position: relative;">
                             <div class="search">
                                 <input type="search" placeholder="Search for people" id="input_search">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                                 <i class="fa-solid fa-delete-left" id="delete"></i> 
                             </div>
+                            <div class="container-outputs" id="container-outputs">
+                                <div class="container-out-image">
+                                    <img id="img-search" src="" alt="" srcset="">
+                                </div>
+                                <div class="container-out-name">
+                                    <p id="name-search"></p>
+                                </div>
+                                <div class="container-out-friend" id="button-friend">
+                                    <button >profile</button>
+                                </div>
+                                <div class="container-out-friend2" id="button-friend2">
+                                    <button >No profile</button>
+                                </div>
+                            </div>
+
                         </div>
                         
                         <div class="container-profile">
                             <div class="profile">
-                                <img class="avatars" src="./images/avatar.png" alt="">
+                                <img class="avatars" src="" alt="">
                                 <div class="container-notification">
-                                    <p>Abdelkarim hajji</p>
+                                    <p id="nameNotification">Abdelkarim hajji</p>
                                     <p>2 unread notifications</p>
                                 </div>
                                 <div class="icon-down">
@@ -128,21 +143,7 @@
                             </div>
                         </div>
 
-                        <div class="container-outputs" id="container-outputs">
-                            <div class="container-out-image">
-                                <img src="./images/avatar.png" alt="" srcset="">
-                            </div>
-                            <div class="container-out-name">
-                                <p>abdelkarim hajji</p>
-                            </div>
-                            <div class="container-out-friend">
-                                <button>Friend</button>
-                            </div>
-                        </div>
-
-                        <div class="container-not-found" id="not-found">
-                            <p>Not found</p>
-                        </div>
+                        
                     </div>
                     <!-- end top nav bar -->
 
@@ -152,8 +153,8 @@
                 </div>
             </div>
         </div>
-        <div id="loginn">
-        </div>
+        <!-- <div id="loginn">
+        </div> -->
 
         <script type="module" src="app.js"> </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

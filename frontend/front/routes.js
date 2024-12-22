@@ -155,29 +155,29 @@ export const routes = {
                                     </div>
                                     <div class="container-inputs">
                                         <div class="container-input">
-                                            <p>First Name</p>
+                                            <p>Username</p>
                                             <div class="group">
-                                                <input type="text">
+                                                <p id="userNameProfile"></p>
                                                 <i class="fa-solid fa-user"></i>
                                             </div>
                                         </div>
                                         <div class="container-input">
-                                            <p>Last Name</p>
+                                            <p>Email</p>
                                             <div class="group">
-                                                <input type="text">
+                                                <p id="emailProfile"></p>
                                                 <i class="fa-solid fa-user"></i>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="container-email">
-                                        <p>Username</p>
+                                        <p>Password</p>
                                         <div class="group">
-                                            <input type="text" >
+                                            <input type="text" disabled  value="************">
                                             <i class="fa-solid fa-at"></i>
                                         </div>
                                     </div>
                                     <div class="container-save">
-                                        <button><i class="fa-solid fa-check"></i> Save Changes</button>
+                                        <button>Edit profile</button>
                                     </div>
                                 </div>
                             </div>

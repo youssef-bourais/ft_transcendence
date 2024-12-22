@@ -6,7 +6,7 @@ services:
     depends_on:
       - api
     volumes:
-    - /Users/ybourais/Desktop/.Desktop/ft_transcendence/frontend/front/:/var/www/html/
+    - /Users/ahajji/Desktop/ft_transcendence/frontend/front/:/var/www/html/
     ports:
       - '443:443'
     networks:
@@ -19,14 +19,14 @@ services:
     depends_on:
       - postgres
     volumes:
-      - /Users/ybourais/Desktop/.Desktop/ft_transcendence/backend/api/:/app
+      - /Users/ahajji/Desktop/ft_transcendence/backend/api/:/app
     ports:
       - '8000:8000'
     networks:
       - network
     restart: always
     env_file:
-      - /Users/ybourais/Desktop/.Desktop/ft_transcendence/.env
+      - /Users/ahajji/Desktop/ft_transcendence/.env
   postgres:
     container_name: postgres
     image: postgres:latest
