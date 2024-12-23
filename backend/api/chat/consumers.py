@@ -65,7 +65,7 @@ class DirectMessageConsumer(AsyncWebsocketConsumer):
         body = data.get('body')
         recipient = data.get('recipient')
         sender = data.get('sender')
-        print(body + "   " + recipient + "    " + sender)
+        # print(body + "   " + recipient + "    " + sender)
         if body and recipient:
             await self.save_message(sender, recipient, body)
             

@@ -6,7 +6,7 @@ services:
     depends_on:
       - api
     volumes:
-    - /Users/eel-hour/ft_transcendence/frontend/front/:/var/www/html/
+    - /Users/eel-hour/ft_transcendence_mahdi/frontend/front/:/var/www/html/
     ports:
       - '443:443'
     networks:
@@ -19,14 +19,14 @@ services:
     depends_on:
       - postgres
     volumes:
-      - /Users/eel-hour/ft_transcendence/backend/api/:/app
+      - /Users/eel-hour/ft_transcendence_mahdi/backend/api/:/app
     ports:
       - '8000:8000'
     networks:
       - network
     restart: always
     env_file:
-      - /Users/eel-hour/ft_transcendence/.env
+      - /Users/eel-hour/ft_transcendence_mahdi/.env
   postgres:
     container_name: postgres
     image: postgres:latest
@@ -38,7 +38,7 @@ services:
       - ./postgres_data:/var/lib/postgresql/data
     networks:
       - network
-    # restart: always
+    restart: always
 
 networks:
     network:

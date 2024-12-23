@@ -3,6 +3,14 @@ import { togglePass, logout, clickEvent } from './utils.js';
 
 let currentState = { view: "login" };
 
+function toggle_visibility(id) 
+{
+    var e = document.getElementById(id);
+    if ( e.style.display == 'block' )
+        e.style.display = 'none';
+    else
+        e.style.display = 'block';
+}
 
 function toggleNavbar(path) 
 {
@@ -21,17 +29,29 @@ function toggleNavbar(path)
         document.getElementById("user-email").textContent = email;
         document.getElementById("user-photo").src = photo;
 
-        navbar.classList.add("visible");
-        bruh.style.visibility = 'visible';     // Show
+        // navbar.classList.add("visible");
+        // bruh.classList.add("visible");
 
-            
+        navbar.style.display = 'block';
+        navbar.style.opacity = '1';
+
+        // bruh.style.display = 'block';
+        // bruh.style.opacity = '1';
+        bruh.style.display = 'flex';
+
+        // navbar.offsetHeight; // Trigger a reflow
+        // location.reload();
+        // navbar.style.display = 'block';     // Show
+        // bruh.style.display = 'block';     // Show
     }
     else 
     {
-        navbar.classList.remove("visible");
-        bruh.style.visibility = 'hidden';      // Hide
+        // navbar.classList.remove("visible");
+        // navbar.style.visibility = 'hidden';
+        // bruh.style.visibility = 'hidden';      // Hide
+        bruh.style.display = 'none';
+        navbar.style.display = 'none';
     }
-
     
 }
 
@@ -84,8 +104,8 @@ export const handleLocation = () =>
     // if(path === '/' || path === '/register' || path === '/OTP', "/forget_passwd", "/bridg", "/login_42")
     //     document.getElementById("loginn").innerHTML = route.html;
     // else
-        document.getElementById("con").innerHTML = route.html;
-    
+
+    document.getElementById("con").innerHTML = route.html;
     toggleNavbar(path);
     
     // for debugging
@@ -128,39 +148,7 @@ document.getElementById("logout").addEventListener("click", function(event) {
     logout(); 
 });
 
-export function createNavBar() {
-    return `
-        <!-- start top nav bar -->
-        <div class="container-top">
-            <div class="container-title">
-                <img src="./images/Pingo.svg" alt="" srcset="">
-            </div>
-            <div class="container-search">
-                <div class="search">
-                    <input type="search" placeholder="Search for people" id="input_search">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <i class="fa-solid fa-delete-left" id="delete"></i> 
-                </div>
-            </div>
-            
-            <div class="container-profile">
-                <div class="profile">
-                    <img class="avatars" src="./images/avatar.png" alt="">
-                    <div class="container-notification">
-                        <p>Abdelkarim hajji</p>
-                        <p>2 unread notifications</p>
-                    </div>
-                    <div class="icon-down">
-                        <div class="container-icon">
-                            <i class="fa-solid fa-caret-down"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end top nav bar -->
-    `;
-}
+
 
 
 
@@ -168,34 +156,61 @@ export function createNavBar() {
 window.onload = () => {
     const inputSearch = document.getElementById('input_search');
     if (inputSearch) {
-        // Change background color to red
     let  output = document.getElementById("container-outputs");
-        
-        // Add 'input' event listener
+    let  notFound = document.getElementById("not-found");
+    let  nameSearch = document.getElementById("name-search");
+    let  imgSearch = document.getElementById("img-search");
+    let  buttonFriend = document.getElementById("button-friend");
+    let  buttonFriend2 = document.getElementById("button-friend2");
+    let  userNameFriend = document.getElementById("userNameProfile")
+
+
+    userNameFriend.innerHTML = localStorage.getItem("username");
+    let  emailProfile = document.getElementById("emailProfile");
+    emailProfile.innerHTML = localStorage.getItem("email");
+    let  nameNotification = document.getElementById("nameNotification")
+    nameNotification.innerHTML = localStorage.getItem("username");
         inputSearch.addEventListener('input', (event) => {
-            const username = event.target.value;  // Get the current value of the input
+            const username = event.target.value;  
+            let valid = 0;
             
-            // If the username is not empty, send a fetch request
             if (username.trim()) {
                 fetch(`/api/get/${username}/`)
                     .then(response => response.json())
                     .then(data => {
                         console.log('Response from server:', data);
-                        if(event.target.value != 0)
-                            output.style.display = "flex"
+                        if(data.error == "User not found")
+                        {
+                            nameSearch.innerHTML = "User not found";
+                            imgSearch.src = "./images/notFound.png";
+                            buttonFriend.style.display = "none"
+                            buttonFriend2.style.display = "flex"
+                        }
                         else
-                            output.style.display = "none";
+                        {
+
+                            nameSearch.innerHTML = data.username;
+                            imgSearch.src = data.photo;
+                            buttonFriend.style.display = "flex"
+                            buttonFriend2.style.display = "none"
+                        }
+                        console.log("i am here in data");
                     })
                     .catch(error => {
                         console.error('Error fetching data:', error);
+                        // nameSearch.innerHTML = "NotFound";
+                        // console.log("i am there error data");
                     });
             }
+            if(event.target.value.length > 0)
+                output.style.display = "flex"
+            else if(event.target.value <= 0)
+                output.style.display = "none";
         });
     } else {
         console.error("Element with ID 'input-search' not found.");
     }
 };
-
 window.togglePass = togglePass;
 window.clickEvent = clickEvent;
 window.logout = logout;

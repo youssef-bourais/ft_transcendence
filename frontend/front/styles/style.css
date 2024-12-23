@@ -189,7 +189,7 @@ h1 {
 
 #login:hover, #login-intra:hover, .register:hover , #submit:hover {
     transform: scale(1.02);
-    background-color: var(--blue);
+    background-color: var(--red);
 }
 
 

@@ -9,13 +9,20 @@ from django.conf import settings
 from rest_framework.permissions import IsAuthenticated
 from .serializers import UserRegistrationSerializer
 import json
-from .permissions import IsDeveloper
+from .permissions import IsDeveloper 
 from account.models import CustomUser
+from django.contrib.auth.models import AnonymousUser
+from friendship.models import FriendshipRequest
+from django.contrib.auth import get_user_model
 
 from django.contrib.auth import authenticate
 from django.utils.timezone import now
 from datetime import timedelta
 from .utils import generate_otp, send_otp_email
+
+from django.http import Http404
+from friendship.models import Friend
+from django.shortcuts import get_object_or_404
 # from django.http import HttpeResponse
 # from django.views.decorators.csrf import csrf_exempt
 
@@ -58,9 +65,10 @@ def custom_token_obtain_pair(request):
     if not user:
         return Response({"error": "Invalid username or password."}, status=status.HTTP_400_BAD_REQUEST)
     useremail = user.email
-    bool = True
-    if(bool):
-    # if user.is_2fa_enabled:
+    
+    # bool = True
+    # if(bool):
+    if user.is_2fa_enabled:
         if not otp:
             generate_otp(user)
             send_otp_email(user)
@@ -90,7 +98,7 @@ def get_user(request, id_or_name):
     If it contains a string, it will search by username.
     """
     if id_or_name == "0":
-        users = CustomUser.objects.all().values('id', 'username', 'email', 'photo', 'otp_code', 'otp_created_at', 'is_2fa_enabled')
+        users = CustomUser.objects.all().values('id', 'username', 'email', 'photo', 'otp_code', 'otp_created_at', 'is_2fa_enabled')#, 'friends')
         return Response({'users': list(users)}, status=status.HTTP_200_OK)
 
     try:
@@ -104,15 +112,17 @@ def get_user(request, id_or_name):
             'username': user.username,
             'email': user.email,
             'photo': user.photo,
-            'is_2fa_enabled':user.is_2fa_enabled
+            'is_2fa_enabled':user.is_2fa_enabled,
+            # 'friends': list(user.friends.values('id', 'username', 'email'))
+            # 'friends':user.friends
         }
         return Response(user_data, status=status.HTTP_200_OK)
     except CustomUser.DoesNotExist:
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['DELETE'])
-# @permission_classes([AllowAny])
-@permission_classes([IsDeveloper])
+@permission_classes([AllowAny])
+# @permission_classes([IsDeveloper])
 def delete_user(request, id):
     print("delete_user===========DELETE", request.data)
     try:
@@ -221,5 +231,138 @@ def logouthttponly(request):
     response = Response({"message": "Logged out successfully"})
     # response.delete_cookie('access_token')
     return response
+
+
+
+
+#  curl -X POST http://127.0.0.1:8000/api/friend/add/ \                                                                                                                                                      ─╯
+# -H "Authorization: Bearer fes" \
+# -H "Content-Type: application/json" \
+# -d '{"to_user": "1"}'
+
+@api_view(['POST'])
+# @permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
+def add_friend(request):
+    to_user_id = request.data.get('to_user')
+    
+    if not to_user_id:
+        return Response({"error": "'to_user' field is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if not str(to_user_id).isdigit():
+        return Response({"error": "'to_user' must be a numeric value."}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        to_user = get_object_or_404(CustomUser, id=to_user_id)
+    except Http404:
+        return Response({"error": "user not found."}, status=status.HTTP_404_NOT_FOUND)   
+    try:
+        Friend.objects.add_friend(request.user, to_user)
+        return Response({"message": "Friend request sent."}, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+#  curl http://127.0.0.1:8000/api/friend/list_request/ \                                                                                                                                                     ─╯
+# -H "Authorization: Bearer eyJ
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_incoming_requests(request):
+    incoming_requests = Friend.objects.unrejected_requests(user=request.user)
+
+    requests_list = []
+    for fr in incoming_requests:
+        friend_request_data = {
+            "id": fr.id, 
+            "from_user": fr.from_user.username, 
+            "from_user_id": fr.from_user.id 
+        }
+        requests_list.append(friend_request_data)
+    return Response({"incoming_requests": requests_list}, status=status.HTTP_200_OK)
+
+
+# curl -X POST http://127.0.0.1:8000/api/friend/respond/ \
+# -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+# -H "Content-Type: application/json" \
+# -d '{"request_id": 1, "action": "accept"}'
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def respond_friend_request(request):
+    request_id = request.data.get('request_id')
+    action = request.data.get('action') 
+    
+    if not request_id or not action:
+        return Response({"error": "'request_id' and 'action' fields are required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        friend_request = FriendshipRequest.objects.get(id=request_id, to_user=request.user)
+    except FriendshipRequest.DoesNotExist:
+        return Response({"error": "Friend request not found."}, status=status.HTTP_404_NOT_FOUND)
+    
+    if action == 'accept':
+        friend_request.accept()
+        return Response({"message": "Friend request accepted."}, status=status.HTTP_200_OK)
+    elif action == 'reject':
+        friend_request.reject()
+        return Response({"message": "Friend request rejected."}, status=status.HTTP_200_OK)
+    else:
+        return Response({"error": "Invalid action. Use 'accept' or 'reject'."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+#  curl  http://127.0.0.1:8000/api/friend/get_friends/ \                                                                                                                                                                         ─╯
+# -H "Authorization: Bearer eyJh
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_friends(request):
+    friend_list = []
+    if isinstance(request.user, AnonymousUser):
+        return Response({"error": "User not authenticated."}, status=401)
+    
+    friends = Friend.objects.friends(request.user)
+
+    for friend in friends:
+        friend_data = {
+            "id": friend.id,
+            "username": friend.username,
+            "photo": friend.photo if friend.photo else None
+        }
+        friend_list.append(friend_data)
+    return Response({"friends": friend_list})
+
+
+# curl -X POST http://127.0.0.1:8000/api/friend/remove_friend/ \
+# -H "Authorization: Bearer " \
+# -H "Content-Type: application/json" \
+# -d '{"friend_id": 4}'
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def remove_friend(request):
+    friend_id = request.data.get("friend_id")
+    
+    if not friend_id:
+        return Response({"error": "'friend_id' is required."}, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        user = get_user_model()
+        friend = user.objects.get(id=friend_id)
+    except user.DoesNotExist:
+        return Response({"error": "Friend not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    if not Friend.objects.are_friends(request.user, friend):
+        return Response({"error": "You are not friends with this user."}, status=status.HTTP_400_BAD_REQUEST)
+
+    Friend.objects.remove_friend(request.user, friend)
+    return Response({"message": "Friend removed successfully."}, status=status.HTTP_200_OK)
+
+
+
+
+
+
+
+
+
 
 
