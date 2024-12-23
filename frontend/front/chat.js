@@ -99,14 +99,18 @@ function connectWebSocket() {
 
 async function fetchFriends() {
     // try {
-    //     const response = await SecureApiRequest('/friends/');
+    //     const response = await SecureApiRequest('/api/friend/get_friends/');
+    //     console.log("status:::::::::::::::::::::::::::", response.status);
     //     if (!response.ok) {
+    //         console.log("status: ", response.status);
     //         throw new Error(`HTTP error! status: ${response.status}`);
     //     }
     //     const friendData = await response.json();
+    //
     //     friends = friendData.map(friend => ({
-    //         name: friend.friend_name,
-    //         avatar: friend.avatar_url
+    //         id:friend.id,
+    //         name: friend.username,
+    //         avatar: friend.photo
     //     }));
     //     renderFriends();
     // } catch (error) {
