@@ -45,7 +45,7 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
     console.log("lasttime: ", token);
     if(token === null)
     {
-        GoLogin();
+        // GoLogin();
         alert("please login .....");
         return;
     }
@@ -81,7 +81,7 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
                 console.error("Error refreshing access token.");
                 alert("Authentication failed. Please log in again.");
                 console.log("logout......")
-                GoLogin();
+                // GoLogin();
             }
         }
         if (response.ok) 

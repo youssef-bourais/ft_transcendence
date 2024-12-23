@@ -15,11 +15,11 @@ function toggle_visibility(id)
 
 function toggleNavbar(path) 
 {
-    const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP"];
+    const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP"]
 
 
     if (!isAuthenticatedRoutes.includes(path)) 
-    {
+    { 
         const username = localStorage.getItem("username");
         const email = localStorage.getItem("email");
         const photo = localStorage.getItem("photo"); 
@@ -94,20 +94,27 @@ function handleEvent(selector, isNavbar = false)
         });
     }
 }
+let  output = document.getElementById("container-outputs");
+let inputSearch = document.getElementById('input_search');
 
 export const handleLocation = () => 
 {
-    console.log("handleLocation=========");
-   
+    // output.style.display = "none";
+    inputSearch.value = ""
     
     const path = window.location.pathname;
     currentState.view = path;
     
-    if(path == "/profile")
-    {
+    // if(path == "/profile")
+    // {
+      
+            setTimeout(function() {
+            renderAll();
+        }, 100); 
+    
         console.log(path);
-        renderAll()
-    }
+    // }
+
     const route = routes[path] ? routes[path] : routes["/404"];
       
     // if(path === '/' || path === '/register' || path === '/OTP', "/forget_passwd", "/bridg", "/login_42")
@@ -164,9 +171,9 @@ document.getElementById("logout").addEventListener("click", function(event) {
 function renderAll() {
         
     console.log("render all ok bro ")
-    const inputSearch = document.getElementById('input_search');
+   ;
     if (inputSearch) {
-    let  output = document.getElementById("container-outputs");
+    
     let  notFound = document.getElementById("not-found");
     let  nameSearch = document.getElementById("name-search");
     let  imgSearch = document.getElementById("img-search");
@@ -181,7 +188,7 @@ function renderAll() {
         let validForm = 0;
         let validPassword = 0;
 
-    setTimeout(function() {
+   
         let  userNameFriend = document.getElementById("userNameProfile")
         if(userNameFriend)
         userNameFriend.innerHTML = localStorage.getItem("username");
@@ -197,61 +204,68 @@ function renderAll() {
             let containerEdit = document.getElementById("container-edit");
             let editProfile = document.getElementById("edit-profile");
             let containerError = document.getElementById("container-error")
-            cancel.addEventListener("click", function() {
-                containerEdit.style.display = "none";
-                containerError.style.display = "none"
-                validForm = 0;
-                validPassword = 0;
-                usernameIdProfile.value = ""
-                emailIdProfile.value = ""
-                passwordIdProfile.value = ""
-                passwordIdProfileConfirme.value = ""
-              });
-
-            editProfile.addEventListener("click", function() {
-                containerEdit.style.display = "flex";
-            });
-
-            
-            
-
-            save.addEventListener("click", function() {
-            if(usernameIdProfile.value == "" || emailIdProfile.value == "" || passwordIdProfile.value == "" || passwordIdProfileConfirme.value == "")
-                validForm = 1;
-            else
-                validForm = 0
-
-            if(passwordIdProfile.value != passwordIdProfileConfirme.value)
-                validPassword = 1;
-            else
-                validPassword = 0;
-                if(validForm == 1)
-                {
-                    containerError.style.display ="flex";
-                    errorMessage.innerHTML = "Error in input !!!"
-                    console.log("lowla", usernameIdProfile.value)
-                }
-                else if(validPassword == 1)
-                {
-                    containerError.style.display ="flex";
-                    errorMessage.innerHTML = "password not correct !!!"
-                    console.log("tania")
-                }
-                else
-                {
-
-                    containerError.style.display = "none"
+            if(cancel)
+            {
+                cancel.addEventListener("click", function() {
                     containerEdit.style.display = "none";
+                    containerError.style.display = "none"
                     validForm = 0;
                     validPassword = 0;
                     usernameIdProfile.value = ""
                     emailIdProfile.value = ""
                     passwordIdProfile.value = ""
                     passwordIdProfileConfirme.value = ""
-                }
-                console.log("hiiiiii karim fin")
-            });
-            }, 50); 
+                  });
+    
+                editProfile.addEventListener("click", function() {
+                    containerEdit.style.display = "flex";
+                });
+            }
+            
+
+            
+            
+            if(save)
+            {
+                save.addEventListener("click", function() {
+                    if(usernameIdProfile.value == "" || emailIdProfile.value == "" || passwordIdProfile.value == "" || passwordIdProfileConfirme.value == "")
+                        validForm = 1;
+                    else
+                        validForm = 0
+        
+                    if(passwordIdProfile.value != passwordIdProfileConfirme.value)
+                        validPassword = 1;
+                    else
+                        validPassword = 0;
+                        if(validForm == 1)
+                        {
+                            containerError.style.display ="flex";
+                            errorMessage.innerHTML = "Error in input !!!"
+                            console.log("lowla", usernameIdProfile.value)
+                        }
+                        else if(validPassword == 1)
+                        {
+                            containerError.style.display ="flex";
+                            errorMessage.innerHTML = "password not correct !!!"
+                            console.log("tania")
+                        }
+                        else
+                        {
+        
+                            containerError.style.display = "none"
+                            containerEdit.style.display = "none";
+                            validForm = 0;
+                            validPassword = 0;
+                            usernameIdProfile.value = ""
+                            emailIdProfile.value = ""
+                            passwordIdProfile.value = ""
+                            passwordIdProfileConfirme.value = ""
+                        }
+                        console.log("hiiiiii karim fin")
+                    });
+            }
+            
+           
     
     let  nameNotification = document.getElementById("nameNotification")
     nameNotification.innerHTML = localStorage.getItem("username");
@@ -273,7 +287,6 @@ function renderAll() {
                         }
                         else
                         {
-
                             nameSearch.innerHTML = data.username;
                             imgSearch.src = data.photo;
                             buttonFriend.style.display = "flex"
@@ -287,10 +300,17 @@ function renderAll() {
                         // console.log("i am there error data");
                     });
             }
+            
+            buttonFriend.addEventListener("click", function() {
+                inputSearch.value = "";
+               
+                // handleLocation("/eachprofile")
+            });
             if(event.target.value.length > 0)
                 output.style.display = "flex"
             else if(event.target.value <= 0)
                 output.style.display = "none";
+
         });
     } else {
         console.error("Element with ID 'input-search' not found.");
@@ -299,19 +319,25 @@ function renderAll() {
         const info = await SecureApiRequest("/api/friend/get_friends/");
         let friendsContainer = document.getElementById("list-friends-profile");
         console.log(info.friends)
-        console.log("this all my friends => ", info.friends.length)
+        // console.log("this all my friends => ", info.friends.photo)
         if(info.friends.length > 0)
         {
             if(friendsContainer)
             {
-                friendsContainer.innerHTML = `
-                <div class="container-setting">
-                    <div class="container-img"><img src="./images/setting.svg" alt=""></div>
-                    <div class="container-name">
-                        <p class="display-name">Abdelkarim hajji</p>
-                        <p>Settings about name and password</p>
-                    </div>
-                </div>`
+                var i = 0;
+                while(i <= info.friends.length)
+                {
+                    friendsContainer.innerHTML = `
+                    <div class="container-setting">
+                        <div class="container-img"><img style="border-radius: 50%;" src="${info.friends[i].photo}" ></div>
+                        <div class="container-name">
+                            <p class="display-name">${info.friends[i].username}</p>
+                            <p>username</p>
+                        </div>
+                    </div>`
+                    i++;
+                }
+                
             }
             
         }
@@ -341,10 +367,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
   });
  
-    window.onload = () => {
-    
-        renderAll();
-    };
+  
 
 window.togglePass = togglePass;
 window.clickEvent = clickEvent;
