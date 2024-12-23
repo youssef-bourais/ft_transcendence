@@ -330,7 +330,9 @@ def get_friends(request):
             "photo": friend.photo if friend.photo else None
         }
         friend_list.append(friend_data)
-    return Response({"friends": friend_list})
+    if not friend_list:
+        Response({"friend_list emty"}, status=status.HTTP_404_NOT_FOUND)
+    return Response({"friends": friend_list}, status=status.HTTP_200_OK)
 
 
 # curl -X POST http://127.0.0.1:8000/api/friend/remove_friend/ \
