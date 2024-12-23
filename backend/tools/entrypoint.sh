@@ -11,7 +11,8 @@ done
 echo "PostgreSQL is ready."
 
 echo "Applying database migrations..."
-python manage.py migrate --noinput
+python manage.py migrate
+python manage.py migrate --noinput --run-syncdb
 
 if [ $? -eq 0 ]; then
     echo "Database migrations applied successfully."

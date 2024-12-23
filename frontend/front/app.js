@@ -14,7 +14,7 @@ function toggle_visibility(id)
 
 function toggleNavbar(path) 
 {
-    const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP"];
+    const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP", "chat"];
 
 
     if (!isAuthenticatedRoutes.includes(path)) 

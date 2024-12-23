@@ -84,7 +84,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
-    #new 
+    #new
+    'chat',
+    'channels',
     'rest_framework',
     'account',
     'corsheaders',
@@ -95,6 +97,8 @@ INSTALLED_APPS = [
     'friendship',
     # 'rest_friendship',
 ]
+
+ASGI_APPLICATION = 'api.asgi.application'
 
 # REST_FRIENDSHIP = {
 #    'PERMISSION_CLASSES': [
@@ -156,6 +160,12 @@ DATABASES = {
 #         'NAME': BASE_DIR / 'db.sqlite3',         # Database file name
 #     }
 # }
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 MIDDLEWARE = [
     #new 
