@@ -1,5 +1,6 @@
 import { routes, populateProfile} from './routes.js';
 import { togglePass, logout, clickEvent } from './utils.js';
+import { startChat } from './chat.js';
 
 let currentState = { view: "login" };
 
@@ -220,5 +221,10 @@ window.clickEvent = clickEvent;
 window.logout = logout;
 
 window.addEventListener("popstate", handleLocation);
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     startChat();
+// });
+// document.addEventListener('DOMContentLoaded', startChat);
 
 window.addEventListener("DOMContentLoaded", handleLocation);

@@ -119,9 +119,9 @@ class DirectMessageConsumer(AsyncWebsocketConsumer):
             'recipient__username': receiver
         }))
 
-    @database_sync_to_async
-    def get_user(self, username):
-        return User.objects.get_or_create(username=username)[0]
+    # @database_sync_to_async
+    # def get_user(self, username):
+    #     return User.objects.get_or_create(username=username)[0]
 
     @database_sync_to_async
     def save_message(self, sender, recipient, body):

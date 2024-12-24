@@ -1,5 +1,6 @@
 
 import { handleLocation } from './app.js';
+import { closeWebSocket } from './chat.js';
 
 export function togglePass(id_name) 
 {
@@ -32,6 +33,7 @@ export function clickEvent(first,last)
 
 export async function logout() 
 {
+    closeWebSocket();
     const refreshToken = localStorage.getItem('refreshToken');
     try 
     {

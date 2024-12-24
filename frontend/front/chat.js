@@ -2,7 +2,7 @@ import { SecureApiRequest  } from './api.js';
 let socket = null;
 let currentRecipient = null;
 let friends = [];
-const currentUserName = localStorage.getItem("username");
+var currentUserName = null;
 
 export function loadChatInterface() {
     const content = document.getElementById('con');
@@ -48,6 +48,8 @@ export function loadChatInterface() {
 }
 
 function initializeChat() {
+
+    currentUserName = localStorage.getItem("username");
     const friendsList = document.getElementById('friendsList');
     const messagesContainer = document.getElementById('messagesContainer');
     const messageInput = document.getElementById('messageInput');
@@ -76,12 +78,28 @@ function initializeChat() {
     fetchFriends();
 }
 
+export function closeWebSocket() {
+    if (socket) {
+        console.log("socket closed.....");
+        socket.close();
+    }
+}
+
+
+export function startChat() {
+    console.log("initializeChat===================")
+    if (!socket || socket.readyState === WebSocket.CLOSED) {
+        connectWebSocket();
+    }
+}
+
 function connectWebSocket() {
     socket = new WebSocket(`https://${window.location.host}/ws/chat`);
 
     socket.onopen = function(e) {
         console.log("WebSocket connection established");
     };
+
 
     socket.onmessage = function(e) {
         const data = JSON.parse(e.data);
@@ -93,6 +111,7 @@ function connectWebSocket() {
     };
 
     socket.onclose = function(e) {
+        socket = null;
         console.log("WebSocket connection closed");
     };
 }
@@ -100,6 +119,8 @@ function connectWebSocket() {
 async function fetchFriends() 
 {
     const friendData = await SecureApiRequest('/api/friend/get_friends/');
+
+
 
     const friendsToRender = friendData.friends.map(friend => ({
         name: friend.username, 
@@ -109,6 +130,7 @@ async function fetchFriends()
     console.log("friends:", friendsToRender);
     renderFriends(friendsToRender);
 }
+
 
 function renderFriends(friends) 
 {
