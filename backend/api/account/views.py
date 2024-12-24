@@ -327,7 +327,7 @@ def get_friends(request):
         friend_data = {
             "id": friend.id,
             "username": friend.username,
-            "photo": friend.photo if friend.photo else None
+            "photo": friend.photo
         }
         friend_list.append(friend_data)
     if not friend_list:
