@@ -165,7 +165,40 @@ document.getElementById("logout").addEventListener("click", function(event) {
     logout(); 
 });
 
-
+// Function that will be triggered when the user clicks the "Upload Image" button
+function uploadImage() {
+    // Get the file input element
+    let fileInput = document.getElementById("file-input");
+    // Check if the user has selected a file
+    if (fileInput.files && fileInput.files[0]) {
+      // Get the first file (image)
+      const file = fileInput.files[0];
+  
+      // Create a FormData object to send the image data
+      const formData = new FormData();
+  
+      // Append the file to the FormData object
+      formData.append('image', file);
+  
+      // Send the FormData to the backend using fetch or XMLHttpRequest
+      fetch('/upload', {
+        method: 'POST',
+        body: formData,  // Send the FormData as the body of the request
+      })
+      .then(response => response.json())  // Parse the JSON response
+      .then(data => {
+        console.log('Success:', data);
+        alert('Image uploaded successfully');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('Error uploading image');
+      });
+    } else {
+      alert('Please select an image file first');
+    }
+  }
+  
 
 
 function renderAll() {
@@ -183,6 +216,7 @@ function renderAll() {
         let emailIdProfile = document.getElementById("emailIdProfile");
         let passwordIdProfile = document.getElementById("passwordIdProfile");
         let passwordIdProfileConfirme = document.getElementById("passwordIdProfileConfirme");
+        let checkBox = document.getElementById("check-box");
         
         let errorMessage = document.getElementById("error-message");
         let validForm = 0;
@@ -291,6 +325,8 @@ function renderAll() {
                             imgSearch.src = data.photo;
                             buttonFriend.style.display = "flex"
                             buttonFriend2.style.display = "none"
+                            localStorage.setItem('eachProfileUserName', data.username);
+
                         }
                         console.log("i am here in data");
                     })
@@ -357,10 +393,39 @@ function renderAll() {
     fetchDataFriends();
     
   
-    
+    // each profile 
 
+    let usernameEachProfile = document.getElementById("usernmaeEachProfile");
+    let usernameEachProfile2 = document.getElementById("usernmaeEachProfile2");
+    let usernameEachProfile3 = document.getElementById("usernmaeEachProfile3");
+    let emailEachProfile = document.getElementById('emailEachProfile');
+    let imageEachProfile = document.getElementById("imageEachProfile");
+    let imageEachProfile2 = document.getElementById("imageEachProfile2");
+    let imageEachProfile3 = document.getElementById("imageEachProfile3");
 
-}
+    fetch(`/api/get/${localStorage.getItem('eachProfileUserName')}/`)
+    .then(response => response.json())
+    .then(data => {
+        console.log('Response from server:', data);
+        if(data.error == "User not found")
+        {
+            
+        }
+        else{
+            usernameEachProfile.innerHTML = data.username;
+            usernameEachProfile2.innerHTML = data.username;
+            usernameEachProfile3.innerHTML = data.username;
+            emailEachProfile.innerHTML = data.email;
+            imageEachProfile.src = data.photo;
+            imageEachProfile2.src = data.photo;
+            imageEachProfile3.src = data.photo;
+        }
+        
+    })
+    .catch(error => {
+        
+    });
+ }
 
 
 document.addEventListener("DOMContentLoaded", function() {

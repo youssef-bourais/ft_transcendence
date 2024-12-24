@@ -136,9 +136,18 @@ export const routes = {
                                 <input type="password" name="" id="passwordIdProfile" placeholder="Updtae your password" required>
                                 <i class="fa-solid fa-key"></i>
                             </div>
-                            <div class="container-each-input" style="margin-bottom: 10px;">
+                            <div class="container-each-input">
                                 <input type="password" name="" id="passwordIdProfileConfirme" placeholder="Confirme your username" required>
                                 <i class="fa-solid fa-key"></i>
+                            </div>
+                            <div class="container-each-input" style="margin-bottom: 25px;">
+                            <input type="file" id="file-input" style="display: none;"/>
+                            <label for="file-input" class="file-label" >Choose File</label>
+                                <i class="fa-solid fa-upload"></i>
+                            </div>
+                            <div class="container-each-input2" style="margin-bottom: 25px;">
+                                <input  id="check-box" type="checkbox">
+                                <label>Enabel auth</label>
                             </div>
                             <div class="errorInput" id="container-error">
                                 <p id="error-message" >Error in input</p>
@@ -169,7 +178,6 @@ export const routes = {
                                 <p>Friends</p>
                             </div>
                             <div class="list-friends-profile" id="list-friends-profile">
-                                
                                 
                             </div>
                         </div>
@@ -313,11 +321,11 @@ export const routes = {
             <div class="child-container-main-home">
                 <!-- start make the left side of main -->
                 <div class="left-side">
-                    <div class="title"><p>Settings</p></div>
+                    <div class="title"><p>Profile</p></div>
                     <div class="container-profile">
-                        <div class="container-img"><img class="avatars" src="./images/avatar.png" alt=""></div>
+                        <div class="container-img"><img class="avatars" src="" alt="" id="imageEachProfile2"></div>
                         <div class="container-name">
-                            <p  class="display-name" >Abdelkarim hajji</p>
+                            <p  class="display-name" id="usernmaeEachProfile2"></p>
                             <p>settings</p>
                         </div>
                     </div>
@@ -334,7 +342,7 @@ export const routes = {
                 <div class="midle-side">
                     <div class="container-bg">
                         <div class="child-bg">
-                            <img class="avatars" src="./images/avatar.png" alt="karim">
+                            <img class="avatars" src=""  id="imageEachProfile">
                         </div>
                     </div>
                     <div class="container-update-info">
@@ -347,14 +355,14 @@ export const routes = {
                                 <div class="container-input">
                                     <p>Username</p>
                                     <div class="group">
-                                        <p ></p>
+                                        <p id="usernmaeEachProfile"></p>
                                         <i class="fa-solid fa-user"></i>
                                     </div>
                                 </div>
                                 <div class="container-input">
                                     <p>Email</p>
                                     <div class="group">
-                                        <p ></p>
+                                        <p id="emailEachProfile"></p>
                                         <i class="fa-solid fa-user"></i>
                                     </div>
                                 </div>
@@ -366,7 +374,7 @@ export const routes = {
                                     <i class="fa-solid fa-at"></i>
                                 </div>
                             </div>
-                            <div class="container-save">
+                            <div class="container-save" style="display:none;">
                                 <button id="edit-profile">Edit profile</button>
                             </div>
                         </div>
@@ -380,10 +388,10 @@ export const routes = {
                         <div class="child-container-profile-left">
                             <div class="container-background-profile">
                                 <img src="./images/background.jpg" alt="">
-                                <img class="avatars" src="./images/avatar.png" alt="">
+                                <img class="avatars" src="" id="imageEachProfile3" alt="">
                             </div>
                             <div class="container-name-profile-left">
-                                <p  class="display-name">Abdelkarim hajji</p>
+                                <p  class="display-name" id="usernmaeEachProfile3"></p>
                                 <p>Not in your friends list</p>
                             </div>
                             <div class="container-send-request">
