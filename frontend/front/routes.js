@@ -946,6 +946,8 @@ async function setupProfilepage()
 {
 
     const data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
+    console.log("data from profile: ", data.username, data.email, data.photo);
+
 
     // refresh_creadentel(data);
 

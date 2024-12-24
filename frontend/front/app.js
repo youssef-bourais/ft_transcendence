@@ -165,52 +165,56 @@ window.onload = () => {
     let  userNameFriend = document.getElementById("userNameProfile")
 
 
-    userNameFriend.innerHTML = localStorage.getItem("username");
+    if(userNameFriend)
+        userNameFriend.innerHTML = localStorage.getItem("username");
     let  emailProfile = document.getElementById("emailProfile");
-    emailProfile.innerHTML = localStorage.getItem("email");
+    if(emailProfile)
+        emailProfile.innerHTML = localStorage.getItem("email");
     let  nameNotification = document.getElementById("nameNotification")
-    nameNotification.innerHTML = localStorage.getItem("username");
-        inputSearch.addEventListener('input', (event) => {
-            const username = event.target.value;  
-            let valid = 0;
-            
-            if (username.trim()) {
-                fetch(`/api/get/${username}/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Response from server:', data);
-                        if(data.error == "User not found")
-                        {
-                            nameSearch.innerHTML = "User not found";
-                            imgSearch.src = "./images/notFound.png";
-                            buttonFriend.style.display = "none"
-                            buttonFriend2.style.display = "flex"
-                        }
-                        else
-                        {
+    if(nameNotification)
+        nameNotification.innerHTML = localStorage.getItem("username");
+    inputSearch.addEventListener('input', (event) => {
+        
+    const username = event.target.value;  
+    let valid = 0;
+    if (username.trim()) {
+        fetch(`/api/get/${username}/`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response from server:', data);
+                if(data.error == "User not found")
+                {
+                    nameSearch.innerHTML = "User not found";
+                    imgSearch.src = "./images/notFound.png";
+                    buttonFriend.style.display = "none"
+                    buttonFriend2.style.display = "flex"
+                }
+                else
+                {
 
-                            nameSearch.innerHTML = data.username;
-                            imgSearch.src = data.photo;
-                            buttonFriend.style.display = "flex"
-                            buttonFriend2.style.display = "none"
-                        }
-                        console.log("i am here in data");
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                        // nameSearch.innerHTML = "NotFound";
-                        // console.log("i am there error data");
-                    });
-            }
-            if(event.target.value.length > 0)
-                output.style.display = "flex"
-            else if(event.target.value <= 0)
-                output.style.display = "none";
-        });
+                    nameSearch.innerHTML = data.username;
+                    imgSearch.src = data.photo;
+                    buttonFriend.style.display = "flex"
+                    buttonFriend2.style.display = "none"
+                }
+                console.log("i am here in data");
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                // nameSearch.innerHTML = "NotFound";
+                // console.log("i am there error data");
+            });
+        }
+        if(event.target.value.length > 0)
+            output.style.display = "flex"
+        else if(event.target.value <= 0)
+            output.style.display = "none";
+    });
     } else {
         console.error("Element with ID 'input-search' not found.");
     }
 };
+
 window.togglePass = togglePass;
 window.clickEvent = clickEvent;
 window.logout = logout;

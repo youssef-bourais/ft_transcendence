@@ -73,8 +73,13 @@ export async function logout()
 
 export function GoLogin()
 {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('username');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('photo');
+    localStorage.removeItem('email');
+    localStorage.removeItem('message');
+
 
     history.pushState({}, "", "/");
     handleLocation();

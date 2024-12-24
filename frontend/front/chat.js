@@ -97,35 +97,24 @@ function connectWebSocket() {
     };
 }
 
-async function fetchFriends() {
-    // try {
-    //     const response = await SecureApiRequest('/api/friend/get_friends/');
-    //     console.log("status:::::::::::::::::::::::::::", response.status);
-    //     if (!response.ok) {
-    //         console.log("status: ", response.status);
-    //         throw new Error(`HTTP error! status: ${response.status}`);
-    //     }
-    //     const friendData = await response.json();
-    //
-    //     friends = friendData.map(friend => ({
-    //         id:friend.id,
-    //         name: friend.username,
-    //         avatar: friend.photo
-    //     }));
-    //     renderFriends();
-    // } catch (error) {
-        // console.error('Error fetching friends:', error);
-        friends = [
-            { name: "eel-hour", avatar: "https://cdn-images-3.listennotes.com/podcasts/two-dead-pines/lsd-trip-report-Qe0E3pjyGlg-USIahZq6KYe.1400x1400.jpg?_gl=1*2qe68d*_ga*ODMxNDUyOTgxLjE3MzMxNDk5MzY.*_ga_T0PZE2Z7L4*MTczMzE0OTkzNS4xLjAuMTczMzE0OTk0My41Mi4wLjA." },
-            { name: "abelechg", avatar: "https://cdn-images-3.listennotes.com/podcasts/two-dead-pines/lsd-trip-report-Qe0E3pjyGlg-USIahZq6KYe.1400x1400.jpg?_gl=1*2qe68d*_ga*ODMxNDUyOTgxLjE3MzMxNDk5MzY.*_ga_T0PZE2Z7L4*MTczMzE0OTkzNS4xLjAuMTczMzE0OTk0My41Mi4wLjA." }
-        ];
-        renderFriends();
-    // }
+async function fetchFriends() 
+{
+    const friendData = await SecureApiRequest('/api/friend/get_friends/');
+
+    const friendsToRender = friendData.friends.map(friend => ({
+        name: friend.username, 
+        avatar: friend.photo  
+    }));
+
+    console.log("friends:", friendsToRender);
+    renderFriends(friendsToRender);
 }
 
-function renderFriends() {
+function renderFriends(friends) 
+{
     const friendsList = document.getElementById('friendsList');
     friendsList.innerHTML = '';
+
     friends.forEach(friend => {
         const li = document.createElement('li');
         li.innerHTML = `
@@ -138,6 +127,7 @@ function renderFriends() {
         friendsList.appendChild(li);
     });
 }
+
 
 async function selectFriend(friend) {
     currentRecipient = friend.name;

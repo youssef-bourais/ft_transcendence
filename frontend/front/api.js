@@ -18,11 +18,8 @@ export async function refreshAccessToken()
 
         if (!response.ok) 
         {
-            alert("Failed to refresh the access token. Please log in again.");
-    history.pushState({}, "", "/");
-    handleLocation();
-
-            // GoLogin();
+            // alert("Failed to refresh the access token. Please log in again.");
+            GoLogin();
         }
 
         const data = await response.json();
@@ -35,7 +32,7 @@ export async function refreshAccessToken()
     {
         console.error("Error occurred while refreshing the access token:", error.message);
         alert("Session expired. Please log in again.");
-        // GoLogin();
+        GoLogin();
     }
 }
 
@@ -43,12 +40,12 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
 {
     const token = localStorage.getItem("accessToken");
     console.log("lasttime: ", token);
-    if(token === null)
-    {
-        GoLogin();
-        alert("please login .....");
-        return;
-    }
+    // if(token === null)
+    // {
+    //     GoLogin();
+    //     alert("please login .....");
+    //     return;
+    // }
     // console.log("access token: 2===================", token);
     // console.log("user of this account logout", token);
     const headers = {
@@ -81,7 +78,7 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
                 console.error("Error refreshing access token.");
                 alert("Authentication failed. Please log in again.");
                 console.log("logout......")
-                GoLogin();
+                // GoLogin();
             }
         }
         if (response.ok) 
@@ -90,10 +87,15 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
             console.log("SecureApiRequest successful:", data);
             return data;
         }
+        if(response.status === 202)
+        {
+            alert("hello");
 
-        const errorData = await response.json();
-        console.error("API error:", errorData);
-        throw new Error(errorData.detail || "API error occurred.");
+        }
+
+        // const errorData = await response.json();
+        // console.error("API error:", errorData);
+        // throw new Error(errorData.detail || "API error occurred.");
     } 
     catch (error) 
     {

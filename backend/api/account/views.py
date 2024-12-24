@@ -107,6 +107,8 @@ def get_user(request, id_or_name):
         else:
             user = CustomUser.objects.get(username=id_or_name)
         
+
+        # friends = Friend.objects.friends(request.user)
         user_data = {
             'id': user.id,
             'username': user.username,
@@ -330,8 +332,8 @@ def get_friends(request):
             "photo": friend.photo
         }
         friend_list.append(friend_data)
-    if not friend_list:
-        Response({"friend_list emty"}, status=status.HTTP_404_NOT_FOUND)
+    # if not friend_list:
+    #     return Response({"friend_list emty"}, status=status.HTTP_204_NO_CONTENT)
     return Response({"friends": friend_list}, status=status.HTTP_200_OK)
 
 
