@@ -1,3 +1,6 @@
+from prometheus_client import generate_latest, REGISTRY
+from django.views import View
+from django.http import HttpResponse
 from django.http import JsonResponse
 from .models import *
 from .serializer import *
@@ -59,3 +62,9 @@ def msg_details(request, recipient):
 
 
 
+
+
+class MetricsView(View):
+    def get(self, request, *args, **kwargs):
+        # Generate the latest metrics and return as a response
+        return HttpResponse(generate_latest(REGISTRY), content_type="text/plain")
