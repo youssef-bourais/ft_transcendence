@@ -619,43 +619,6 @@ export const routes = {
    
 };
 
-// // search 
-// const inputSearch = document.getElementById('input-search');
-// // if(!inputSearch)
-// //     console.log("hiiiiiiiii");
-// inputSearch.style.backgroundColor = "red";
-
-
-// window.onload = () => {
-//     const inputSearch = document.getElementById('input-search');
-//     if (inputSearch) {
-//         // Change background color to red
-        
-//         // console.log("hooooooo");
-//         // Add 'input' event listener
-//         inputSearch.addEventListener('input', (event) => {
-//             const username = event.target.value;  // Get the current value of the input
-//             inputSearch.style.backgroundColor = "red";
-//             // If the username is not empty, send a fetch request
-//             if (username.trim()) {
-//                 fetch(`/api/get/${username}/`)
-//                     .then(response => response.json())
-//                     .then(data => {
-//                         console.log('Response from server:', data);
-//                         // Do something with the data, like updating the UI
-//                     })
-//                     .catch(error => {
-//                         console.error('Error fetching data:', error);
-//                     });
-//             }
-//         });
-//     } else {
-//         console.error("Element with ID 'input-search' not found.");
-//     }
-// };
-
-
-
 
 function isOnlyDigits(str) {
     return /^\d+$/.test(str);

@@ -54,8 +54,16 @@ export async function logout()
         else 
         {
             console.log("status: ", response.status);
-
             console.log('Refresh token successfully blacklisted.');
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('username');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('photo');
+            localStorage.removeItem('email');
+            localStorage.removeItem('message');
+            // alert('Logged out!');
+            history.pushState({}, "", "/");
+            handleLocation();
         }
     } 
     catch (error) 
@@ -63,17 +71,6 @@ export async function logout()
         console.error('Network or server error while blacklisting token:', error);
         throw error;
     }
-
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('username');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('photo');
-    localStorage.removeItem('email');
-    localStorage.removeItem('message');
-
-    // alert('Logged out!');
-    history.pushState({}, "", "/");
-    handleLocation();
 }
 
 export function GoLogin()

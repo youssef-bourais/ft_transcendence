@@ -74,8 +74,6 @@ CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be sent with the request
 
 INSTALLED_APPS = [
 
-    # 'rest_framework',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

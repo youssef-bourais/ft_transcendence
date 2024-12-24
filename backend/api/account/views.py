@@ -50,7 +50,6 @@ def custom_token_obtain_pair(request):
     password = request.data.get('password', '')
     otp = request.data.get('otp', None)
 
-
     print("username: ", username)
     print("password: ", password)
     print("otp: ", otp)
@@ -66,9 +65,9 @@ def custom_token_obtain_pair(request):
         return Response({"error": "Invalid username or password."}, status=status.HTTP_400_BAD_REQUEST)
     useremail = user.email
     
-    # bool = True
-    # if(bool):
-    if user.is_2fa_enabled:
+    bool = True
+    if(bool):
+    # if user.is_2fa_enabled:
         if not otp:
             generate_otp(user)
             send_otp_email(user)

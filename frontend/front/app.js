@@ -47,8 +47,6 @@ let isNavigating = false;
 
 function handleEvent(selector, isNavbar = false)
 {
-
-
     const Button = document.querySelectorAll(selector);
     if(Button)
     {
@@ -109,10 +107,8 @@ export const handleLocation = () =>
         
         const inputSearch = document.getElementById('input-search');
         inputSearch.style.backgroundColor = "red";
-});
-
-
-});
+        });
+        });
 
     if (route.setup) 
         route.setup();
