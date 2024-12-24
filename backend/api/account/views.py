@@ -227,8 +227,8 @@ def endpoint(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def logouthttponly(request):
-    access = request.COOKIES.get('access_token')
-    access = RefreshToken(access)
+    # access = request.COOKIES.get('access_token')
+    access = RefreshToken(request.access_token)
     access.blacklist()
     response = Response({"message": "Logged out successfully"})
     # response.delete_cookie('access_token')

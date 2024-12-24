@@ -34,3 +34,4 @@ urlpatterns = [
     path('friend/remove_friend/', remove_friend, name='remove_friend'),
 
 ]
+

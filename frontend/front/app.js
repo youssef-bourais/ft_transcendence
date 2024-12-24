@@ -30,26 +30,13 @@ function toggleNavbar(path)
         document.getElementById("user-email").textContent = email;
         document.getElementById("user-photo").src = photo;
 
-        // navbar.classList.add("visible");
-        // bruh.classList.add("visible");
-
         navbar.style.display = 'block';
         navbar.style.opacity = '1';
 
-        // bruh.style.display = 'block';
-        // bruh.style.opacity = '1';
         bruh.style.display = 'flex';
-
-        // navbar.offsetHeight; // Trigger a reflow
-        // location.reload();
-        // navbar.style.display = 'block';     // Show
-        // bruh.style.display = 'block';     // Show
     }
     else 
     {
-        // navbar.classList.remove("visible");
-        // navbar.style.visibility = 'hidden';
-        // bruh.style.visibility = 'hidden';      // Hide
         bruh.style.display = 'none';
         navbar.style.display = 'none';
     }
@@ -221,10 +208,5 @@ window.clickEvent = clickEvent;
 window.logout = logout;
 
 window.addEventListener("popstate", handleLocation);
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     startChat();
-// });
-// document.addEventListener('DOMContentLoaded', startChat);
 
 window.addEventListener("DOMContentLoaded", handleLocation);

@@ -50,10 +50,13 @@ export async function logout()
         {
             const errorData = await response.json();
             console.error('Error blacklisting token:', errorData);
-            // return ;
         } 
         else 
+        {
+            console.log("status: ", response.status);
+
             console.log('Refresh token successfully blacklisted.');
+        }
     } 
     catch (error) 
     {

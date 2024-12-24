@@ -120,8 +120,6 @@ async function fetchFriends()
 {
     const friendData = await SecureApiRequest('/api/friend/get_friends/');
 
-
-
     const friendsToRender = friendData.friends.map(friend => ({
         name: friend.username, 
         avatar: friend.photo  

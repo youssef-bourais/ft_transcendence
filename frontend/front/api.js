@@ -2,11 +2,10 @@ import { GoLogin  } from './utils.js';
 
 export async function refreshAccessToken() 
 {
-    console.log("refresh access token");
     try 
     {
         const refreshToken = localStorage.getItem("refreshToken");
-        console.log("refreshAccessToken: ", refreshToken);
+        // console.log("refreshToken in refreshAccessToken======", refreshToken);
 
             const response = await fetch(`/api/token/refresh/`, {
             method: "POST",
@@ -16,17 +15,19 @@ export async function refreshAccessToken()
             body: JSON.stringify({ refresh: refreshToken }),
         });
 
+        console.log("status in refreshToken function:", response.status);
+
         if (!response.ok) 
         {
-            // alert("Failed to refresh the access token. Please log in again.");
+            // alert("Session expired. Please log in again.");
             GoLogin();
         }
-
-        const data = await response.json();
-
-        localStorage.removeItem("accessToken");
-        localStorage.setItem("accessToken", data.access);
-        console.log("Access token successfully refreshed.");
+        else
+        {
+            const data = await response.json();
+            console.log("New access token retrieved successfully.");
+            localStorage.setItem("accessToken", data.access);
+        }
     } 
     catch (error) 
     {
@@ -38,28 +39,19 @@ export async function refreshAccessToken()
 
 export async function SecureApiRequest(endpoint, method = "GET", body = null) 
 {
-    const token = localStorage.getItem("accessToken");
-    console.log("lasttime: ", token);
-    // if(token === null)
-    // {
-    //     GoLogin();
-    //     alert("please login .....");
-    //     return;
-    // }
-    // console.log("access token: 2===================", token);
-    // console.log("user of this account logout", token);
-    const headers = {
+    let token = localStorage.getItem("accessToken");
+
+    let headers = {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
     };
 
-    const request = 
-    {
+    let request = {
         method,
         headers,
     };
 
-    if (body) 
+    if (body)
         request.body = JSON.stringify(body);
 
     try 
@@ -68,39 +60,112 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
 
         if (response.status === 401) 
         {
-            try 
+            console.warn("Access token expired. Attempting to refresh...");
+
+            await refreshAccessToken();
+            token = localStorage.getItem("accessToken");
+            headers.Authorization = `Bearer ${token}`;
+            request.headers = headers;
+
+            const retryResponse = await fetch(`${endpoint}`, request);
+
+            if (retryResponse.ok) 
             {
-                await refreshAccessToken(); 
-                return SecureApiRequest(endpoint, method, body); 
-            } 
-            catch 
-            {
-                console.error("Error refreshing access token.");
-                alert("Authentication failed. Please log in again.");
-                console.log("logout......")
-                // GoLogin();
+                const data = await retryResponse.json();
+                console.log("Request retried successfully after token refresh.");
+                return data;
             }
+            console.error("Retry after token refresh failed.");
+            alert("Session expired. Please log in again.");
+            GoLogin();
+            return {"":""};
         }
         if (response.ok) 
         {
             const data = await response.json();
-            console.log("SecureApiRequest successful:", data);
             return data;
-        }
-        if(response.status === 202)
-        {
-            alert("hello");
-
-        }
-
-        // const errorData = await response.json();
-        // console.error("API error:", errorData);
-        // throw new Error(errorData.detail || "API error occurred.");
+        } 
     } 
     catch (error) 
     {
         console.error("Error in SecureApiRequest:", error.message);
-        alert("An error occurred. Please try again......");
-        throw error; 
+        alert("An error occurred. Please try again.");
+        throw error;
     }
 }
+
+// export async function SecureApiRequest(endpoint, method = "GET", body = null) 
+// {
+//     const token = localStorage.getItem("accessToken");
+//
+//     const headers = {
+//         Authorization: `Bearer ${token}`,
+//         "Content-Type": "application/json",
+//     };
+//
+//     const request = 
+//     {
+//         method,
+//         headers,
+//     };
+//
+//     if (body) 
+//         request.body = JSON.stringify(body);
+//
+//     try 
+//     {
+//         const response = await fetch(`${endpoint}`, request);
+//         // console.log("status code (SecureApiRequest): ", response.status);
+//
+//         if (response.status === 401) 
+//         {
+//             console.warn("Access token expired. Attempting to refresh...");
+//
+//             await refreshAccessToken(); 
+//             // const data = SecureApiRequest(endpoint, method);
+//
+//             // return data;
+//
+//             token = localStorage.getItem("accessToken");
+//             headers = {
+//                 Authorization: `Bearer ${token}`,
+//                 "Content-Type": "application/json",
+//             };
+//             request = 
+//             {
+//                 method,
+//                 headers,
+//             }
+//             if(body)
+//                 request.body = json.stringify(body);
+//
+//              const response2 = await fetch(`${endpoint}`, request);
+//              if (response2.ok) 
+//              {
+//                  const data = await response2.json();
+//                  localStorage.setItem("accessToken", data.access);
+//                  console.log("New access token retrieved successfully.");
+//                  return data;
+//              }
+//             alert("Session expired. Please log in again.");
+//             GoLogin();
+//              // const data = await response.json();
+//              // return data;
+//         }
+//         if(response.ok)
+//         {
+//             const data = await response.json();
+//             return data;
+//         }
+//     } 
+//     catch (error) 
+//     {
+//         alert("Session expired. Please log in again.");
+//         GoLogin();
+//
+//         // console.error("Error in SecureApiRequest:", error.message);
+//         // alert("An error occurred. Please try again......");
+//         // throw error; 
+//     }
+// }
+
