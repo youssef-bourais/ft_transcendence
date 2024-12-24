@@ -115,9 +115,53 @@ export const routes = {
         html: ``,
         setup: setupLogin42Page,
         },
+    
     "/profile" : {
         html:`
-            
+                <!-- start edit -->
+                <div class="container-edit" id="container-edit">
+                    <div class="container-card-edit">
+                        <div class="container-icone">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </div>
+                        <div class="container-card-edit-inputs">
+                            <div class="container-each-input">
+                                <input type="text" name="" id="usernameIdProfile" placeholder="Updtae your username" required>
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div class="container-each-input">
+                                <input type="email" name="" id="emailIdProfile" placeholder="Updtae your email" required>
+                                <i class="fa-solid fa-at"></i>
+                            </div>
+                            <div class="container-each-input">
+                                <input type="password" name="" id="passwordIdProfile" placeholder="Updtae your password" required>
+                                <i class="fa-solid fa-key"></i>
+                            </div>
+                            <div class="container-each-input">
+                                <input type="password" name="" id="passwordIdProfileConfirme" placeholder="Confirme your username" required>
+                                <i class="fa-solid fa-key"></i>
+                            </div>
+                            <div class="container-each-input" style="margin-bottom: 25px;">
+                            <input type="file" id="file-input" style="display: none;"/>
+                            <label for="file-input" class="file-label" >Choose File</label>
+                                <i class="fa-solid fa-upload"></i>
+                            </div>
+                            <div class="container-each-input2" style="margin-bottom: 25px;">
+                                <input  id="check-box" type="checkbox">
+                                <label>Enabel auth</label>
+                            </div>
+                            <div class="errorInput" id="container-error">
+                                <p id="error-message" >Error in input</p>
+                            </div>
+                            <div class="container-save">
+                                <button id="cancel">CANCEL</button>
+                                <button id="save">SAVE</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            <!-- end edit -->
                 <!-- start main -->
                 <div class="container-main-home">
                     <div class="child-container-main-home">
@@ -131,12 +175,11 @@ export const routes = {
                                     <p>settings</p>
                                 </div>
                             </div>
-                            <div class="container-setting">
-                                <div class="container-img"><img src="./images/setting.svg" alt=""></div>
-                                <div class="container-name">
-                                    <p class="display-name">Abdelkarim hajji</p>
-                                    <p>Settings about name and password</p>
-                                </div>
+                            <div class="container-friends-profiles">
+                                <p>Friends</p>
+                            </div>
+                            <div class="list-friends-profile" id="list-friends-profile">
+                                
                             </div>
                         </div>
                         <!-- finish make the left side of main -->
@@ -154,7 +197,7 @@ export const routes = {
                                         <div class="profile"><p>Profile</p></div>
                                         <div class="security"><p>Security</p></div>
                                     </div>
-                                    <div class="container-inputs">
+                                    <div class="container-inputs" style="height:110px">
                                         <div class="container-input">
                                             <p>Username</p>
                                             <div class="group">
@@ -178,7 +221,7 @@ export const routes = {
                                         </div>
                                     </div>
                                     <div class="container-save">
-                                        <button>Edit profile</button>
+                                        <button id="edit-profile">Edit profile</button>
                                     </div>
                                 </div>
                             </div>
@@ -203,7 +246,6 @@ export const routes = {
                                     </div>
                                     <div class="container-history-friends">
                                         <div class="contaienr-history-profile"><p>History</p></div>
-                                        <div class="container-friends-profile"><p>Friends</p></div>
                                     </div>
                                     <div class="container-chalange">
                                         <div class="child-container-chalange">
@@ -236,6 +278,152 @@ export const routes = {
         html : `
         <div class="container-main" id="container-main"><div id="chat-container"></div></div>`, 
         setup: loadChatInterface,
+    },
+    "/eachprofile" : {
+        html : `
+        <!-- start edit -->
+        <div class="container-edit" id="container-edit">
+            <div class="container-card-edit">
+                <div class="container-icone">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+                <div class="container-card-edit-inputs">
+                    <div class="container-each-input">
+                        <input type="text" name="" id="usernameIdProfile" placeholder="Updtae your username" required>
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="container-each-input">
+                        <input type="email" name="" id="emailIdProfile" placeholder="Updtae your email" required>
+                        <i class="fa-solid fa-at"></i>
+                    </div>
+                    <div class="container-each-input">
+                        <input type="password" name="" id="passwordIdProfile" placeholder="Updtae your password" required>
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <div class="container-each-input" style="margin-bottom: 10px;">
+                        <input type="password" name="" id="passwordIdProfileConfirme" placeholder="Confirme your username" required>
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <div class="errorInput" id="container-error">
+                        <p id="error-message" >Error in input</p>
+                    </div>
+                    <div class="container-save">
+                        <button id="cancel">CANCEL</button>
+                        <button id="save">SAVE</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    <!-- end edit -->
+        <!-- start main -->
+        <div class="container-main-home">
+            <div class="child-container-main-home">
+                <!-- start make the left side of main -->
+                <div class="left-side">
+                    <div class="title"><p>Profile</p></div>
+                    <div class="container-profile">
+                        <div class="container-img"><img class="avatars" src="" alt="" id="imageEachProfile2"></div>
+                        <div class="container-name">
+                            <p  class="display-name" id="usernmaeEachProfile2"></p>
+                            <p>settings</p>
+                        </div>
+                    </div>
+                    <div class="container-friends-profiles">
+                        <p>Friends</p>
+                    </div>
+                    <div class="list-friends-profile">
+
+                    </div>
+                </div>
+                <!-- finish make the left side of main -->
+
+                <!-- start make the midle of main -->
+                <div class="midle-side">
+                    <div class="container-bg">
+                        <div class="child-bg">
+                            <img class="avatars" src=""  id="imageEachProfile">
+                        </div>
+                    </div>
+                    <div class="container-update-info">
+                        <div class="container-form">
+                            <div class="container-switch">
+                                <div class="profile"><p>Profile</p></div>
+                                <div class="security"><p>Security</p></div>
+                            </div>
+                            <div class="container-inputs" style="height:110px">
+                                <div class="container-input">
+                                    <p>Username</p>
+                                    <div class="group">
+                                        <p id="usernmaeEachProfile"></p>
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                </div>
+                                <div class="container-input">
+                                    <p>Email</p>
+                                    <div class="group">
+                                        <p id="emailEachProfile"></p>
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-email">
+                                <p>Password</p>
+                                <div class="group">
+                                    <input type="text" disabled  value="************">
+                                    <i class="fa-solid fa-at"></i>
+                                </div>
+                            </div>
+                            <div class="container-save" style="display:none;">
+                                <button id="edit-profile">Edit profile</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- finish make the midle of main -->
+
+                <!-- start make the end of main -->
+                <div class="end-side">
+                    <div class="container-profile-left">
+                        <div class="child-container-profile-left">
+                            <div class="container-background-profile">
+                                <img src="./images/background.jpg" alt="">
+                                <img class="avatars" src="" id="imageEachProfile3" alt="">
+                            </div>
+                            <div class="container-name-profile-left">
+                                <p  class="display-name" id="usernmaeEachProfile3"></p>
+                                <p>Not in your friends list</p>
+                            </div>
+                            <div class="container-send-request">
+                                <div class="container-send"><i class="fa-solid fa-link"></i></i> <p>Chalange</p></div>
+                                <div class="container-block"><i class="fa-solid fa-user-slash"></i><p>Block</p></div>
+                            </div>
+                            <div class="container-history-friends">
+                                <div class="contaienr-history-profile"><p>History</p></div>
+                            </div>
+                            <div class="container-chalange">
+                                <div class="child-container-chalange">
+                                    <div class="contaienr-chalange-img-left"><img src="./images/avatar.png" alt=""><p>1</p></div>
+                                    <div class="container-VS">VS</div>
+                                    <div class="contaienr-chalange-img-right"><p>1</p><img src="./images/avatar.png" alt=""> </div>
+                                </div>
+                                <div class="child-container-chalange">
+                                    <div class="contaienr-chalange-img-left"><img src="./images/avatar.png" alt=""><p>1</p></div>
+                                    <div class="container-VS">VS</div>
+                                    <div class="contaienr-chalange-img-right"><p>1</p><img src="./images/avatar.png" alt=""> </div>
+                                </div>
+                            
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- finish make the end of main -->
+            </div>
+        </div>
+        <!-- end main -->
+            `, 
+        setup:() => console.log("eachprofile veiw...."),
     },
     "/game": {
         html: `
@@ -776,7 +964,7 @@ export function populateProfile()
         displayName.innerText = username;
     });
 }
-
+populateProfile() 
 async function setupLoginPage() 
 {
     // console.log("login page");
@@ -975,13 +1163,6 @@ function handleRedirect()
     handleLocation();
 }
 
-
-// function refresh_creadentel()
-// {
-//
-// }
-
-
 async function setupProfilepage()
 {
 
@@ -989,17 +1170,9 @@ async function setupProfilepage()
     console.log("data from profile: ", data.username, data.email, data.photo);
 
 
-    // refresh_creadentel(data);
 
-    // console.log("data, ", localStorage.getItem("photo"));
-    // console.log("data, ", localStorage.getItem("email"));
-
-
-    // document.getElementById('user-id').innerText = data.user.id;
-    // document.getElementById('user-username').innerText = data.user.username;
-    // document.getElementById('user-email').innerText = data.user.email;
-    // document.getElementById('user-photo').src = data.user.photo;
-
+    console.log("data, ", localStorage.getItem("photo"));
+    console.log("data, ", localStorage.getItem("email"));
 }
 
 

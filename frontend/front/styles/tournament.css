@@ -356,7 +356,7 @@ input[type="search"]::-webkit-search-cancel-button {
     border: 2px solid rgb(118, 118, 118);
     background-color: #99185d23;
     padding: 15px;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 

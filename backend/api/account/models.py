@@ -11,4 +11,5 @@ class CustomUser(AbstractUser):
     is_2fa_enabled = models.BooleanField(default=False) 
     otp_code = models.CharField(max_length=6, blank=True, null=True) 
     otp_created_at = models.DateTimeField(blank=True, null=True)
+    
     # friends = models.ManyToManyField('self', symmetrical=True, blank=True, related_name='user_friends')

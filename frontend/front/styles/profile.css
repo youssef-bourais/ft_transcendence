@@ -355,6 +355,7 @@ input[type="search"]::-webkit-search-cancel-button {
     border-radius: 20px;
     position: relative;
     padding-right: 0px;
+    /* overflow-y: scroll; */
 }
 
 .container-main-home .child-container-main-home .left-side::after
@@ -440,7 +441,7 @@ input[type="search"]::-webkit-search-cancel-button {
     color: white;
     border: 2px solid rgb(118, 118, 118);
     position: relative;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     cursor: pointer;
 }
 
@@ -863,7 +864,7 @@ input[type="search"]::-webkit-search-cancel-button {
     cursor: pointer;
 }
 
-.child-container-profile-left .container-history-friends .contaienr-history-profile::after
+/* .child-container-profile-left .container-history-friends .contaienr-history-profile::after
 {
     content: "";
     border: 1px solid rgba(255, 255, 255, 0.691);
@@ -871,7 +872,7 @@ input[type="search"]::-webkit-search-cancel-button {
     position: absolute;
     right: 0px;
     top: -7px;
-}
+} */
 
 .child-container-profile-left .container-history-friends .container-friends-profile
 {
@@ -994,3 +995,189 @@ input[type="search"]::-webkit-search-cancel-button {
     width: 40px;
     border-radius: 50%;
 }
+.list-friends-profile
+{
+    overflow-y: scroll;
+    height: 570px;
+
+}
+
+.container-friends-profiles
+{
+    width: 100%;
+    height: 50px;
+    border-radius: 15px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    border: solid rgba(255, 255, 255, 0.691);
+}
+
+
+
+
+
+
+.container-edit
+    {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: rgba(0, 0, 0, 0.399);
+        z-index: 12;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        display: none;
+    }
+
+    .container-edit .container-card-edit
+    {
+        width: 600px;
+        height: 600px;
+        background-color: black;
+        border-radius: 20px;
+    }
+
+    .container-edit .container-card-edit .container-icone
+    {
+        /* background-color: white; */
+        color: white;
+        margin-bottom: 80px;
+    }
+
+    .container-edit .container-card-edit .container-icone i
+    {
+        font-size: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top:50px ;
+    }
+
+    .container-edit .container-card-edit .container-card-edit-inputs
+    {
+        /* background-color: red; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 20px;
+        
+    }
+
+
+    .container-edit .container-card-edit .container-card-edit-inputs input
+    {
+        display: block;
+        width: 300px;
+        height: 40px;
+        border:1px solid rgba(255, 255, 255, 0.691);
+        border-radius: 10px;
+        background-color: rgb(238, 238, 238);
+        box-sizing: border-box;
+        padding-left: 35px;
+        padding-right: 20px;
+        outline: none;
+        margin-bottom: 20px;
+    }
+    .container-edit .container-card-edit .container-card-edit-inputs .container-each-input
+    {
+        position: relative;
+    }
+    .container-edit .container-card-edit .container-card-edit-inputs i
+    {
+        position: absolute;
+        z-index: 1;
+        left: 12px;
+        top: 10px;
+        color: #99185D;
+        font-size: 17px;
+        /* color: ; */
+    }
+    .container-edit .container-card-edit .container-card-edit-inputs .container-save
+    {
+        width: 300px;
+        display: flex;
+        justify-content: space-around;
+        align-items: end;
+    }
+    .container-edit .container-card-edit .container-card-edit-inputs .container-save button
+    {
+        width: 100px;
+        height: 35px;
+        border-radius: 10px;
+        border: 1px solid black;
+        background-color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .container-edit .container-card-edit .container-card-edit-inputs .container-save button:hover
+    {
+        background-color: #99185D;
+        transition: 0.5s;
+    }
+
+    .errorInput
+    {
+        color: #99185D;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        display: none;
+    }
+    .file-label {
+        background-color: white; /* Green background */
+        color: rgb(130, 130, 130);
+        padding-left:40px;
+        border-radius:10px;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 16px;
+        width: 300px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+      }
+      
+      .file-label:hover {
+        background-color: #45a049; /* Darker green on hover */
+      }
+
+    .container-edit .container-card-edit .container-card-edit-inputs .container-each-input2
+    {
+        position: relative;
+        color: white;
+        display: flex;
+        /* background-color: red; */
+        align-items: center;
+        width: 300px;
+        
+    }
+    .container-edit .container-card-edit .container-card-edit-inputs .container-each-input2 input
+    {
+        display: block;
+        width: 25px;
+        height: 25px;
+        border:1px solid rgba(255, 255, 255, 0.691);
+        border-radius: 10px;
+        background-color: rgb(238, 238, 238);
+        box-sizing: border-box;
+        padding-left: none;
+        padding-right: none;
+        outline: none;
+        margin-bottom: 0px;
+
+    }
+    .container-edit .container-card-edit .container-card-edit-inputs .container-each-input2 label
+    {
+        margin-left: 20px;
+    }

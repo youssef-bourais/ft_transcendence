@@ -264,8 +264,9 @@ def add_friend(request):
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-#  curl http://127.0.0.1:8000/api/friend/list_request/ \                                                                                                                                                     ─╯
+#  curl http://127.0.0.1:8000/api/friend/list_friends_request/ \      
 # -H "Authorization: Bearer eyJ
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def list_incoming_requests(request):
@@ -282,10 +283,12 @@ def list_incoming_requests(request):
     return Response({"incoming_requests": requests_list}, status=status.HTTP_200_OK)
 
 
+
+
 # curl -X POST http://127.0.0.1:8000/api/friend/respond/ \
 # -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
 # -H "Content-Type: application/json" \
-# -d '{"request_id": 1, "action": "accept"}'
+# -d '{"request_id": 2, "action": "accept"}'
 
 
 @api_view(['POST'])
