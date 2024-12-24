@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     #new
     'chat',
     'channels',
+    'django_prometheus',
     'rest_framework',
     'account',
     'corsheaders',
@@ -143,7 +144,7 @@ SIMPLE_JWT = {
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django_prometheus.db.backends.postgresql",
 
         "NAME": os.getenv('DB_NAME'),
         "USER": os.getenv('DB_USER'),
@@ -168,6 +169,7 @@ CHANNEL_LAYERS = {
 }
 
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     #new 
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',  
@@ -179,6 +181,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #new
+    'django_prometheus.middleware.PrometheusAfterMiddleware',  
 ]
 
 #new
