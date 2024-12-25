@@ -64,3 +64,56 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         attrs['username'] = username
         data = super().validate(attrs)
         return data
+
+
+
+from django.contrib.auth.hashers import make_password
+
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    repeat_password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'username', 'photo', 'is_2fa_enabled', 'password', 'repeat_password']
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
+
+    def validate_email(self, value):
+        value = bleach.clean(value)
+        EmailValidator()(value)
+        if CustomUser.objects.filter(email=value).exists():
+            raise serializers.ValidationError("A user with this email already exists.")
+        return value
+
+    def validate_username(self, value):
+        value = bleach.clean(value)
+        validator = RegexValidator(
+            regex=r'^[a-zA-Z0-9_]+$',
+            message="Username must only contain letters, numbers, and underscores.",
+            code='invalid_username'
+        )
+        validator(value)
+        if CustomUser.objects.filter(username=value).exists():
+            raise serializers.ValidationError("This username is already taken.")
+        return value
+
+    def validate(self, attrs):
+        password = attrs.get('password')
+        repeat_password = attrs.get('repeat_password')
+
+        if password and repeat_password:
+            if password != repeat_password:
+                raise serializers.ValidationError("Passwords do not match.")
+            attrs['password'] = bleach.clean(password)
+        return attrs
+
+    def update(self, instance, validated_data):
+        if 'password' in validated_data:
+            validated_data['password'] = make_password(validated_data['password'])
+            validated_data.pop('repeat_password', None)
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance

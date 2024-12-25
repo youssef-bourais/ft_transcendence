@@ -155,7 +155,7 @@ def login_with_42(request):
     # print("authorization url: ", authorization_url)
     # requestingIntraApi = reques
     response = Response({"redirectUrl": authorization_url})
-    response.set_cookie('12345678', 'hello')
+    # response.set_cookie('12345678', 'hello')
     return response
 
 
@@ -361,6 +361,35 @@ def remove_friend(request):
 
     Friend.objects.remove_friend(request.user, friend)
     return Response({"message": "Friend removed successfully."}, status=status.HTTP_200_OK)
+
+from .serializers import UserProfileUpdateSerializer
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated]) 
+def update_profile(request):
+    user = request.user
+
+    allowed_fields = {'username', 'email', 'password', 'repeat_password', 'is_2fa_enabled', 'photo'} 
+
+    invalid_fields = set(request.data.keys()) - allowed_fields
+    if invalid_fields:
+        return Response(
+            {"error": f"Invalid fields: {', '.join(invalid_fields)} are not allowed."},
+            status=status.HTTP_400_BAD_REQUEST)
+    serializer = UserProfileUpdateSerializer(instance=user, data=request.data, partial=True)
+
+    if serializer.is_valid():
+        photo = serializer.validated_data.get('photo')
+        if photo:
+            try:
+                if not photo.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
+                    return Response({"error": "Invalid photo format."}, status=status.HTTP_400_BAD_REQUEST)
+            except ValidationError:
+                return Response({"error": "Invalid photo URL."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer.save()
+        return Response({"message": "Profile updated successfully!", "data": serializer.data}, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

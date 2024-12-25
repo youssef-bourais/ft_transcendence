@@ -313,41 +313,18 @@ function renderAll() {
             if(friendsContainer)
             {
                 var i = 0;
-
-
-            const friendsList = document.getElementById('list-friends-profile');
-            friendsList.innerHTML = '';
-
-            const friendsToRender = info.friends.map(friend => ({
-                name: friend.username, 
-                avatar: friend.photo  
-            }));
-
-
-            friendsToRender.forEach(friend => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <div class="friend-item">
-                        <img src="${friend.avatar}" alt="${friend.name}'s avatar" class="friend-avatar">
-                        <span class="friend-name">${friend.name}</span>
-                    </div>
-                `;
-                // li.addEventListener('click', () => selectFriend(friend));
-                friendsList.appendChild(li);
-            });
-
-                // while(i <= info.friends.length)
-                // {
-                //     friendsContainer.innerHTML = `
-                //     <div class="container-setting">
-                //         <div class="container-img"><img style="border-radius: 50%;" src="${info.friends[i].photo}" ></div>
-                //         <div class="container-name">
-                //             <p class="display-name">${info.friends[i].username}</p>
-                //             <!-- <p>${info.friends[i].username}</p> -->
-                //         </div>
-                //     </div>`
-                //     i++;
-                // }
+                while(i < info.friends.length)
+                {
+                    friendsContainer.innerHTML += `
+                    <div class="container-setting">
+                        <div class="container-img"><img style="border-radius: 50%;" src="${info.friends[i].photo}" ></div>
+                        <div class="container-name">
+                            <p class="display-name">${info.friends[i].username}</p>
+                            <!-- <p>${info.friends[i].username}</p> -->
+                        </div>
+                    </div>`
+                    i++;
+                }
             }
         }
         else

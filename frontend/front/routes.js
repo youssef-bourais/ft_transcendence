@@ -90,6 +90,8 @@ export const routes = {
                         </div>
 
                     </div>
+
+<a href="javascript: history.go(-1)">Back</a>
                     <button class="register">register</button>
                 </form>
 
@@ -1168,13 +1170,22 @@ function handleRedirect()
 async function setupProfilepage()
 {
 
-    // const data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
+    let data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
+    console.log("data: ", data.username, data.email, data.photo);
+    const id = data.username;
+
+    // data = await SecureApiRequest(`/api/get/${id}/`);
+    localStorage.setItem('username', data.username);
+
+    console.log("username", localStorage.getItem("username")); 
+        
+
     // console.log("data from profile: ", data.username, data.email, data.photo);
 
 
 
-    console.log("data, ", localStorage.getItem("photo"));
-    console.log("data, ", localStorage.getItem("email"));
+    // console.log("data, ", localStorage.getItem("photo"));
+    // console.log("data, ", localStorage.getItem("email"));
 }
 
 
