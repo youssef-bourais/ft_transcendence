@@ -1042,22 +1042,28 @@ input[type="search"]::-webkit-search-cancel-button {
         height: 600px;
         background-color: black;
         border-radius: 20px;
+        padding-top: 35px;
     }
 
     .container-edit .container-card-edit .container-icone
     {
-        /* background-color: white; */
+        /* background-color: red; */
         color: white;
-        margin-bottom: 80px;
+        margin-bottom: 50px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
     }
 
     .container-edit .container-card-edit .container-icone i
     {
-        font-size: 80px;
+        font-size: 17px;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding-top:50px ;
+        padding-top:50px;
     }
 
     .container-edit .container-card-edit .container-card-edit-inputs
@@ -1134,24 +1140,7 @@ input[type="search"]::-webkit-search-cancel-button {
         margin-bottom: 20px;
         display: none;
     }
-    .file-label {
-        background-color: white; /* Green background */
-        color: rgb(130, 130, 130);
-        padding-left:40px;
-        border-radius:10px;
-        cursor: pointer;
-        display: inline-block;
-        font-size: 16px;
-        width: 300px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-      }
-      
-      .file-label:hover {
-        background-color: #45a049; /* Darker green on hover */
-      }
-
+    
     .container-edit .container-card-edit .container-card-edit-inputs .container-each-input2
     {
         position: relative;
@@ -1177,7 +1166,50 @@ input[type="search"]::-webkit-search-cancel-button {
         margin-bottom: 0px;
 
     }
-    .container-edit .container-card-edit .container-card-edit-inputs .container-each-input2 label
+    
+
+    .containerInputFile
     {
-        margin-left: 20px;
+        /* background-color: rebeccapurple; */
+        position: relative;
+        width: 100px;
+        height: 100px;
     }
+    .containerInputFile i
+    {
+        color: black;
+        position: absolute;
+        z-index: 5;
+        left: 40px;
+    }
+    .containerInputFile img
+    {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        position: absolute;
+        z-index: 4;
+    }
+    .file-label {
+        background-color: white; /* Green background */
+        color: rgb(130, 130, 130);
+        padding-left:0px;
+        padding-top: 0px;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 16px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: transparent;
+        position: absolute;
+        z-index: 6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .file-label:hover{
+        background-color: rgba(0, 0, 0, 0.269); /* Darker green on hover */
+    }
+

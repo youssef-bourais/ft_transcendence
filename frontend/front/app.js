@@ -169,6 +169,7 @@ document.getElementById("logout").addEventListener("click", function(event) {
 function uploadImage() {
     // Get the file input element
     let fileInput = document.getElementById("file-input");
+    let labelInput = document.getElementById("label-input");
     // Check if the user has selected a file
     if (fileInput.files && fileInput.files[0]) {
       // Get the first file (image)
@@ -299,7 +300,26 @@ function renderAll() {
                     });
             }
             
-           
+    let fileInput = document.getElementById("file-input");
+    let labelInput = document.getElementById("label-input");
+    let imgUpdate = document.getElementById("img-update");
+    
+    if(fileInput)
+    {
+        fileInput.addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if(file)
+            {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    
+                    imgUpdate.src = e.target.result; 
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+    
     
     let  nameNotification = document.getElementById("nameNotification")
     nameNotification.innerHTML = localStorage.getItem("username");
@@ -319,7 +339,7 @@ function renderAll() {
                             buttonFriend.style.display = "none"
                             buttonFriend2.style.display = "flex"
                         }
-                        else
+                        else if(data.username != localStorage.getItem("username"))
                         {
                             nameSearch.innerHTML = data.username;
                             imgSearch.src = data.photo;
