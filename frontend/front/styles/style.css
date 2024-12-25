@@ -938,3 +938,7 @@ body {
 #google_translate_element:hover {
     background-color: var(--white);
 }
+
+.large-text {
+    font-size: 1.5rem;
+}
