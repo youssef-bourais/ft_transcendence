@@ -13,7 +13,7 @@ services:
       - network
     # restart: always
   api:
-    container_name: api/Users/amirabendhia/Desktop/push/.env
+    container_name: api
     image: python:3.12-alpine
     build: ./backend
     depends_on:
