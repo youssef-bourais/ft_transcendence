@@ -1,5 +1,6 @@
 
 import { handleLocation } from './app.js';
+import { closeWebSocket } from './chat.js';
 
 export function togglePass(id_name) 
 {
@@ -32,6 +33,7 @@ export function clickEvent(first,last)
 
 export async function logout() 
 {
+    closeWebSocket();
     const refreshToken = localStorage.getItem('refreshToken');
     try 
     {
@@ -48,17 +50,31 @@ export async function logout()
         {
             const errorData = await response.json();
             console.error('Error blacklisting token:', errorData);
-            // return ;
         } 
         else 
+        {
+            console.log("status: ", response.status);
             console.log('Refresh token successfully blacklisted.');
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('username');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('photo');
+            localStorage.removeItem('email');
+            localStorage.removeItem('message');
+            // alert('Logged out!');
+            history.pushState({}, "", "/");
+            handleLocation();
+        }
     } 
     catch (error) 
     {
         console.error('Network or server error while blacklisting token:', error);
         throw error;
     }
+}
 
+export function GoLogin()
+{
     localStorage.removeItem('accessToken');
     localStorage.removeItem('username');
     localStorage.removeItem('refreshToken');
@@ -66,15 +82,6 @@ export async function logout()
     localStorage.removeItem('email');
     localStorage.removeItem('message');
 
-    // alert('Logged out!');
-    history.pushState({}, "", "/");
-    handleLocation();
-}
-
-export function GoLogin()
-{
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
 
     history.pushState({}, "", "/");
     handleLocation();

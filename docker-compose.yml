@@ -6,7 +6,7 @@ services:
     depends_on:
       - api
     volumes:
-    - /Users/ahajji/Desktop/ft_transcendence/frontend/front/:/var/www/html/
+    - /Users/ybourais/Desktop/.Desktop/ft_transcendence/frontend/front/:/var/www/html/
     ports:
       - '443:443'
     networks:
@@ -19,14 +19,14 @@ services:
     depends_on:
       - postgres
     volumes:
-      - /Users/ahajji/Desktop/ft_transcendence/backend/api/:/app
+      - /Users/ybourais/Desktop/.Desktop/ft_transcendence/backend/api/:/app
     ports:
       - '8000:8000'
     networks:
       - network
     restart: always
     env_file:
-      - /Users/ahajji/Desktop/ft_transcendence/.env
+      - /Users/ybourais/Desktop/.Desktop/ft_transcendence/.env
   postgres:
     container_name: postgres
     image: postgres:latest
@@ -36,9 +36,48 @@ services:
       - POSTGRES_DB=${DB_NAME}
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     networks:
       - network
-    # restart: always
+    restart: always
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - network
+    restart: always
+  postgres_exporter:
+    image: wrouesnel/postgres_exporter:latest  # PostgreSQL Exporter image
+    container_name: postgres_exporter
+    environment:
+      - DATA_SOURCE_NAME=postgresql://gohan:dyueiv483%3A%3B%3E20f@postgres:5432/datastore?sslmode=disable  # DSN format for PostgreSQL connection
+    ports:
+      - "9187:9187"  # Expose the PostgreSQL exporter on port 9187
+    networks:
+      - network
+    depends_on:
+      - postgres
+    restart: always
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin  # Set Grafana admin password
+    ports:
+      - "3000:3000"
+    networks:
+      - network
+    depends_on:
+      - prometheus
+    restart: always
+
 
 networks:
     network:

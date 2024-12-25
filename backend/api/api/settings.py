@@ -74,8 +74,6 @@ CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be sent with the request
 
 INSTALLED_APPS = [
 
-    # 'rest_framework',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,7 +82,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
-    #new 
+    #new
+    'chat',
+    'channels',
+    'django_prometheus',
     'rest_framework',
     'account',
     'corsheaders',
@@ -95,6 +96,8 @@ INSTALLED_APPS = [
     'friendship',
     # 'rest_friendship',
 ]
+
+ASGI_APPLICATION = 'api.asgi.application'
 
 # REST_FRIENDSHIP = {
 #    'PERMISSION_CLASSES': [
@@ -126,11 +129,11 @@ REST_FRAMEWORK = {
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 
     'ROTATE_REFRESH_TOKENS': True,  # creates a new refresh token on use
-    'BLACKLIST_AFTER_ROTATION': True,  # Automatically blacklist the old token
+    'BLACKLIST_AFTER_ROTATION': False,  # Automatically blacklist the old token
     'UPDATE_LAST_LOGIN': False,
 }
    
@@ -139,7 +142,7 @@ SIMPLE_JWT = {
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django_prometheus.db.backends.postgresql",
 
         "NAME": os.getenv('DB_NAME'),
         "USER": os.getenv('DB_USER'),
@@ -157,7 +160,14 @@ DATABASES = {
 #     }
 # }
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
+
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     #new 
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',  
@@ -169,6 +179,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #new
+    'django_prometheus.middleware.PrometheusAfterMiddleware',  
 ]
 
 #new

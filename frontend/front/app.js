@@ -1,5 +1,6 @@
 import { routes, populateProfile} from './routes.js';
 import { togglePass, logout, clickEvent } from './utils.js';
+import { startChat } from './chat.js';
 import {SecureApiRequest} from './api.js';
 
 let currentState = { view: "login" };
@@ -15,7 +16,7 @@ function toggle_visibility(id)
 
 function toggleNavbar(path) 
 {
-    const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP"]
+    const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP", "chat"];
 
 
     if (!isAuthenticatedRoutes.includes(path)) 
@@ -30,26 +31,13 @@ function toggleNavbar(path)
         document.getElementById("user-email").textContent = email;
         document.getElementById("user-photo").src = photo;
 
-        // navbar.classList.add("visible");
-        // bruh.classList.add("visible");
-
         navbar.style.display = 'block';
         navbar.style.opacity = '1';
 
-        // bruh.style.display = 'block';
-        // bruh.style.opacity = '1';
         bruh.style.display = 'flex';
-
-        // navbar.offsetHeight; // Trigger a reflow
-        // location.reload();
-        // navbar.style.display = 'block';     // Show
-        // bruh.style.display = 'block';     // Show
     }
     else 
     {
-        // navbar.classList.remove("visible");
-        // navbar.style.visibility = 'hidden';
-        // bruh.style.visibility = 'hidden';      // Hide
         bruh.style.display = 'none';
         navbar.style.display = 'none';
     }
@@ -60,8 +48,6 @@ let isNavigating = false;
 
 function handleEvent(selector, isNavbar = false)
 {
-
-
     const Button = document.querySelectorAll(selector);
     if(Button)
     {
@@ -99,50 +85,22 @@ let inputSearch = document.getElementById('input_search');
 
 export const handleLocation = () => 
 {
-    // output.style.display = "none";
     inputSearch.value = ""
-    
     const path = window.location.pathname;
     currentState.view = path;
-    
-    // if(path == "/profile")
-    // {
-      
-            setTimeout(function() {
+
+    if(path === '/profile')
+    {
+        setTimeout(function() {
             renderAll();
         }, 100); 
-    
-        console.log(path);
-    // }
-
+    }
+    console.log(path);
     const route = routes[path] ? routes[path] : routes["/404"];
-      
-    // if(path === '/' || path === '/register' || path === '/OTP', "/forget_passwd", "/bridg", "/login_42")
-    //     document.getElementById("loginn").innerHTML = route.html;
-    // else
-    
 
     document.getElementById("con").innerHTML = route.html;
     toggleNavbar(path);
     
-    // for debugging
-    const test = document.getElementById("test")
-    if(test)
-        test.addEventListener("click", (e)=>{
-
-        fetch('https://localhost/api/endpoint/', {method:"GET", credentials:"include"}).then(async e=>{
-
-            e.json().then(e=>{
-                console.log(e);
-        });
-       
-        const inputSearch = document.getElementById('input-search');
-        inputSearch.style.backgroundColor = "red";
-});
-
-
-});
-
     if (route.setup) 
         route.setup();
 
@@ -199,9 +157,7 @@ function uploadImage() {
       alert('Please select an image file first');
     }
   }
-  
-
-
+ 
 function renderAll() {
         
     console.log("render all ok bro ")
@@ -256,9 +212,6 @@ function renderAll() {
                     containerEdit.style.display = "flex";
                 });
             }
-            
-
-            
             
             if(save)
             {
@@ -321,6 +274,7 @@ function renderAll() {
     }
     
     
+
     let  nameNotification = document.getElementById("nameNotification")
     nameNotification.innerHTML = localStorage.getItem("username");
         inputSearch.addEventListener('input', (event) => {
@@ -371,31 +325,31 @@ function renderAll() {
     } else {
         console.error("Element with ID 'input-search' not found.");
     }
+
     async function fetchDataFriends() {
         const info = await SecureApiRequest("/api/friend/get_friends/");
         let friendsContainer = document.getElementById("list-friends-profile");
-        console.log(info.friends)
+        console.log("friends:===========", info.friends)
+
         // console.log("this all my friends => ", info.friends.photo)
         if(info.friends.length > 0)
         {
             if(friendsContainer)
             {
                 var i = 0;
-                while(i <= info.friends.length)
+                while(i < info.friends.length)
                 {
-                    friendsContainer.innerHTML = `
+                    friendsContainer.innerHTML += `
                     <div class="container-setting">
                         <div class="container-img"><img style="border-radius: 50%;" src="${info.friends[i].photo}" ></div>
                         <div class="container-name">
                             <p class="display-name">${info.friends[i].username}</p>
-                            <p>username</p>
+                            <!-- <p>${info.friends[i].username}</p> -->
                         </div>
                     </div>`
                     i++;
                 }
-                
             }
-            
         }
         else
         {
@@ -445,14 +399,14 @@ function renderAll() {
     .catch(error => {
         
     });
- }
+ } 
+
+
 
 
 document.addEventListener("DOMContentLoaded", function() {
     
   });
- 
-  
 
 window.togglePass = togglePass;
 window.clickEvent = clickEvent;

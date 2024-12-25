@@ -50,7 +50,6 @@ def custom_token_obtain_pair(request):
     password = request.data.get('password', '')
     otp = request.data.get('otp', None)
 
-
     print("username: ", username)
     print("password: ", password)
     print("otp: ", otp)
@@ -66,9 +65,9 @@ def custom_token_obtain_pair(request):
         return Response({"error": "Invalid username or password."}, status=status.HTTP_400_BAD_REQUEST)
     useremail = user.email
     
-    # bool = True
-    # if(bool):
-    if user.is_2fa_enabled:
+    bool = True
+    if(bool):
+    # if user.is_2fa_enabled:
         if not otp:
             generate_otp(user)
             send_otp_email(user)
@@ -107,6 +106,8 @@ def get_user(request, id_or_name):
         else:
             user = CustomUser.objects.get(username=id_or_name)
         
+
+        # friends = Friend.objects.friends(request.user)
         user_data = {
             'id': user.id,
             'username': user.username,
@@ -154,7 +155,7 @@ def login_with_42(request):
     # print("authorization url: ", authorization_url)
     # requestingIntraApi = reques
     response = Response({"redirectUrl": authorization_url})
-    response.set_cookie('12345678', 'hello')
+    # response.set_cookie('12345678', 'hello')
     return response
 
 
@@ -225,8 +226,8 @@ def endpoint(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def logouthttponly(request):
-    access = request.COOKIES.get('access_token')
-    access = RefreshToken(access)
+    # access = request.COOKIES.get('access_token')
+    access = RefreshToken(request.access_token)
     access.blacklist()
     response = Response({"message": "Logged out successfully"})
     # response.delete_cookie('access_token')
@@ -330,10 +331,12 @@ def get_friends(request):
         friend_data = {
             "id": friend.id,
             "username": friend.username,
-            "photo": friend.photo if friend.photo else None
+            "photo": friend.photo
         }
         friend_list.append(friend_data)
-    return Response({"friends": friend_list})
+    # if not friend_list:
+    #     return Response({"friend_list emty"}, status=status.HTTP_204_NO_CONTENT)
+    return Response({"friends": friend_list}, status=status.HTTP_200_OK)
 
 
 # curl -X POST http://127.0.0.1:8000/api/friend/remove_friend/ \
@@ -358,6 +361,35 @@ def remove_friend(request):
 
     Friend.objects.remove_friend(request.user, friend)
     return Response({"message": "Friend removed successfully."}, status=status.HTTP_200_OK)
+
+from .serializers import UserProfileUpdateSerializer
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated]) 
+def update_profile(request):
+    user = request.user
+
+    allowed_fields = {'username', 'email', 'password', 'repeat_password', 'is_2fa_enabled', 'photo'} 
+
+    invalid_fields = set(request.data.keys()) - allowed_fields
+    if invalid_fields:
+        return Response(
+            {"error": f"Invalid fields: {', '.join(invalid_fields)} are not allowed."},
+            status=status.HTTP_400_BAD_REQUEST)
+    serializer = UserProfileUpdateSerializer(instance=user, data=request.data, partial=True)
+
+    if serializer.is_valid():
+        photo = serializer.validated_data.get('photo')
+        if photo:
+            try:
+                if not photo.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
+                    return Response({"error": "Invalid photo format."}, status=status.HTTP_400_BAD_REQUEST)
+            except ValidationError:
+                return Response({"error": "Invalid photo URL."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer.save()
+        return Response({"message": "Profile updated successfully!", "data": serializer.data}, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

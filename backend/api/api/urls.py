@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django_prometheus import exports
+from chat.views import MetricsView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -24,5 +26,5 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('account.urls')),
-
+    path('metrics/', MetricsView.as_view(), name='prometheus-metrics'),
 ]
