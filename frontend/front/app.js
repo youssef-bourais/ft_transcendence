@@ -89,7 +89,7 @@ export const handleLocation = () =>
     const path = window.location.pathname;
     currentState.view = path;
 
-    if(path === '/profile')
+    if(path === '/profile' || path === "/eachprofile")
     {
         setTimeout(function() {
             renderAll();
@@ -251,6 +251,28 @@ function renderAll() {
                         console.log("hiiiiii karim fin")
                     });
             }
+
+
+            let fileInput = document.getElementById("file-input");
+            let labelInput = document.getElementById("label-input");
+            let imgUpdate = document.getElementById("img-update");
+            
+            if(fileInput)
+            {
+                fileInput.addEventListener("change", function(event) {
+                    const file = event.target.files[0];
+                    if(file)
+                    {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            
+                            imgUpdate.src = e.target.result; 
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
     let  nameNotification = document.getElementById("nameNotification")
     nameNotification.innerHTML = localStorage.getItem("username");
         inputSearch.addEventListener('input', (event) => {
@@ -353,6 +375,7 @@ function renderAll() {
     let imageEachProfile = document.getElementById("imageEachProfile");
     let imageEachProfile2 = document.getElementById("imageEachProfile2");
     let imageEachProfile3 = document.getElementById("imageEachProfile3");
+
 
     fetch(`/api/get/${localStorage.getItem('eachProfileUserName')}/`)
     .then(response => response.json())

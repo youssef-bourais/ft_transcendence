@@ -44,7 +44,6 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
     if(!token)
     {
         return;
-
     }
 
     let headers = {

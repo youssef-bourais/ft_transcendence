@@ -812,7 +812,6 @@ export const routes = {
    
 };
 
-
 function isOnlyDigits(str) {
     return /^\d+$/.test(str);
 }
@@ -1166,6 +1165,7 @@ function handleRedirect()
     localStorage.setItem("username", username);
     localStorage.setItem("photo", image);
     
+    // console
     history.pushState({}, "", "/profile");
     handleLocation();
 }
@@ -1175,12 +1175,12 @@ async function setupProfilepage()
 
     let data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
     console.log("data: ", data.username, data.email, data.photo);
-    const id = data.username;
+    // const id = data.username;
 
     // data = await SecureApiRequest(`/api/get/${id}/`);
-    localStorage.setItem('username', data.username);
+    // localStorage.setItem('username', data.username);
 
-    console.log("username", localStorage.getItem("username")); 
+    // console.log("username", localStorage.getItem("username")); 
         
 
     // console.log("data from profile: ", data.username, data.email, data.photo);
