@@ -124,7 +124,14 @@ export const routes = {
                 <div class="container-edit" id="container-edit">
                     <div class="container-card-edit">
                         <div class="container-icone">
-                            <i class="fa-solid fa-pen-to-square"></i>
+                            <div class="containerInputFile">
+                                <img src="" class="avatars" id="img-update"/>
+                                <input type="file" id="file-input" style="display: none;"/>
+                                <label for="file-input" class="file-label"id="label-input" ></label>
+                                <div class="container-flow"> 
+                                    <i class="fa-solid fa-upload"></i>
+                                </div>
+                            </div>
                         </div>
                         <div class="container-card-edit-inputs">
                             <div class="container-each-input">
@@ -143,14 +150,10 @@ export const routes = {
                                 <input type="password" name="" id="passwordIdProfileConfirme" placeholder="Confirme your username" required>
                                 <i class="fa-solid fa-key"></i>
                             </div>
-                            <div class="container-each-input" style="margin-bottom: 25px;">
-                            <input type="file" id="file-input" style="display: none;"/>
-                            <label for="file-input" class="file-label" >Choose File</label>
-                                <i class="fa-solid fa-upload"></i>
-                            </div>
+                            
                             <div class="container-each-input2" style="margin-bottom: 25px;">
                                 <input  id="check-box" type="checkbox">
-                                <label>Enabel auth</label>
+                                <label style="margin-left:20px">Enabel auth</label>
                             </div>
                             <div class="errorInput" id="container-error">
                                 <p id="error-message" >Error in input</p>
