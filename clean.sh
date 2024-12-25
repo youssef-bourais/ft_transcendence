@@ -1,2 +1,2 @@
 #!/bin/zsh
-docker system prune -a
+docker system prune -a --volumes
