@@ -6,27 +6,27 @@ services:
     depends_on:
       - api
     volumes:
-    - /goinfre/mdouzi/docker/ft_transcendence/frontend/front/:/var/www/html/
+    - /Users/amirabendhia/Desktop/push/frontend/front/:/var/www/html/
     ports:
       - '443:443'
     networks:
       - network
     # restart: always
   api:
-    container_name: api
+    container_name: api/Users/amirabendhia/Desktop/push/.env
     image: python:3.12-alpine
     build: ./backend
     depends_on:
       - postgres
     volumes:
-      - /goinfre/mdouzi/docker/ft_transcendence/backend/api/:/app
+      - /Users/amirabendhia/Desktop/push/backend/api/:/app
     ports:
       - '8000:8000'
     networks:
       - network
     restart: always
     env_file:
-      - /goinfre/mdouzi/docker/ft_transcendence/.env
+      - /Users/amirabendhia/Desktop/push/.env
   postgres:
     container_name: postgres
     image: postgres:latest

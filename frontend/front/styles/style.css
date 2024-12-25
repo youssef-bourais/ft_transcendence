@@ -37,7 +37,7 @@ html, body {
 }
 
 #container-main-container{
-    style="display: flex; flex-direction: row; align-items: center; justify-content: center;
+    display: flex; flex-direction: row; align-items: center; justify-content: center;
 }
 
 .cart {
@@ -632,9 +632,9 @@ body {
     flex-direction: column;
 }
 
-#con{
+/* #con{
     /* background-color: var(--white); */
-}
+/*
 
 /*chat new shit*/
 .chat-container {
@@ -908,3 +908,33 @@ body {
     }
 }
 
+/* Initially hide the translate container */
+.translate-container {
+    display: none;
+    margin-top: 20px; /* Adjust space as needed */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+/* Show the translate container when sidebar is expanded */
+.sidebar.active .translate-container {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Optional: Style the translate container */
+#google_translate_element {
+    margin-top: 10px;
+    text-align: center;
+    background-color: var(--black);
+    padding: 0.4rem 1.2rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+#google_translate_element:hover {
+    background-color: var(--white);
+}
