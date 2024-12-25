@@ -88,10 +88,13 @@ export const handleLocation = () =>
     inputSearch.value = ""
     const path = window.location.pathname;
     currentState.view = path;
-    setTimeout(function() {
-        renderAll();
-    }, 100); 
-    
+
+    if(path === '/profile')
+    {
+        setTimeout(function() {
+            renderAll();
+        }, 100); 
+    }
     console.log(path);
     const route = routes[path] ? routes[path] : routes["/404"];
 
@@ -298,31 +301,54 @@ function renderAll() {
     } else {
         console.error("Element with ID 'input-search' not found.");
     }
+
     async function fetchDataFriends() {
         const info = await SecureApiRequest("/api/friend/get_friends/");
         let friendsContainer = document.getElementById("list-friends-profile");
-        console.log(info.friends)
+        console.log("friends:===========", info.friends)
+
         // console.log("this all my friends => ", info.friends.photo)
         if(info.friends.length > 0)
         {
             if(friendsContainer)
             {
                 var i = 0;
-                while(i <= info.friends.length)
-                {
-                    friendsContainer.innerHTML = `
-                    <div class="container-setting">
-                        <div class="container-img"><img style="border-radius: 50%;" src="${info.friends[i].photo}" ></div>
-                        <div class="container-name">
-                            <p class="display-name">${info.friends[i].username}</p>
-                            <p>username</p>
-                        </div>
-                    </div>`
-                    i++;
-                }
-                
+
+
+            const friendsList = document.getElementById('list-friends-profile');
+            friendsList.innerHTML = '';
+
+            const friendsToRender = info.friends.map(friend => ({
+                name: friend.username, 
+                avatar: friend.photo  
+            }));
+
+
+            friendsToRender.forEach(friend => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="friend-item">
+                        <img src="${friend.avatar}" alt="${friend.name}'s avatar" class="friend-avatar">
+                        <span class="friend-name">${friend.name}</span>
+                    </div>
+                `;
+                // li.addEventListener('click', () => selectFriend(friend));
+                friendsList.appendChild(li);
+            });
+
+                // while(i <= info.friends.length)
+                // {
+                //     friendsContainer.innerHTML = `
+                //     <div class="container-setting">
+                //         <div class="container-img"><img style="border-radius: 50%;" src="${info.friends[i].photo}" ></div>
+                //         <div class="container-name">
+                //             <p class="display-name">${info.friends[i].username}</p>
+                //             <!-- <p>${info.friends[i].username}</p> -->
+                //         </div>
+                //     </div>`
+                //     i++;
+                // }
             }
-            
         }
         else
         {

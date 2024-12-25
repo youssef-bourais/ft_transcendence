@@ -1,4 +1,4 @@
-import { SanitizeInpute, GoLogin, showError, validatePassword, getCookie, deleteCookie, clickEvent} from './utils.js';
+import { SanitizeInpute, GoLogin, showError, validatePassword, getCookie, deleteCookie, clickEvent, logout} from './utils.js';
 import { handleLocation } from './app.js';
 import { SecureApiRequest} from './api.js';
 import { loadChatInterface } from './chat.js';
@@ -967,6 +967,7 @@ export function populateProfile()
 populateProfile() 
 async function setupLoginPage() 
 {
+    // logout();
     // console.log("login page");
     const form = document.getElementById("login-form");
     form.addEventListener("submit", async (event) => 
@@ -1080,6 +1081,7 @@ async function setupRegisterPage()
                 for (const key in data) 
                     if (data[key]) 
                         errorMessage += `${key} :${data[key].join(", ")} `;
+                errorMessage += "\n\n";
                 showError(errorMessage);
             }
         } 
@@ -1166,8 +1168,8 @@ function handleRedirect()
 async function setupProfilepage()
 {
 
-    const data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
-    console.log("data from profile: ", data.username, data.email, data.photo);
+    // const data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
+    // console.log("data from profile: ", data.username, data.email, data.photo);
 
 
 

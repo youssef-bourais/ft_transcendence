@@ -77,7 +77,7 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
                 return data;
             }
             console.error("Retry after token refresh failed.");
-            alert("Session expired. Please log in again.");
+            alert("Session expired. Please log in again azbiiii.");
             GoLogin();
             return {"":""};
         }
