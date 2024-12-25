@@ -89,12 +89,12 @@ export const handleLocation = () =>
     const path = window.location.pathname;
     currentState.view = path;
 
-    if(path === '/profile')
-    {
+    // if(path === '/profile')
+    // {
         setTimeout(function() {
             renderAll();
         }, 100); 
-    }
+    // }
     console.log(path);
     const route = routes[path] ? routes[path] : routes["/404"];
 
@@ -380,6 +380,7 @@ function renderAll() {
     fetch(`/api/get/${localStorage.getItem('eachProfileUserName')}/`)
     .then(response => response.json())
     .then(data => {
+        console.log("i am her i will ")
         console.log('Response from server:', data);
         if(data.error == "User not found")
         {
