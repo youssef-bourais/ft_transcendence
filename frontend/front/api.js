@@ -41,6 +41,11 @@ export async function refreshAccessToken()
 export async function SecureApiRequest(endpoint, method = "GET", body = null) 
 {
     let token = localStorage.getItem("accessToken");
+    if(!token)
+    {
+        return;
+
+    }
 
     let headers = {
         Authorization: `Bearer ${token}`,

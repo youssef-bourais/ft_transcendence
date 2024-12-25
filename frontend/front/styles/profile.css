@@ -1120,13 +1120,15 @@ input[type="search"]::-webkit-search-cancel-button {
         height: 35px;
         border-radius: 10px;
         border: 1px solid black;
-        background-color: white;
+        background-color: #99185D;
         font-weight: bold;
         cursor: pointer;
+        padding: 0;
+        font-size: 13px;
     }
     .container-edit .container-card-edit .container-card-edit-inputs .container-save button:hover
     {
-        background-color: #99185D;
+        background-color: #7b1049;
         transition: 0.5s;
     }
 
