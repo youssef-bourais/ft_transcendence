@@ -199,7 +199,7 @@ async function displayMessage(message) {
     // console.log(message);
     const messagesContainer = document.getElementById('messagesContainer');
     const messageElement = document.createElement('div');
-    messageElement.classList.add('message');
+    messageElement.classList.add('messages');
     
     const isCurrentUser = message.sender__username === currentUserName;
     // console.log(message.sender__username + "    "  +  currentUserName);

@@ -811,7 +811,7 @@ body {
     gap: 1rem;
 }
 
-.message {
+.messages {
     max-width: 70%;
     padding: 0.8rem 1rem;
     border-radius: 1rem;
@@ -819,13 +819,13 @@ body {
     width: 300px; /* Adjust this value to fine-tune the width */
 }
 
-.message.sent {
+.messages.sent {
     align-self: flex-end;
     background-color: #99185d23;
     border-bottom-right-radius: 0.2rem;
 }
 
-.message.received {
+.messages.received {
     align-self: flex-start;
     background-color: #333333;
     border-bottom-left-radius: 0.2rem;
@@ -914,7 +914,7 @@ body {
 }
 
 @media (max-width: 768px) {
-    .message {
+    .messages {
         width: 250px; /* Smaller width for mobile devices */
     }
 }
