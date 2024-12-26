@@ -4,6 +4,9 @@ import { SecureApiRequest} from './api.js';
 import { loadChatInterface } from './chat.js';
 
 {/* <button id='test' style='z-index:10'>hey</button> */}
+{/* <div> */}
+{/*                     <a href="javascript: history.go(-1)"style="color: black;text-decoration: none; font-weight: bolder;">back</a> */}
+{/*                     </div> */}
 
 
 export const routes = {
@@ -84,15 +87,20 @@ export const routes = {
                             <svg onclick="togglePass('password2')" hidden id="Layer_2password2" data-name="Layer 2" width="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>eye-disabled-glyph</title><path d="M409.84,132.33l95.91-95.91A21.33,21.33,0,1,0,475.58,6.25L6.25,475.58a21.33,21.33,0,1,0,30.17,30.17L140.77,401.4A275.84,275.84,0,0,0,256,426.67c107.6,0,204.85-61.78,253.81-161.25a21.33,21.33,0,0,0,0-18.83A291,291,0,0,0,409.84,132.33ZM256,362.67a105.78,105.78,0,0,1-58.7-17.8l31.21-31.21A63.29,63.29,0,0,0,256,320a64.07,64.07,0,0,0,64-64,63.28,63.28,0,0,0-6.34-27.49l31.21-31.21A106.45,106.45,0,0,1,256,362.67ZM2.19,265.42a21.33,21.33,0,0,1,0-18.83C51.15,147.11,148.4,85.33,256,85.33a277,277,0,0,1,70.4,9.22l-55.88,55.88A105.9,105.9,0,0,0,150.44,270.52L67.88,353.08A295.2,295.2,0,0,1,2.19,265.42Z"/></svg>
                         </div>
 
-
                         <div id="errordiv" align="center" style="margin-left: auto; margin-right: auto;"> 
                             <span id="error" style="color: white; display: none"></span> 
                         </div>
 
                     </div>
 
-<a href="javascript: history.go(-1)">Back</a>
-                    <button class="register">register</button>
+                    <button id="registerbutton" class="register">register</button>
+
+                <div class="social-iconss" style="color">
+                    <p class="signup"><br/>already signed up?
+                    <a href="javascript: history.go(-1)">back to login</a>
+                    </p>
+                </div>
+
                 </form>
 
                 
@@ -281,7 +289,10 @@ export const routes = {
     },
     "/chat" : {
         html : `
-        <div class="container-main" id="container-main"><div id="chat-container"></div></div>`, 
+        <div class="container-main" id="container-main">
+            <div id="chat-container">
+            </div>
+        </div>`, 
         setup: loadChatInterface,
     },
     "/eachprofile" : {
@@ -432,6 +443,9 @@ export const routes = {
     },
     "/game": {
         html: `
+<div class="container-main-home">
+                <div id="chat-container">
+
         <div id="app">
         <div class="game-container">
             <div class="canvas-section">
@@ -510,6 +524,10 @@ export const routes = {
             </div>
         </div>
     </div>
+
+        </div>
+    </div>
+
         `,
         setup: setupGamePage,
     },
@@ -806,7 +824,18 @@ export const routes = {
         setup: handleOTPpage,
     },
     "/404": {
-        html: `<h1>404: Page Not Found</h1><br><h4>The page you're looking for doesn't exist.</h4>`,
+        html: `
+
+            <div class="container-main-home">
+                <div id="chat-container">
+                <div id="not_found">
+                    <h1>404: Page Not Found</h1>
+                    <br>
+                    <h5>The page you're looking for doesn't exist.</h4>
+                </div>
+                </div>
+            </div>
+`,
         setup: () => console.log("404 page loaded"),
     },
    
@@ -958,18 +987,25 @@ export function populateProfile()
 
     const avatar = document.getElementsByClassName("avatars");
     let i = 0;
-    while(i < avatar.length)
-    {   
-        avatar[i].src = photo;
-        i++;
+
+    if(avatar)
+    {
+        while(i < avatar.length)
+        {   
+            avatar[i].src = photo;
+            i++;
+        }
     }
 
-    document.querySelectorAll(".display-name").forEach(displayName => {
-        console.log("length");
-        displayName.innerText = username;
-    });
+    const displayName = document.querySelectorAll(".display-name");
+    if(displayName)
+    {
+        displayName.forEach(displayName => {
+            displayName.innerText = username;
+        });
+    }
 }
-populateProfile() 
+
 async function setupLoginPage() 
 {
     // logout();
@@ -1082,12 +1118,17 @@ async function setupRegisterPage()
             }
             else
             {
-                let errorMessage = "Registration failed: ";
+                let errorMessage = "";
                 for (const key in data) 
                     if (data[key]) 
-                        errorMessage += `${key} :${data[key].join(", ")} `;
-                errorMessage += "\n\n";
+                        errorMessage += `${key}: ${data[key].join(", ")} `;
+                // errorMessage += "\n\n";
+                // button = document.getElementById("registerbutton"); 
+                //
+                //
+                // button.style.display =  "none";
                 showError(errorMessage);
+                // button.style.display = "Block";
             }
         } 
         catch (error) 
@@ -1174,19 +1215,20 @@ async function setupProfilepage()
 {
 
     let data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
-    console.log("data: ", data.username, data.email, data.photo);
-    const id = data.username;
+    if(!data)
+    {
+        GoLogin();
+        return;
+    }
+
+    // console.log("data: ", data.username, data.email, data.photo);
 
     // data = await SecureApiRequest(`/api/get/${id}/`);
-    localStorage.setItem('username', data.username);
 
-    console.log("username", localStorage.getItem("username")); 
         
 
+
     // console.log("data from profile: ", data.username, data.email, data.photo);
-
-
-
     // console.log("data, ", localStorage.getItem("photo"));
     // console.log("data, ", localStorage.getItem("email"));
 }
@@ -1562,7 +1604,7 @@ function applySettings() {
         PADDLE_SPEED: parseInt(paddleSpeed),
         WINNING_SCORE: parseInt(winningScore)
     };
-    if(game) {
+    if(Game) {
         updateGameSettings(window.gameSettings);
     }
 }

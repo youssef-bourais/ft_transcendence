@@ -31,10 +31,13 @@
 
 html, body {
     height: 100%;
-    background-image: linear-gradient(var(--red) , var(--black));
+    background-image: linear-gradient(var(--blue) , var(--base2));
+
     overflow: hidden; /* Prevent scrollbars */
     /* background-color: var(--white); */
     /* display: flex; */
+
+    /* background-image: url('../images/and.jpg'); */
 }
 
 #container-main-container{
@@ -43,8 +46,9 @@ html, body {
 
 .cart {
 
+    background-image: url('../images/background.jpg');
     width: 400px;
-    height: 520px;
+    height: 590px;
 
     /* border: 2px solid var(--black); /* Border color*/  
     border-radius: 25px;
@@ -60,7 +64,9 @@ html, body {
     transform: translate(-50%, -50%); /* Offset the square by half its width and height to center it*/ 
     
     box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.4), 0 24px 80px 0 rgba(0, 0, 0, 0.38);
-    background-color: rgb(68, 1, 1);
+    /* background-color: rgb(68, 1, 1); */
+    
+    /* background-image: linear-gradient(var(--blue) , var(--black)); */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -101,6 +107,7 @@ h1 {
     flex-direction: column; /* Arrange items vertically */
     gap: 50px; 
     overflow: hidden;
+    height: 500px;
 }
 
 #login-form {
@@ -193,7 +200,7 @@ h1 {
 
 #login:hover, #login-intra:hover, .register:hover , #submit:hover {
     transform: scale(1.02);
-    background-color: var(--red);
+    background-color: var(--blue);
 }
 
 
@@ -946,3 +953,19 @@ body {
 .large-text {
     font-size: 1.2em;
 }
+
+
+#chat-container {
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center;    /* Vertically center */
+    height: 100vh;          /* Make the container fill the viewport */
+    text-align: center;     /* Center text inside the div */
+    margin: 0;              /* Remove default margin */
+}
+
+#not_found {
+    max-width: 600px;       /* Optional: Restrict width for better readability */
+    font-size: 30px;
+}
+

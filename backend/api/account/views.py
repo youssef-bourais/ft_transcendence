@@ -19,7 +19,7 @@ from django.contrib.auth import authenticate
 from django.utils.timezone import now
 from datetime import timedelta
 from .utils import generate_otp, send_otp_email
-
+from .serializers import UserProfileUpdateSerializer
 from django.http import Http404
 from friendship.models import Friend
 from django.shortcuts import get_object_or_404
@@ -65,9 +65,9 @@ def custom_token_obtain_pair(request):
         return Response({"error": "Invalid username or password."}, status=status.HTTP_400_BAD_REQUEST)
     useremail = user.email
     
-    bool = True
-    if(bool):
-    # if user.is_2fa_enabled:
+    # bool = True
+    # if(bool):
+    if user.is_2fa_enabled:
         if not otp:
             generate_otp(user)
             send_otp_email(user)
@@ -362,12 +362,14 @@ def remove_friend(request):
     Friend.objects.remove_friend(request.user, friend)
     return Response({"message": "Friend removed successfully."}, status=status.HTTP_200_OK)
 
-from .serializers import UserProfileUpdateSerializer
 
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated]) 
 def update_profile(request):
     user = request.user
+    print("user_id========================:", user.id)
+    if(user.id > 100):
+       return Response({"message": "intra Users cant update profile!"}, status=status.HTTP_200_OK) 
 
     allowed_fields = {'username', 'email', 'password', 'repeat_password', 'is_2fa_enabled', 'photo'} 
 
@@ -390,14 +392,4 @@ def update_profile(request):
         serializer.save()
         return Response({"message": "Profile updated successfully!", "data": serializer.data}, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-
-
-
-
-
-
 

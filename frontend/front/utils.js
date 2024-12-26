@@ -55,13 +55,8 @@ export async function logout()
         {
             console.log("status: ", response.status);
             console.log('Refresh token successfully blacklisted.');
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('username');
-            localStorage.removeItem('refreshToken');
-            localStorage.removeItem('photo');
-            localStorage.removeItem('email');
-            localStorage.removeItem('message');
-            // alert('Logged out!');
+
+            localStorage.clear();
             history.pushState({}, "", "/");
             handleLocation();
         }

@@ -42,10 +42,7 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
 {
     let token = localStorage.getItem("accessToken");
     if(!token)
-    {
-        return;
-
-    }
+        return null;
 
     let headers = {
         Authorization: `Bearer ${token}`,
@@ -67,7 +64,6 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
         if (response.status === 401) 
         {
             console.warn("Access token expired. Attempting to refresh...");
-
             await refreshAccessToken();
             token = localStorage.getItem("accessToken");
             headers.Authorization = `Bearer ${token}`;
@@ -88,6 +84,7 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
         }
         if (response.ok) 
         {
+            console.log("feth from api");
             const data = await response.json();
             return data;
         } 

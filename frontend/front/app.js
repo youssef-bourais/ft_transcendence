@@ -1,5 +1,5 @@
 import { routes, populateProfile} from './routes.js';
-import { togglePass, logout, clickEvent } from './utils.js';
+import { togglePass, logout, clickEvent, GoLogin } from './utils.js';
 import { startChat } from './chat.js';
 import {SecureApiRequest} from './api.js';
 
@@ -14,18 +14,22 @@ function toggle_visibility(id)
         e.style.display = 'block';
 }
 
-function toggleNavbar(path) 
+const NonAuthenticated = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP"];
+
+function toggleNavbarAndSearchBar(path) 
 {
-    const isAuthenticatedRoutes = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP", "chat"];
-
-
-    if (!isAuthenticatedRoutes.includes(path)) 
+    if (!NonAuthenticated.includes(path)) 
     { 
+
         const username = localStorage.getItem("username");
         const email = localStorage.getItem("email");
         const photo = localStorage.getItem("photo"); 
-        if(path === '/profile')
-            populateProfile(); 
+
+        populateProfile(); 
+
+        setTimeout(function() {
+            renderAll();
+        }, 100); 
 
         document.getElementById("user-username").textContent = username;
         document.getElementById("user-email").textContent = email;
@@ -83,23 +87,35 @@ function handleEvent(selector, isNavbar = false)
 let  output = document.getElementById("container-outputs");
 let inputSearch = document.getElementById('input_search');
 
+function isUserAuthenticated(path)
+{
+    if(!localStorage.getItem("accessToken") && !NonAuthenticated.includes(path))
+        return false;
+    return true
+}
+
 export const handleLocation = () => 
 {
     inputSearch.value = ""
     const path = window.location.pathname;
     currentState.view = path;
 
-    if(path === '/profile')
+    if(!isUserAuthenticated(path))
     {
-        setTimeout(function() {
-            renderAll();
-        }, 100); 
+        GoLogin();
+        return;
     }
-    console.log(path);
+    if(localStorage.getItem("accessToken") && NonAuthenticated.includes(path))
+    {
+        history.pushState({}, "", '/profile'); 
+        handleLocation('/profile');
+        return;
+    }
+
     const route = routes[path] ? routes[path] : routes["/404"];
 
     document.getElementById("con").innerHTML = route.html;
-    toggleNavbar(path);
+    toggleNavbarAndSearchBar(path);
     
     if (route.setup) 
         route.setup();
@@ -107,8 +123,6 @@ export const handleLocation = () =>
     handleEvent(".inpute");
     handleEvent(".barinpute", true);
 };
-
-
 
 let btn = document.querySelector('#btn');
 let sidebar = document.querySelector('.sidebar');
@@ -127,6 +141,7 @@ document.getElementById("logout").addEventListener("click", function(event) {
 function uploadImage() {
     // Get the file input element
     let fileInput = document.getElementById("file-input");
+    let labelInput = document.getElementById("label-input");
     // Check if the user has selected a file
     if (fileInput.files && fileInput.files[0]) {
       // Get the first file (image)
@@ -251,6 +266,29 @@ function renderAll() {
                         console.log("hiiiiii karim fin")
                     });
             }
+            
+    let fileInput = document.getElementById("file-input");
+    let labelInput = document.getElementById("label-input");
+    let imgUpdate = document.getElementById("img-update");
+    
+    if(fileInput)
+    {
+        fileInput.addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if(file)
+            {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    
+                    imgUpdate.src = e.target.result; 
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+    
+    
+
     let  nameNotification = document.getElementById("nameNotification")
     nameNotification.innerHTML = localStorage.getItem("username");
         inputSearch.addEventListener('input', (event) => {
@@ -269,7 +307,7 @@ function renderAll() {
                             buttonFriend.style.display = "none"
                             buttonFriend2.style.display = "flex"
                         }
-                        else
+                        else if(data.username != localStorage.getItem("username"))
                         {
                             nameSearch.innerHTML = data.username;
                             imgSearch.src = data.photo;
@@ -304,11 +342,12 @@ function renderAll() {
 
     async function fetchDataFriends() {
         const info = await SecureApiRequest("/api/friend/get_friends/");
+        if(!info)
+            return;
         let friendsContainer = document.getElementById("list-friends-profile");
-        console.log("friends:===========", info.friends)
 
-        friendsContainer.innerHTML = ``;
-        // console.log("this all my friends => ", info.friends.photo)
+        // friendsContainer.innerHTML = '';
+
         if(info.friends.length > 0)
         {
             if(friendsContainer)
@@ -354,32 +393,34 @@ function renderAll() {
     let imageEachProfile2 = document.getElementById("imageEachProfile2");
     let imageEachProfile3 = document.getElementById("imageEachProfile3");
 
-    fetch(`/api/get/${localStorage.getItem('eachProfileUserName')}/`)
-    .then(response => response.json())
-    .then(data => {
-        console.log('Response from server:', data);
-        if(data.error == "User not found")
-        {
+    const eachProfileUserName = localStorage.getItem("eachProfileUserName");
+    if(eachProfileUserName)
+    {
+        fetch(`/api/get/${eachProfileUserName}/`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("i am her i will ")
+            console.log('Response from server:', data);
+            if(data.error == "User not found")
+            {
+                
+            }
+            else{
+                usernameEachProfile.innerHTML = data.username;
+                usernameEachProfile2.innerHTML = data.username;
+                usernameEachProfile3.innerHTML = data.username;
+                emailEachProfile.innerHTML = data.email;
+                imageEachProfile.src = data.photo;
+                imageEachProfile2.src = data.photo;
+                imageEachProfile3.src = data.photo;
+            }
             
-        }
-        else{
-            usernameEachProfile.innerHTML = data.username;
-            usernameEachProfile2.innerHTML = data.username;
-            usernameEachProfile3.innerHTML = data.username;
-            emailEachProfile.innerHTML = data.email;
-            imageEachProfile.src = data.photo;
-            imageEachProfile2.src = data.photo;
-            imageEachProfile3.src = data.photo;
-        }
-        
-    })
-    .catch(error => {
-        
-    });
+        })
+        .catch(error => {
+            
+        });
+    }
  } 
-
-
-
 
 document.addEventListener("DOMContentLoaded", function() {
     
