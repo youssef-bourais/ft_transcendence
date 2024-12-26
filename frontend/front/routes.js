@@ -1214,14 +1214,35 @@ function handleRedirect()
 async function setupProfilepage()
 {
 
-    let data = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
-    if(!data)
+    // let data = await SecureApiRequest(`api/update/profile/`, "PATCH", '{"username":"hello"}');
+    // if(!data)
+    // {
+    //     GoLogin();
+    //     return;
+    // }
+
+    const body = {"username":"hello", "email":"helloword@gmaill.com", "photo":"https://cdn.adf.org.au/media/images/LSD-social.2e16d0ba.fill-1200x1200.jpg"};
+
+    const UserData = 
     {
-        GoLogin();
-        return;
+        username: "hello",
+        email: "hello@gmail.com",
+        photo: "./images/try.jpg"
     }
 
-    // console.log("data: ", data.username, data.email, data.photo);
+    try
+    {
+        // const info = await SecureApiRequest("/api/update/profile/","PATCH", body);
+        
+        // const response = await SecureApiRequest("/api/update/profile/","PATCH", body);
+
+        // console.log("response: ", response);
+
+    }
+    catch (error)
+    {
+        // console.log("response:  ", error);
+    }
 
     // data = await SecureApiRequest(`/api/get/${id}/`);
 

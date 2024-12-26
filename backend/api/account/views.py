@@ -186,11 +186,30 @@ def callback_from_42(request):
     response.set_cookie('photo', photo)
 
     user = CustomUser.objects.filter(email=email).first()
+    user2 = CustomUser.objects.filter(username=username).first()
 
-    if user:
-        if user.id != intra_id:
-            user.id = intra_id
+    if user or user2:
+        print("not now")
+        if user and  not user2:
+            if user.id != intra_id:
+                user.photo = photo
+                user.username = username
+                user.email = email
+                user.save()
+        if user2 and not user:
+            if user2.id != intra_id:
+                print("NOw")
+                user2.photo = photo
+                user2.username = username
+                user2.email = email
+                print("NOw")
+                user2.save()
+                print("NOwwww")
+        else: 
+            user2.delete()
             user.photo = photo
+            user.username = username
+            user.email = email
             user.save()
     else:
         user = CustomUser.objects.create(
@@ -368,6 +387,7 @@ def remove_friend(request):
 def update_profile(request):
     user = request.user
     print("user_id========================:", user.id)
+    print("user body: ", request.body)
     if(user.id > 100):
        return Response({"message": "intra Users cant update profile!"}, status=status.HTTP_200_OK) 
 
@@ -391,5 +411,5 @@ def update_profile(request):
 
         serializer.save()
         return Response({"message": "Profile updated successfully!", "data": serializer.data}, status=status.HTTP_200_OK)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 

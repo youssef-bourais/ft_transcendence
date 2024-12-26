@@ -54,9 +54,11 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
         headers,
     };
 
-    if (body)
+        
+    if (body && typeof body !== "string") 
         request.body = JSON.stringify(body);
-
+    else 
+        request.body = body;
     try 
     {
         const response = await fetch(`${endpoint}`, request);
@@ -77,10 +79,12 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
                 console.log("Request retried successfully after token refresh.");
                 return data;
             }
-            console.error("Retry after token refresh failed.");
-            alert("Session expired. Please log in again azbiiii.");
+            console.error("accessToken refresh failed.");
+            alert("Session expired. Please log in again...");
+
+            const data = await retryResponse.json();
             GoLogin();
-            return {"":""};
+            return data.error;
         }
         if (response.ok) 
         {
@@ -88,6 +92,11 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
             const data = await response.json();
             return data;
         } 
+        if(!response.ok)
+        {
+            const data = await response.json();
+            return data.error;
+        }
     } 
     catch (error) 
     {
