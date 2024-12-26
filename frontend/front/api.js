@@ -43,7 +43,6 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
     let token = localStorage.getItem("accessToken");
     if(!token)
         return null;
-
     let headers = {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -53,7 +52,6 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
         method,
         headers,
     };
-
         
     if (body && typeof body !== "string") 
         request.body = JSON.stringify(body);

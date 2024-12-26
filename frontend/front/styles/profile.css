@@ -260,7 +260,9 @@ input[type="search"]::-webkit-search-cancel-button {
 .container-top .container-profile .profile img
 {
     width: 40px;
-    border-radius: 50%;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%; 
 }
 .container-top .container-profile .profile .container-notification
 {
@@ -412,6 +414,10 @@ input[type="search"]::-webkit-search-cancel-button {
 {
     width: 67px;
     border-radius: 50%;
+    width: 67px;
+    height: 67px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 .left-side .container-profile .container-name
 {
@@ -456,6 +462,11 @@ input[type="search"]::-webkit-search-cancel-button {
 .left-side .container-setting .container-img img
 {
     width: 67px;
+    border-radius: 50%;
+    width: 67px;
+    height: 67px;
+    object-fit: cover;
+    border-radius: 50%;
     /* border-radius: 50%; */
 }
 .left-side .container-setting .container-name
@@ -492,6 +503,7 @@ input[type="search"]::-webkit-search-cancel-button {
     justify-content: center;
     align-items: center;
     padding-top: 10px;
+    object-fit: cover;
 }
 
 .midle-side .container-bg .child-bg
@@ -510,6 +522,10 @@ input[type="search"]::-webkit-search-cancel-button {
     bottom: -40px;
     border-radius: 50%;
     left: 42%;
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 .midle-side .container-update-info
 {
@@ -689,7 +705,7 @@ input[type="search"]::-webkit-search-cancel-button {
     cursor: pointer;
     position: relative;
     border: 1px solid black;
-    background-color: var(--red);
+    background-color: rgb(150, 33, 33);
     color: white;
 }
 
@@ -765,6 +781,10 @@ input[type="search"]::-webkit-search-cancel-button {
     width: 100px;
     position: absolute;
     top: 100px;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
     border-radius: 50%;
 }
 .child-container-profile-left .container-name-profile-left
