@@ -951,8 +951,10 @@ async function getUserData(username)
 
 export function populateProfile() 
 {
+    console.log("hola.............");
     const photo = localStorage.getItem("photo");
     const username = localStorage.getItem("username");
+    // console.log("see this photo ==> ", photo);
     // const email = localStorage.getItem("email");
 
     const avatar = document.getElementsByClassName("avatars");
@@ -962,13 +964,24 @@ export function populateProfile()
         avatar[i].src = photo;
         i++;
     }
-
+    let editProfile = document.getElementById("edit-profile");
+    fetch(`/api/get/${localStorage.getItem("username")}/`)
+    .then(response => response.json())
+    .then(data => {
+        if(data.id > 100)
+            editProfile.style.display = "none";
+    })
+    .catch(error => {
+        
+    });
     document.querySelectorAll(".display-name").forEach(displayName => {
         console.log("length");
         displayName.innerText = username;
     });
 }
+
 populateProfile() 
+
 async function setupLoginPage() 
 {
     // logout();
@@ -1017,6 +1030,7 @@ async function setupLoginPage()
                     localStorage.setItem("refreshToken", data.refresh);
                     localStorage.setItem("email", userinfo.email);
                     localStorage.setItem("photo", userinfo.photo);
+                    
 
                     history.pushState({}, "", "/profile"); 
                     handleLocation();
@@ -1038,7 +1052,6 @@ async function setupLoginPage()
 
 async function setupRegisterPage() 
 {
-
     console.log("register page");
     const form = document.getElementById("register-form");
     form.addEventListener("submit", async (event) => 

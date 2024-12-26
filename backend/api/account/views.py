@@ -239,6 +239,7 @@ def logouthttponly(request):
 #  curl -X POST http://127.0.0.1:8000/api/friend/add/ \                                                                                                                                                      ─╯
 # -H "Authorization: Bearer fes" \
 # -H "Content-Type: application/json" \
+
 # -d '{"to_user": "1"}'
 
 @api_view(['POST'])
@@ -364,6 +365,11 @@ def remove_friend(request):
 
 from .serializers import UserProfileUpdateSerializer
 
+# curl -X POST http://127.0.0.1:8000/api/update/profile/ \
+# -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1MjQyNjQ1LCJpYXQiOjE3MzUyMzkwNDUsImp0aSI6IjJmODIzZTg4ZDdiMDQxOGY5ZmQwMTMwZmZlMmNjOTE5IiwidXNlcl9pZCI6MX0.ASvl7LBMdO0eSQK-wIAStJWZRcCd3PcCR-ECdeMbAf4" \
+# -H "Content-Type: application/json" \
+# -d '{"username":"hello"}'
+
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated]) 
 def update_profile(request):
@@ -372,9 +378,10 @@ def update_profile(request):
     allowed_fields = {'username', 'email', 'password', 'repeat_password', 'is_2fa_enabled', 'photo'} 
 
     invalid_fields = set(request.data.keys()) - allowed_fields
+    # print("===============", invalid_fields)
     if invalid_fields:
         return Response(
-            {"error": f"Invalid fields: {', '.join(invalid_fields)} are not allowed."},
+            {"error": f"Invalid fields: are not allowed."},
             status=status.HTTP_400_BAD_REQUEST)
     serializer = UserProfileUpdateSerializer(instance=user, data=request.data, partial=True)
 

@@ -1095,6 +1095,8 @@ input[type="search"]::-webkit-search-cancel-button {
 .container-chat .container-main .container-outputs .container-out-image img
 {
     width: 60px;
+    height: 60px;
+    object-fit: cover;
     border-radius: 50%;
     z-index: 5;
 }

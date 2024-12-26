@@ -25,7 +25,10 @@ function toggleNavbar(path)
         const email = localStorage.getItem("email");
         const photo = localStorage.getItem("photo"); 
         if(path === '/profile')
+        {
             populateProfile(); 
+
+        }
 
         document.getElementById("user-username").textContent = username;
         document.getElementById("user-email").textContent = email;
@@ -95,6 +98,7 @@ export const handleLocation = () =>
             renderAll();
         }, 100); 
     }
+    populateProfile();
     console.log(path);
     const route = routes[path] ? routes[path] : routes["/404"];
 
@@ -123,9 +127,8 @@ document.getElementById("logout").addEventListener("click", function(event) {
     logout(); 
 });
 
-// Function that will be triggered when the user clicks the "Upload Image" button
 function uploadImage() {
-    // Get the file input element
+    
     let fileInput = document.getElementById("file-input");
     // Check if the user has selected a file
     if (fileInput.files && fileInput.files[0]) {
@@ -196,6 +199,8 @@ function renderAll() {
             let containerError = document.getElementById("container-error")
             if(cancel)
             {
+               
+                // editProfile
                 cancel.addEventListener("click", function() {
                     containerEdit.style.display = "none";
                     containerError.style.display = "none"
@@ -209,6 +214,33 @@ function renderAll() {
     
                 editProfile.addEventListener("click", function() {
                     containerEdit.style.display = "flex";
+                    const photo = localStorage.getItem("photo");
+                    const username = localStorage.getItem("username");
+                    // const email = localStorage.getItem("email");
+
+                    const avatar = document.getElementsByClassName("avatars");
+                    let i = 0;
+                    while(i < avatar.length)
+                    {   
+                        avatar[i].src = photo;
+                        i++;
+                    }
+                    fetch(`/api/get/${localStorage.getItem("username")}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("get item ===> ", data)
+                        if(data.is_2fa_enabled == true)
+                            checkBox.checked = true
+                        else
+                            checkBox.checked = false
+                            usernameIdProfile.value = data.username;
+                            emailIdProfile.value = data.email;
+
+                        console.log("i am here in data");
+                    })
+                    .catch(error => {
+                        
+                    });
                 });
             }
             
@@ -224,31 +256,55 @@ function renderAll() {
                         validPassword = 1;
                     else
                         validPassword = 0;
-                        if(validForm == 1)
-                        {
-                            containerError.style.display ="flex";
-                            errorMessage.innerHTML = "Error in input !!!"
-                            console.log("lowla", usernameIdProfile.value)
-                        }
-                        else if(validPassword == 1)
-                        {
-                            containerError.style.display ="flex";
-                            errorMessage.innerHTML = "password not correct !!!"
-                            console.log("tania")
-                        }
-                        else
-                        {
-        
-                            containerError.style.display = "none"
-                            containerEdit.style.display = "none";
-                            validForm = 0;
-                            validPassword = 0;
-                            usernameIdProfile.value = ""
-                            emailIdProfile.value = ""
-                            passwordIdProfile.value = ""
-                            passwordIdProfileConfirme.value = ""
-                        }
+
+                    if(validForm == 1)
+                    {
+                        containerError.style.display ="flex";
+                        errorMessage.innerHTML = "Error in input !!!"
+                        console.log("lowla", usernameIdProfile.value)
+                    }
+                    else if(validPassword == 1)
+                    {
+                        containerError.style.display ="flex";
+                        errorMessage.innerHTML = "password not correct !!!"
+                        console.log("tania")
+                    }
+                    else
+                    {
+                        
                         console.log("hiiiiii karim fin")
+                        let send_image = "";
+                        if(fileInput)
+                        {
+                            fileInput.addEventListener("change", function(event) {
+                                const file = event.target.files[0];
+                                if(file)
+                                    send_image = e.target.result; 
+                                else
+                                    send_image = localStorage.getItem("photo");
+                            });
+                            // if(send_image != )
+                        }
+
+                        async function sendRequestUpdateProfile() {
+                            console.log("hi mister karim")
+                            console.log(`{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "photo":"${send_image}", "is_2fa_enabled":"${checkBox.value}"}`)
+                            // const info = await SecureApiRequest("/api/update/profile/","PATCH", `{'username':"abdelkarime"}`);
+                            const info = await SecureApiRequest("/api/update/profile/","PATCH", `{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "is_2fa_enabled":"${checkBox.value}"}`);
+                            
+                            console.log("info:::::::", info);
+                        }
+                        sendRequestUpdateProfile();
+                        containerError.style.display = "none"
+                        containerEdit.style.display = "none";
+                        validForm = 0;
+                        validPassword = 0;
+                        usernameIdProfile.value = ""
+                        emailIdProfile.value = ""
+                        passwordIdProfile.value = ""
+                        passwordIdProfileConfirme.value = ""
+                    }
+                    
                     });
             }
 
@@ -272,6 +328,8 @@ function renderAll() {
                     }
                 });
             }
+            if(inputSearch.value.length <= 0)
+                output.style.display = "none";
 
     let  nameNotification = document.getElementById("nameNotification")
     nameNotification.innerHTML = localStorage.getItem("username");
@@ -283,7 +341,7 @@ function renderAll() {
                 fetch(`/api/get/${username}/`)
                     .then(response => response.json())
                     .then(data => {
-                        console.log('Response from server:', data);
+                        // console.log('Response from server:', data);
                         if(data.error == "User not found")
                         {
                             nameSearch.innerHTML = "User not found";
@@ -291,13 +349,15 @@ function renderAll() {
                             buttonFriend.style.display = "none"
                             buttonFriend2.style.display = "flex"
                         }
-                        else
+                        else if(data.username != localStorage.getItem("username"))
                         {
                             nameSearch.innerHTML = data.username;
                             imgSearch.src = data.photo;
                             buttonFriend.style.display = "flex"
                             buttonFriend2.style.display = "none"
                             localStorage.setItem('eachProfileUserName', data.username);
+                            console.log("see this data===> ",data);
+                           
 
                         }
                         console.log("i am here in data");
@@ -329,12 +389,12 @@ function renderAll() {
         let friendsContainer = document.getElementById("list-friends-profile");
         console.log("friends:===========", info.friends)
 
-        friendsContainer.innerHTML = ``;
         // console.log("this all my friends => ", info.friends.photo)
         if(info.friends.length > 0)
         {
             if(friendsContainer)
             {
+                friendsContainer.innerHTML = ``;
                 var i = 0;
                 while(i < info.friends.length)
                 {
@@ -380,7 +440,7 @@ function renderAll() {
     fetch(`/api/get/${localStorage.getItem('eachProfileUserName')}/`)
     .then(response => response.json())
     .then(data => {
-        console.log('Response from server:', data);
+        // console.log('Response from server:', data);
         if(data.error == "User not found")
         {
             

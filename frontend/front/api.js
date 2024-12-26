@@ -55,10 +55,10 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
         method,
         headers,
     };
-
-    if (body)
+    if (body && typeof body !== "string") 
         request.body = JSON.stringify(body);
-
+    else if (body) 
+        request.body = body;
     try 
     {
         const response = await fetch(`${endpoint}`, request);
