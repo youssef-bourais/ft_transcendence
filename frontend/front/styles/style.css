@@ -664,7 +664,11 @@ body {
 }
 
 .chat-interface {
-    background-color: #000000;
+    background-image: url("../images/lsd.jpg");
+    /* filter: blur(8px);
+    -webkit-filter: blur(8px); */
+    /* background-image: linear-gradient(var(--red) , var(--black)); */
+    /* background-color: #000000; */
     border-radius: 8px;
     height: 100%;
     display: flex;
