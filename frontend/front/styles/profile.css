@@ -1038,6 +1038,8 @@ input[type="search"]::-webkit-search-cancel-button {
 
     .container-edit .container-card-edit
     {
+        /* opacity: 0.8; */
+        background-image: url('./../images/and');
         width: 600px;
         height: 600px;
         background-color: black;
