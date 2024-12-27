@@ -258,9 +258,44 @@ function renderAll()
             });
         }
             
+
+        fetch(`/api/get/${localStorage.getItem("username")}/`)
+        .then(response => response.json())
+        .then(data => {
+            if(data.id > 100)
+                editProfile.style.display = "none"
+            console.log("i am here in data");
+        })
+        .catch(error => {
+            
+        });
+        
+
+        let fileInput = document.getElementById("file-input");
+        let labelInput = document.getElementById("label-input");
+        let imgUpdate = document.getElementById("img-update");
+        let send_image = localStorage.getItem("photo");
+        if(fileInput)
+        {
+            fileInput.addEventListener("change", function(event) {
+                const file = event.target.files[0];
+                if(file)
+                {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        
+                        imgUpdate.src = e.target.result; 
+                        send_image = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
         if(save)
         {
             save.addEventListener("click", function() {
+                
                 if(usernameIdProfile.value == "" || emailIdProfile.value == "" || passwordIdProfile.value == "" || passwordIdProfileConfirme.value == "")
                     validForm = 1;
                 else
@@ -286,25 +321,17 @@ function renderAll()
                 else
                 {
                     
-                    console.log("hiiiiii karim fin")
-                    let send_image = "";
-                    if(fileInput)
-                    {
-                        fileInput.addEventListener("change", function(event) {
-                            const file = event.target.files[0];
-                            if(file)
-                                send_image = e.target.result; 
-                            else
-                                send_image = localStorage.getItem("photo");
-                        });
-                        // if(send_image != )
-                    }
-
+                 
                     async function sendRequestUpdateProfile() {
                         console.log("hi mister karim")
-                        console.log(`{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "photo":"${send_image}", "is_2fa_enabled":"${checkBox.value}"}`)
-                        // const info = await SecureApiRequest("/api/update/profile/","PATCH", `{'username':"abdelkarime"}`);
-                        const info = await SecureApiRequest("/api/update/profile/","PATCH", `{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "is_2fa_enabled":"${checkBox.value}"}`);
+                        let stateCheck;
+                        if(checkBox.checked)
+                            stateCheck = true;
+                        else
+                            stateCheck = false;
+                        console.log(`{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "photo":"${send_image}", "is_2fa_enabled":"${stateCheck}"}`)
+                       
+                        const info = await SecureApiRequest("/api/update/profile/","PATCH", `{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "is_2fa_enabled":"${stateCheck}", "photo":"${send_image}"}`);
                         
                         console.log("info:::::::", info);
                     }
@@ -322,25 +349,11 @@ function renderAll()
                 });
         }
             
-        let fileInput = document.getElementById("file-input");
-        let labelInput = document.getElementById("label-input");
-        let imgUpdate = document.getElementById("img-update");
+        // let fileInput = document.getElementById("file-input");
+        // let labelInput = document.getElementById("label-input");
+        // let imgUpdate = document.getElementById("img-update");
         
-        if(fileInput)
-        {
-            fileInput.addEventListener("change", function(event) {
-                const file = event.target.files[0];
-                if(file)
-                {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        
-                        imgUpdate.src = e.target.result; 
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
+        
     
         if(inputSearch.value.length <= 0)
             output.style.display = "none";
@@ -371,6 +384,7 @@ function renderAll()
                             buttonFriend.style.display = "flex"
                             buttonFriend2.style.display = "none"
                             localStorage.setItem('eachProfileUserName', data.username);
+                            localStorage.setItem('eachProfileUserId', data.id);
                             console.log("see this data===> ",data);
                            
 
@@ -400,6 +414,8 @@ function renderAll()
     {
         console.error("Element with ID 'input-search' not found.");
     }
+
+
     async function fetchDataFriends() 
     {
         const info = await SecureApiRequest("/api/friend/get_friends/");
@@ -407,14 +423,19 @@ function renderAll()
             return;
         let friendsContainer = document.getElementById("list-friends-profile");
 
-        // friendsContainer.innerHTML = '';
+        if(friendsContainer)
+        {
 
-        // console.log("this all my friends => ", info.friends.photo)
+        
+        friendsContainer.innerHTML = '';
+
+        // console.log("this all my friends => ", info.friends)
+        // console.log("this all my friends => ", info.friends.length)
         if(info.friends.length > 0)
         {
-            if(friendsContainer)
-            {
-                friendsContainer.innerHTML = ``;
+            // if(friendsContainer)
+            // {
+                
                 var i = 0;
                 while(i < info.friends.length)
                 {
@@ -428,7 +449,7 @@ function renderAll()
                     </div>`
                     i++;
                 }
-            }
+            // }
         }
         else
         {
@@ -442,6 +463,7 @@ function renderAll()
             
         }
         
+    }
     }
     fetchDataFriends();
     
@@ -463,24 +485,77 @@ function renderAll()
         .then(response => response.json())
         .then(data => {
             console.log("i am her i will ")
-            console.log('Response from server:', data);
+            console.log('Response from server karim ok ::::', data);
             if(data.error == "User not found")
             {
                 
             }
             else{
-                usernameEachProfile.innerHTML = data.username;
-                usernameEachProfile2.innerHTML = data.username;
-                usernameEachProfile3.innerHTML = data.username;
-                emailEachProfile.innerHTML = data.email;
-                imageEachProfile.src = data.photo;
-                imageEachProfile2.src = data.photo;
-                imageEachProfile3.src = data.photo;
+                if(usernameEachProfile)
+                {
+                    usernameEachProfile.innerHTML = data.username;
+                    usernameEachProfile2.innerHTML = data.username;
+                    usernameEachProfile3.innerHTML = data.username;
+                    emailEachProfile.innerHTML = data.email;
+                    imageEachProfile.src = data.photo;
+                    imageEachProfile2.src = data.photo;
+                    imageEachProfile3.src = data.photo;
+                }
             }
 
 
         });
     }
+    let addFriendButton = document.getElementById("addFriendButton");
+    async function checkButtonAddFriend() 
+    {
+
+       
+        if(addFriendButton)
+        {
+            const info = await SecureApiRequest("/api/friend/get_friends/");
+            // if(!info)
+            //     return;
+            
+            console.log("i am inside checkButtonAddFriend ok bro", info)
+            let i = 0;
+            let valid = 0;
+            while(i < info.friends.length)
+            {
+                if(info.friends[i].unsername == localStorage.getItem("username"))
+                    valid = 1;
+                i++;
+            }
+            if(valid == 1)
+                addFriendButton.innerHTML = "Message"
+            else
+                addFriendButton.innerHTML = "Add Friend +"
+        }
+        
+    }
+    checkButtonAddFriend()
+
+
+
+    async function sendFriend() 
+    {
+        const info = await SecureApiRequest("/api/friend/add/", "POST", `'{"to_user": "${localStorage.getItem("eachProfileUserId")}"}'`);
+        // if(!info)
+        //     return;
+        
+        // localStorage.setItem('eachProfileUserName', data.username);
+        
+    }
+    if(addFriendButton)
+    {
+        addFriendButton.addEventListener("click", function(event) {
+            if(addFriendButton.innerHTML == "Add Friend +")
+            {
+                sendFriend();
+            }
+        });
+    }
+
 }
 
 

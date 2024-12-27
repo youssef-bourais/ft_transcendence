@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//                                                                            //
-//                                                        :::      ::::::::   //
-//   routes.js                                          :+:      :+:    :+:   //
-//                                                    +:+ +:+         +:+     //
-//   By: ybourais <ybourais@student.1337.ma>        +#+  +:+       +#+        //
-//                                                +#+#+#+#+#+   +#+           //
-//   Created: 2024/12/27 00:47:11 by ybourais          #+#    #+#             //
-//   Updated: 2024/12/27 06:08:37 by ybourais         ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   routes.js                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahajji <ahajji@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/27 00:47:11 by ybourais          #+#    #+#             */
+/*   Updated: 2024/12/27 18:43:21 by ahajji           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 import { SanitizeInpute, GoLogin, showError, validatePassword, getCookie, deleteCookie, clickEvent, logout} from './utils.js';
 import { handleLocation } from './app.js';
@@ -377,7 +377,7 @@ export const routes = {
                         <div class="container-form">
                             <div class="container-switch">
                                 <div class="profile"><p>Profile</p></div>
-                                <div class="security"><p>Security</p></div>
+                                <div class="security" id="addFriendButton" ><p></p></div>
                             </div>
                             <div class="container-inputs" style="height:110px">
                                 <div class="container-input">

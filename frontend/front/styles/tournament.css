@@ -1116,7 +1116,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .container-chat .container-main .container-outputs .container-out-friend
 {
-    width: 20%;
+    width: 30%;
     height: 100%;
     display: flex;
     justify-content: center;
