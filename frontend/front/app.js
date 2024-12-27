@@ -102,12 +102,11 @@ export const handleLocation = () =>
     const path = window.location.pathname;
     currentState.view = path;
 
-    // if(!isUserAuthenticated(path))
-        // if(path === '/profile' || path === "/eachprofile")
-        // {
-        //     GoLogin();
-        //     return;
-        // }
+    if(!isUserAuthenticated(path))
+    {
+        GoLogin();
+        return;
+    }
 
     if(localStorage.getItem("accessToken") && NonAuthenticated.includes(path))
     {
@@ -115,9 +114,6 @@ export const handleLocation = () =>
         handleLocation('/profile');
         return;
     }
-
-    populateProfile();
-    console.log(path);
 
     const route = routes[path] ? routes[path] : routes["/404"];
 
