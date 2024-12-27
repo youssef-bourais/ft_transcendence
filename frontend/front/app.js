@@ -37,9 +37,9 @@ function toggleNavbarAndSearchBar(path)
         document.getElementById("user-email").textContent = email;
         document.getElementById("user-photo").src = photo;
 
+
         navbar.style.display = 'block';
         navbar.style.opacity = '1';
-
         bruh.style.display = 'flex';
     }
     else 
@@ -174,18 +174,19 @@ function uploadImage() {
     }
   }
  
-function renderAll() {
+function renderAll() 
+{
         
-    console.log("render all ok bro ")
-   ;
-    if (inputSearch) {
+    console.log("render all ok bro ");
+    if (inputSearch) 
+    {
     
-    let  notFound = document.getElementById("not-found");
-    let  nameSearch = document.getElementById("name-search");
-    let  imgSearch = document.getElementById("img-search");
-    let  buttonFriend = document.getElementById("button-friend");
-    let  buttonFriend2 = document.getElementById("button-friend2");
-    let usernameIdProfile = document.getElementById("usernameIdProfile");
+        let  notFound = document.getElementById("not-found");
+        let  nameSearch = document.getElementById("name-search");
+        let  imgSearch = document.getElementById("img-search");
+        let  buttonFriend = document.getElementById("button-friend");
+        let  buttonFriend2 = document.getElementById("button-friend2");
+        let usernameIdProfile = document.getElementById("usernameIdProfile");
         let emailIdProfile = document.getElementById("emailIdProfile");
         let passwordIdProfile = document.getElementById("passwordIdProfile");
         let passwordIdProfileConfirme = document.getElementById("passwordIdProfileConfirme");
@@ -204,154 +205,154 @@ function renderAll() {
         if(emailProfile)
             emailProfile.innerHTML = localStorage.getItem("email");
 
-
-            let cancel = document.getElementById("cancel");
+        let cancel = document.getElementById("cancel");
+        
+        let save = document.getElementById("save");
+        let containerEdit = document.getElementById("container-edit");
+        let editProfile = document.getElementById("edit-profile");
+        let containerError = document.getElementById("container-error")
+        if(cancel)
+        {
             
-            let save = document.getElementById("save");
-            let containerEdit = document.getElementById("container-edit");
-            let editProfile = document.getElementById("edit-profile");
-            let containerError = document.getElementById("container-error")
-            if(cancel)
-            {
-               
-                // editProfile
-                cancel.addEventListener("click", function() {
-                    containerEdit.style.display = "none";
+            // editProfile
+            cancel.addEventListener("click", function() {
+                containerEdit.style.display = "none";
+                containerError.style.display = "none"
+                validForm = 0;
+                validPassword = 0;
+                usernameIdProfile.value = ""
+                emailIdProfile.value = ""
+                passwordIdProfile.value = ""
+                passwordIdProfileConfirme.value = ""
+                });
+
+            editProfile.addEventListener("click", function() {
+                containerEdit.style.display = "flex";
+                const photo = localStorage.getItem("photo");
+                const username = localStorage.getItem("username");
+                // const email = localStorage.getItem("email");
+
+                const avatar = document.getElementsByClassName("avatars");
+                let i = 0;
+                while(i < avatar.length)
+                {   
+                    avatar[i].src = photo;
+                    i++;
+                }
+                fetch(`/api/get/${localStorage.getItem("username")}/`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("get item ===> ", data)
+                    if(data.is_2fa_enabled == true)
+                        checkBox.checked = true
+                    else
+                        checkBox.checked = false
+                        usernameIdProfile.value = data.username;
+                        emailIdProfile.value = data.email;
+
+                    console.log("i am here in data");
+                })
+                .catch(error => {
+                    
+                });
+            });
+        }
+            
+        if(save)
+        {
+            save.addEventListener("click", function() {
+                if(usernameIdProfile.value == "" || emailIdProfile.value == "" || passwordIdProfile.value == "" || passwordIdProfileConfirme.value == "")
+                    validForm = 1;
+                else
+                    validForm = 0
+    
+                if(passwordIdProfile.value != passwordIdProfileConfirme.value)
+                    validPassword = 1;
+                else
+                    validPassword = 0;
+
+                if(validForm == 1)
+                {
+                    containerError.style.display ="flex";
+                    errorMessage.innerHTML = "Error in input !!!"
+                    console.log("lowla", usernameIdProfile.value)
+                }
+                else if(validPassword == 1)
+                {
+                    containerError.style.display ="flex";
+                    errorMessage.innerHTML = "password not correct !!!"
+                    console.log("tania")
+                }
+                else
+                {
+                    
+                    console.log("hiiiiii karim fin")
+                    let send_image = "";
+                    if(fileInput)
+                    {
+                        fileInput.addEventListener("change", function(event) {
+                            const file = event.target.files[0];
+                            if(file)
+                                send_image = e.target.result; 
+                            else
+                                send_image = localStorage.getItem("photo");
+                        });
+                        // if(send_image != )
+                    }
+
+                    async function sendRequestUpdateProfile() {
+                        console.log("hi mister karim")
+                        console.log(`{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "photo":"${send_image}", "is_2fa_enabled":"${checkBox.value}"}`)
+                        // const info = await SecureApiRequest("/api/update/profile/","PATCH", `{'username':"abdelkarime"}`);
+                        const info = await SecureApiRequest("/api/update/profile/","PATCH", `{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "is_2fa_enabled":"${checkBox.value}"}`);
+                        
+                        console.log("info:::::::", info);
+                    }
+                    sendRequestUpdateProfile();
                     containerError.style.display = "none"
+                    containerEdit.style.display = "none";
                     validForm = 0;
                     validPassword = 0;
                     usernameIdProfile.value = ""
                     emailIdProfile.value = ""
                     passwordIdProfile.value = ""
                     passwordIdProfileConfirme.value = ""
-                  });
-    
-                editProfile.addEventListener("click", function() {
-                    containerEdit.style.display = "flex";
-                    const photo = localStorage.getItem("photo");
-                    const username = localStorage.getItem("username");
-                    // const email = localStorage.getItem("email");
-
-                    const avatar = document.getElementsByClassName("avatars");
-                    let i = 0;
-                    while(i < avatar.length)
-                    {   
-                        avatar[i].src = photo;
-                        i++;
-                    }
-                    fetch(`/api/get/${localStorage.getItem("username")}/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log("get item ===> ", data)
-                        if(data.is_2fa_enabled == true)
-                            checkBox.checked = true
-                        else
-                            checkBox.checked = false
-                            usernameIdProfile.value = data.username;
-                            emailIdProfile.value = data.email;
-
-                        console.log("i am here in data");
-                    })
-                    .catch(error => {
-                        
-                    });
+                }
+                
                 });
-            }
+        }
             
-            if(save)
-            {
-                save.addEventListener("click", function() {
-                    if(usernameIdProfile.value == "" || emailIdProfile.value == "" || passwordIdProfile.value == "" || passwordIdProfileConfirme.value == "")
-                        validForm = 1;
-                    else
-                        validForm = 0
+        let fileInput = document.getElementById("file-input");
+        let labelInput = document.getElementById("label-input");
+        let imgUpdate = document.getElementById("img-update");
         
-                    if(passwordIdProfile.value != passwordIdProfileConfirme.value)
-                        validPassword = 1;
-                    else
-                        validPassword = 0;
-
-                    if(validForm == 1)
-                    {
-                        containerError.style.display ="flex";
-                        errorMessage.innerHTML = "Error in input !!!"
-                        console.log("lowla", usernameIdProfile.value)
-                    }
-                    else if(validPassword == 1)
-                    {
-                        containerError.style.display ="flex";
-                        errorMessage.innerHTML = "password not correct !!!"
-                        console.log("tania")
-                    }
-                    else
-                    {
+        if(fileInput)
+        {
+            fileInput.addEventListener("change", function(event) {
+                const file = event.target.files[0];
+                if(file)
+                {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
                         
-                        console.log("hiiiiii karim fin")
-                        let send_image = "";
-                        if(fileInput)
-                        {
-                            fileInput.addEventListener("change", function(event) {
-                                const file = event.target.files[0];
-                                if(file)
-                                    send_image = e.target.result; 
-                                else
-                                    send_image = localStorage.getItem("photo");
-                            });
-                            // if(send_image != )
-                        }
-
-                        async function sendRequestUpdateProfile() {
-                            console.log("hi mister karim")
-                            console.log(`{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "photo":"${send_image}", "is_2fa_enabled":"${checkBox.value}"}`)
-                            // const info = await SecureApiRequest("/api/update/profile/","PATCH", `{'username':"abdelkarime"}`);
-                            const info = await SecureApiRequest("/api/update/profile/","PATCH", `{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "is_2fa_enabled":"${checkBox.value}"}`);
-                            
-                            console.log("info:::::::", info);
-                        }
-                        sendRequestUpdateProfile();
-                        containerError.style.display = "none"
-                        containerEdit.style.display = "none";
-                        validForm = 0;
-                        validPassword = 0;
-                        usernameIdProfile.value = ""
-                        emailIdProfile.value = ""
-                        passwordIdProfile.value = ""
-                        passwordIdProfileConfirme.value = ""
-                    }
-                    
-                    });
-            }
-            
-    let fileInput = document.getElementById("file-input");
-    let labelInput = document.getElementById("label-input");
-    let imgUpdate = document.getElementById("img-update");
+                        imgUpdate.src = e.target.result; 
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
     
-    if(fileInput)
-    {
-        fileInput.addEventListener("change", function(event) {
-            const file = event.target.files[0];
-            if(file)
-            {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    
-                    imgUpdate.src = e.target.result; 
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-    
-    if(inputSearch.value.length <= 0)
-        output.style.display = "none";
+        if(inputSearch.value.length <= 0)
+            output.style.display = "none";
 
-    let  nameNotification = document.getElementById("nameNotification")
-    nameNotification.innerHTML = localStorage.getItem("username");
+        let  nameNotification = document.getElementById("nameNotification")
+        nameNotification.innerHTML = localStorage.getItem("username");
         inputSearch.addEventListener('input', (event) => {
             const username = event.target.value;  
             let valid = 0;
             
-            if (username.trim()) {
+            if (username.trim()) 
+            {
                 fetch(`/api/get/${username}/`)
                     .then(response => response.json())
                     .then(data => {
@@ -394,11 +395,13 @@ function renderAll() {
                 output.style.display = "none";
 
         });
-    } else {
+    } 
+    else 
+    {
         console.error("Element with ID 'input-search' not found.");
     }
-
-    async function fetchDataFriends() {
+    async function fetchDataFriends() 
+    {
         const info = await SecureApiRequest("/api/friend/get_friends/");
         if(!info)
             return;
@@ -475,23 +478,28 @@ function renderAll() {
                 imageEachProfile3.src = data.photo;
             }
 
- //    //    fetch(`/api/get/${localStorage.getItem('eachProfileUserName')}/`)
- //    //    .then(response => response.json())
- //    //    .then(data => {
- //    //        // console.log('Response from server:', data);
- //    //        if(data.error == "User not found")
- //    //        {
- //    //
- //    //        })
- //    //        .catch(error => {
- //    //
- //    //        });
- //    //    }
- //    // } 
 
-document.addEventListener("DOMContentLoaded", function() {
-    
-  });
+        });
+    }
+}
+
+
+//     fetch(`/api/get/${localStorage.getItem('eachProfileUserName')}/`)
+//      .then(response => response.json())
+//    .then(data => {
+//   console.log('Response from server:', data);
+//         if(data.error == "User not found")
+//        {
+//
+//         }
+//       .catch(error => {
+//
+//       });
+//   }
+// } 
+//
+//
+//  });
 
 window.togglePass = togglePass;
 window.clickEvent = clickEvent;
@@ -500,3 +508,5 @@ window.logout = logout;
 window.addEventListener("popstate", handleLocation);
 
 window.addEventListener("DOMContentLoaded", handleLocation);
+
+

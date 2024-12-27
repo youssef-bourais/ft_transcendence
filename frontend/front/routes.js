@@ -6,7 +6,7 @@
 //   By: ybourais <ybourais@student.1337.ma>        +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2024/12/27 00:47:11 by ybourais          #+#    #+#             //
-//   Updated: 2024/12/27 00:48:43 by ybourais         ###   ########.fr       //
+//   Updated: 2024/12/27 06:08:37 by ybourais         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -1020,20 +1020,22 @@ export function populateProfile()
 }
 
 
-let editProfile = document.getElementById("edit-profile");
-fetch(`/api/get/${localStorage.getItem("username")}/`)
-.then(response => response.json())
-.then(data => {
-    if(data.id > 100)
-        editProfile.style.display = "none";
-})
-.catch(error => {
-    
-});
-document.querySelectorAll(".display-name").forEach(displayName => {
-    console.log("length");
-    displayName.innerText = username;
-});
+// let editProfile = document.getElementById("edit-profile");
+//
+//
+// const data = await fetch(`/api/get/${localStorage.getItem("username")}/`)
+// .then(response => response.json())
+// .then(data => {
+//     if(data.id > 100)
+//         editProfile.style.display = "none";
+// })
+// .catch(error => {
+//
+// });
+// document.querySelectorAll(".display-name").forEach(displayName => {
+//     console.log("length");
+//     displayName.innerText = data.username;
+// });
 
 
 
@@ -1254,26 +1256,29 @@ async function setupProfilepage()
     //     return;
     // }
 
-    const body = {"username":"hello", "email":"helloword@gmaill.com", "photo":"https://cdn.adf.org.au/media/images/LSD-social.2e16d0ba.fill-1200x1200.jpg"};
-
-    const UserData = 
-    {
-        username: "hello",
-        email: "hello@gmail.com",
-        photo: "./images/try.jpg"
-    }
-
-    try
-    {
-        const info = await SecureApiRequest("/api/update/profile/","PATCH", body);
-        console.log("data: ", data.username, data.email, data.photo);
-        // const id = data.username;
-
-    }
-    catch (error)
-    {
-        // console.log("response:  ", error);
-    }
+    // const body = {"username":"hello", "email":"helloword@gmaill.com", "photo":"https://cdn.adf.org.au/media/images/LSD-social.2e16d0ba.fill-1200x1200.jpg"};
+    //
+    // const UserData = 
+    // {
+    //     username: "hello",
+    //     email: "hello@gmail.com",
+    //     photo: "./images/try.jpg"
+    // }
+    //
+    // try
+    // {
+    //     const info = await SecureApiRequest("/api/update/profile/","PATCH", body);
+    //     console.log("info: ", info);
+    //
+    //
+    //
+    //
+    //
+    // }
+    // catch (error)
+    // {
+    //     console.log("response:  ", error);
+    // }
 }
 
 
