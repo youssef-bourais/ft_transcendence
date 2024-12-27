@@ -521,9 +521,11 @@ function renderAll()
             console.log("i am inside checkButtonAddFriend ok bro", info)
             let i = 0;
             let valid = 0;
+            console.log("nchofo info ====> ",info.friends, localStorage.getItem("eachProfileUserName"))
             while(i < info.friends.length)
             {
-                if(info.friends[i].unsername == localStorage.getItem("username"))
+                console.log("comp ==> ",info.friends[i].username)
+                if(info.friends[i].username == localStorage.getItem("eachProfileUserName"))
                     valid = 1;
                 i++;
             }
@@ -540,7 +542,7 @@ function renderAll()
 
     async function sendFriend()
     {
-        const info = await SecureApiRequest("/api/friend/add/", "POST", `'{"to_user": "${localStorage.getItem("eachProfileUserId")}"}'`);
+        const info = await SecureApiRequest("/api/friend/add/", "POST", `{"to_user": "${localStorage.getItem("eachProfileUserId")}"}`);
         // if(!info)
         //     return;
         console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))

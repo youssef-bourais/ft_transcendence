@@ -285,7 +285,7 @@ def add_friend(request):
 
 
 #  curl http://127.0.0.1:8000/api/friend/list_friends_request/ \      
-# -H "Authorization: Bearer eyJ
+# -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1MzQ0MDk2LCJpYXQiOjE3MzUzNDA0OTYsImp0aSI6IjYyNGY4OTVmZTZlYjRiNzlhYjI1OGZkMDZiNTZkZGQxIiwidXNlcl9pZCI6MX0.OQm2N_0wiLckqjO5UfTe6_cNS2TiH3nFxJruIDBl_ew
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -305,10 +305,10 @@ def list_incoming_requests(request):
 
 
 
-# curl -X POST http://127.0.0.1:8000/api/friend/respond/ \
-# -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+# curl -X POST http://127.0.0.1:8000/respond_friend_request/ \
+# -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1MzQ0NDI0LCJpYXQiOjE3MzUzNDA4MjQsImp0aSI6ImIzZTI5ZGU2NzBjODQ5NWNiMWE2ZDcyYTYwODVmMGZhIiwidXNlcl9pZCI6MX0.K56KhodfDVW-6NmKKw6i6FjFtadJTRLQL_dtJ-I1NZk" \
 # -H "Content-Type: application/json" \
-# -d '{"request_id": 2, "action": "accept"}'
+# -d '{"request_id": 4, "action": "accept"}'
 
 
 @api_view(['POST'])
