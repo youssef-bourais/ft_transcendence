@@ -27,6 +27,7 @@ function toggleNavbarAndSearchBar(path)
 
         setTimeout(function() {
             renderAll();
+            tournamentOrders();
         }, 100); 
         if(path === '/profile' || path ==='/eachprofile')
         {
@@ -296,30 +297,30 @@ function renderAll()
         {
             save.addEventListener("click", function() {
                 
-                if(usernameIdProfile.value == "" || emailIdProfile.value == "" || passwordIdProfile.value == "" || passwordIdProfileConfirme.value == "")
-                    validForm = 1;
-                else
-                    validForm = 0
+                // if(usernameIdProfile.value == "" || emailIdProfile.value == "" || passwordIdProfile.value == "" || passwordIdProfileConfirme.value == "")
+                //     validForm = 1;
+                // else
+                //     validForm = 0
     
-                if(passwordIdProfile.value != passwordIdProfileConfirme.value)
-                    validPassword = 1;
-                else
-                    validPassword = 0;
+                // if(passwordIdProfile.value != passwordIdProfileConfirme.value)
+                //     validPassword = 1;
+                // else
+                //     validPassword = 0;
 
-                if(validForm == 1)
-                {
-                    containerError.style.display ="flex";
-                    errorMessage.innerHTML = "Error in input !!!"
-                    console.log("lowla", usernameIdProfile.value)
-                }
-                else if(validPassword == 1)
-                {
-                    containerError.style.display ="flex";
-                    errorMessage.innerHTML = "password not correct !!!"
-                    console.log("tania")
-                }
-                else
-                {
+                // if(validForm == 1)
+                // {
+                //     containerError.style.display ="flex";
+                //     errorMessage.innerHTML = "Error in input !!!"
+                //     console.log("lowla", usernameIdProfile.value)
+                // }
+                // else if(validPassword == 1)
+                // {
+                //     containerError.style.display ="flex";
+                //     errorMessage.innerHTML = "password not correct !!!"
+                //     console.log("tania")
+                // }
+                // else
+                // {
                     
                  
                     async function sendRequestUpdateProfile() {
@@ -331,7 +332,7 @@ function renderAll()
                             stateCheck = false;
                         console.log(`{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "photo":"${send_image}", "is_2fa_enabled":"${stateCheck}"}`)
                        
-                        const info = await SecureApiRequest("/api/update/profile/","PATCH", `{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "is_2fa_enabled":"${stateCheck}", "photo":"${send_image}"}`);
+                        const info = await SecureApiRequest("/api/update/profile/","PATCH", `{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "is_2fa_enabled":"${stateCheck}"}`);
                         
                         console.log("info:::::::", info);
                     }
@@ -344,7 +345,7 @@ function renderAll()
                     emailIdProfile.value = ""
                     passwordIdProfile.value = ""
                     passwordIdProfileConfirme.value = ""
-                }
+                // }
                 
                 });
         }
@@ -537,15 +538,17 @@ function renderAll()
 
 
 
-    async function sendFriend() 
+    async function sendFriend()
     {
         const info = await SecureApiRequest("/api/friend/add/", "POST", `'{"to_user": "${localStorage.getItem("eachProfileUserId")}"}'`);
         // if(!info)
         //     return;
-        
+        console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
+
         // localStorage.setItem('eachProfileUserName', data.username);
         
     }
+
     if(addFriendButton)
     {
         addFriendButton.addEventListener("click", function(event) {
@@ -556,6 +559,17 @@ function renderAll()
         });
     }
 
+}
+
+function tournamentOrders()
+{
+    let joinTournament = document.getElementById("join-tournament");
+    if(joinTournament)
+    {
+        joinTournament.addEventListener("click", function(event) {
+            
+        });
+    }
 }
 
 

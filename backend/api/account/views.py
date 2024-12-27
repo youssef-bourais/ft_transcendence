@@ -408,13 +408,13 @@ def update_profile(request):
     serializer = UserProfileUpdateSerializer(instance=user, data=request.data, partial=True)
 
     if serializer.is_valid():
-        photo = serializer.validated_data.get('photo')
-        if photo:
-            try:
-                if not photo.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
-                    return Response({"error": "Invalid photo format."}, status=status.HTTP_400_BAD_REQUEST)
-            except ValidationError:
-                return Response({"error": "Invalid photo URL."}, status=status.HTTP_400_BAD_REQUEST)
+        # photo = serializer.validated_data.get('photo')
+        # if photo:
+        #     try:
+        #         if not photo.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
+        #             return Response({"error": "Invalid photo format."}, status=status.HTTP_400_BAD_REQUEST)
+        #     except ValidationError:
+        #         return Response({"error": "Invalid photo URL."}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer.save()
         return Response({"message": "Profile updated successfully!", "data": serializer.data}, status=status.HTTP_200_OK)

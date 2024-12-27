@@ -102,10 +102,10 @@ class UserProfileUpdateSerializer(serializers.ModelSerializer):
         password = attrs.get('password')
         repeat_password = attrs.get('repeat_password')
         if password and repeat_password:
-            try:
-                validate_password(password)
-            except serializers.ValidationError as e:
-                raise serializers.ValidationError({"password": list(e.messages)})
+            # try:
+            #     validate_password(password)
+            # except serializers.ValidationError as e:
+            #     raise serializers.ValidationError({"password": list(e.messages)})
             if password != repeat_password:
                 raise serializers.ValidationError("Passwords do not match.")
             attrs['password'] = bleach.clean(password)

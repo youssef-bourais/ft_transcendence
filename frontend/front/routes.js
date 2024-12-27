@@ -6,7 +6,7 @@
 /*   By: ahajji <ahajji@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 00:47:11 by ybourais          #+#    #+#             */
-/*   Updated: 2024/12/27 18:43:21 by ahajji           ###   ########.fr       */
+/*   Updated: 2024/12/27 22:07:57 by ahajji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -656,7 +656,7 @@ export const routes = {
                                 <p>Pinger's Room</p>
                             </div>
                             <div class="second-halef">
-                                <button>Join tournament</button>
+                                <button id="join-tournament">Join tournament</button>
                             </div>
                         </div>
                         <div class="midle">
