@@ -9,7 +9,6 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
-    # email = serializers.CharField()  
 
     class Meta:
         model = CustomUser
@@ -17,7 +16,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True}, #not included in the response
         }
-    # get_or_create
     def validate_email(self, value):
         # print("value", value)
         value = bleach.clean(value)

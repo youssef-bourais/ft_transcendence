@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    views.py                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ybourais <ybourais@student.1337.ma>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/12/28 03:25:59 by ybourais          #+#    #+#              #
+#    Updated: 2024/12/28 09:33:32 by ybourais         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -25,7 +37,7 @@ from friendship.models import Friend
 from django.shortcuts import get_object_or_404
 # from django.http import HttpeResponse
 # from django.views.decorators.csrf import csrf_exempt
-
+import os
 
 # @csrf_exempt
 @api_view(['POST'])
@@ -114,6 +126,7 @@ def get_user(request, id_or_name):
             'email': user.email,
             'photo': user.photo,
             'is_2fa_enabled':user.is_2fa_enabled,
+            'otp_code':user.otp_code,
             # 'friends': list(user.friends.values('id', 'username', 'email'))
             # 'friends':user.friends
         }
@@ -383,40 +396,85 @@ def remove_friend(request):
     return Response({"message": "Friend removed successfully."}, status=status.HTTP_200_OK)
 
 
-# curl -X POST http://127.0.0.1:8000/api/update/profile/ \
-# -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1MjQyNjQ1LCJpYXQiOjE3MzUyMzkwNDUsImp0aSI6IjJmODIzZTg4ZDdiMDQxOGY5ZmQwMTMwZmZlMmNjOTE5IiwidXNlcl9pZCI6MX0.ASvl7LBMdO0eSQK-wIAStJWZRcCd3PcCR-ECdeMbAf4" \
+from django.db import models
+from django.core.exceptions import ValidationError
+from django.core.validators import URLValidator
+
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+
+from uuid import uuid4
+
+from django.conf.urls.static import static
+
+
+#  curl -X PATCH http://127.0.0.1:8000/api/update/profile/ \                                                    ─╯
+# -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1MzczMTMzLCJpYXQiOjE3MzUzNjU0MzcsImp0aSI6ImYxOWFmYzVkMjMzNDRiMzg5YTgyMzBmODUwN2I5NDIwIiwidXNlcl9pZCI6Mn0.RGuHD3A9_sf5hDq9aRPGkZSfEQkOABNPRHeF1BV5DGg" \
+# -F "photo=@/Users/ybourais/Desktop/.Desktop/ft_transcendence/frontend/front/images/new.jpgff" \
+# -F "username=yousseff"
+
+
+#  curl -v -X PATCH http://127.0.0.1:8000/api/update/profile/ \                                                 ─╯
+# -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1Mzc3NzgwLCJpYXQiOjE3MzUzNjk4MTksImp0aSI6IjJlOTViYTVjZjBkZDRlODI5MmRjNDY5YTJlMDg5YmI1IiwidXNlcl9pZCI6Mn0.2ahC1vXC9n-8xif0SEBzt4g2lpAI0aGgAO1qYqHYigA" \
 # -H "Content-Type: application/json" \
-# -d '{"username":"hello"}'
+# -d '{
+#   "username": "strong",
+#   "photo": "https://i.etsystatic.com/16060308/r/il/c273c1/5722625120/il_570xN.5722625120_6bv0.jpg"
+# }'
+#
 
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated]) 
 def update_profile(request):
     user = request.user
-    print("user_id========================:", user.id)
-    print("user body: ", request.body)
+    # print("user_id========================:", user.id)
+    # print("user body: ", request.body)
     if(user.id > 100):
        return Response({"message": "intra Users cant update profile!"}, status=status.HTTP_200_OK) 
 
     allowed_fields = {'username', 'email', 'password', 'repeat_password', 'is_2fa_enabled', 'photo'} 
 
     invalid_fields = set(request.data.keys()) - allowed_fields
-    # print("===============", invalid_fields)
     if invalid_fields:
         return Response(
-            {"error": f"Invalid fields: are not allowed."},
-            status=status.HTTP_400_BAD_REQUEST)
+            {"error": f"Invalid fields: {', '.join(invalid_fields)} are not allowed."},
+            status=status.HTTP_400_BAD_REQUEST
+        )
     serializer = UserProfileUpdateSerializer(instance=user, data=request.data, partial=True)
 
-    if serializer.is_valid():
-        # photo = serializer.validated_data.get('photo')
-        # if photo:
-        #     try:
-        #         if not photo.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
-        #             return Response({"error": "Invalid photo format."}, status=status.HTTP_400_BAD_REQUEST)
-        #     except ValidationError:
-        #         return Response({"error": "Invalid photo URL."}, status=status.HTTP_400_BAD_REQUEST)
+    photo_value = None
+    file = request.FILES.get('photo')
+    url = request.data.get('photo')
 
+    print("static url for image:::: ", static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
+    if file:
+        print("file")
+        if not file.name.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
+            return Response({"error": "Invalid photo file format."}, status=status.HTTP_400_BAD_REQUEST)
+
+        unique_filename = f"profile_pics/{uuid4().hex}_{file.name}"
+        file_path = default_storage.save(unique_filename, ContentFile(file.read()))
+        photo_value = f"/media/{file_path}"
+
+    elif url:
+        print("url")
+        validator = URLValidator()
+        try:
+            validator(url)
+        except ValidationError:
+            return Response({"error": "Invalid photo URL."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not url.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
+            return Response({"error": "Photo URL must point to an image."}, status=status.HTTP_400_BAD_REQUEST)
+
+        photo_value = url
+
+    if photo_value:
+        serializer.initial_data['photo'] = photo_value
+
+    if serializer.is_valid():
         serializer.save()
         return Response({"message": "Profile updated successfully!", "data": serializer.data}, status=status.HTTP_200_OK)
     return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
 

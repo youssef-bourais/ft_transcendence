@@ -55,7 +55,7 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
         
     if (body && typeof body !== "string") 
         request.body = JSON.stringify(body);
-    else 
+    else if(body) 
         request.body = body;
     try 
     {
@@ -93,6 +93,7 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
         if(!response.ok)
         {
             const data = await response.json();
+            console.log("SecureApiRequest: ", data);
             return data.error;
         }
     } 

@@ -200,7 +200,7 @@ function renderAll()
    
         let  userNameFriend = document.getElementById("userNameProfile")
         if(userNameFriend)
-        userNameFriend.innerHTML = localStorage.getItem("username");
+            userNameFriend.innerHTML = localStorage.getItem("username");
     
         let  emailProfile = document.getElementById("emailProfile");
         if(emailProfile)
@@ -212,6 +212,7 @@ function renderAll()
         let containerEdit = document.getElementById("container-edit");
         let editProfile = document.getElementById("edit-profile");
         let containerError = document.getElementById("container-error")
+
         if(cancel)
         {
             
@@ -248,8 +249,8 @@ function renderAll()
                         checkBox.checked = true
                     else
                         checkBox.checked = false
-                        usernameIdProfile.value = data.username;
-                        emailIdProfile.value = data.email;
+                        usernameIdProfile.value = "";//data.username;
+                        emailIdProfile.value = "";//data.email;
 
                     console.log("i am here in data");
                 })
@@ -258,7 +259,6 @@ function renderAll()
                 });
             });
         }
-            
 
         fetch(`/api/get/${localStorage.getItem("username")}/`)
         .then(response => response.json())
@@ -322,7 +322,12 @@ function renderAll()
                 // else
                 // {
                     
-                 
+                    function updateLocalstorage(UserData) 
+                    {
+                        if (UserData.username) localStorage.setItem('username', UserData.username);
+                        if (UserData.email) localStorage.setItem('email', UserData.email);
+                        if (UserData.photo) localStorage.setItem('photo', UserData.photo);
+                    }
                     async function sendRequestUpdateProfile() {
                         console.log("hi mister karim")
                         let stateCheck;
@@ -331,10 +336,28 @@ function renderAll()
                         else
                             stateCheck = false;
                         console.log(`{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "photo":"${send_image}", "is_2fa_enabled":"${stateCheck}"}`)
-                       
-                        const info = await SecureApiRequest("/api/update/profile/","PATCH", `{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "is_2fa_enabled":"${stateCheck}"}`);
                         
-                        console.log("info:::::::", info);
+                        const username = usernameIdProfile.value;
+                        const email = emailIdProfile.value;
+                        const password = passwordIdProfile.value;
+                        const repeat_password = passwordIdProfileConfirme.value;
+                        const is_2fa_enabled = stateCheck;
+                        const photo = send_image; 
+
+                        const UserData = {};
+                        if (username) UserData.username = username;
+                        if (email) UserData.email = email;
+                        if (password) UserData.password = password;
+                        if (repeat_password) UserData.repeat_password = repeat_password;
+                        if (is_2fa_enabled) UserData.is_2fa_enabled = is_2fa_enabled;
+                        if (photo) UserData.photo = photo;
+                       
+                        // const info = await SecureApiRequest("/api/update/profile/","PATCH", `{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "is_2fa_enabled":"${stateCheck}"}`);
+                        const info = await SecureApiRequest("/api/update/profile/","PATCH", UserData);
+
+                        if (info && !info.error) 
+                            updateLocalstorage(UserData);
+
                     }
                     sendRequestUpdateProfile();
                     containerError.style.display = "none"
@@ -540,7 +563,7 @@ function renderAll()
 
     async function sendFriend()
     {
-        const info = await SecureApiRequest("/api/friend/add/", "POST", `'{"to_user": "${localStorage.getItem("eachProfileUserId")}"}'`);
+        const info = await SecureApiRequest("/api/friend/add/", "POST", `{"to_user": "${localStorage.getItem("eachProfileUserId")}"}`);
         // if(!info)
         //     return;
         console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
