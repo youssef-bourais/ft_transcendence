@@ -6,7 +6,7 @@
 /*   By: ahajji <ahajji@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 00:47:11 by ybourais          #+#    #+#             */
-/*   Updated: 2024/12/27 22:07:57 by ahajji           ###   ########.fr       */
+/*   Updated: 2024/12/28 21:11:33 by ahajji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -377,7 +377,7 @@ export const routes = {
                         <div class="container-form">
                             <div class="container-switch">
                                 <div class="profile"><p>Profile</p></div>
-                                <div class="security" id="addFriendButton" ><p></p></div>
+                               <div class="security" id="addFriendButton" ><p></p></div>    
                             </div>
                             <div class="container-inputs" style="height:110px">
                                 <div class="container-input">

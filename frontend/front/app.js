@@ -275,7 +275,7 @@ function renderAll()
         let fileInput = document.getElementById("file-input");
         let labelInput = document.getElementById("label-input");
         let imgUpdate = document.getElementById("img-update");
-        let send_image = localStorage.getItem("photo");
+        let send_image = "";
         if(fileInput)
         {
             fileInput.addEventListener("change", function(event) {
@@ -345,6 +345,7 @@ function renderAll()
                     emailIdProfile.value = ""
                     passwordIdProfile.value = ""
                     passwordIdProfileConfirme.value = ""
+                    imgUpdate.src = ""
                 // }
                 
                 });
@@ -385,6 +386,7 @@ function renderAll()
                             buttonFriend.style.display = "flex"
                             buttonFriend2.style.display = "none"
                             localStorage.setItem('eachProfileUserName', data.username);
+                            console.log(data.username)
                             localStorage.setItem('eachProfileUserId', data.id);
                             console.log("see this data===> ",data);
                            
@@ -557,6 +559,14 @@ function renderAll()
             if(addFriendButton.innerHTML == "Add Friend +")
             {
                 sendFriend();
+            }
+            else if(addFriendButton.innerHTML == "Message")
+            {
+                // alert("1")
+                localStorage.setItem("openChat",localStorage.getItem("eachProfileUserName"));
+                history.pushState({}, "", '/chat'); 
+                
+                handleLocation();
             }
         });
     }

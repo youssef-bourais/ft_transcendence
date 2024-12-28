@@ -44,11 +44,12 @@ export function loadChatInterface() {
     `;
     // content.innerHTML = `<h1>hola</h1>`;
     console.log("alexander");
+    
     initializeChat();
 }
 
-function initializeChat() {
-
+async function initializeChat() {
+    let karim =  await dataUser();
     currentUserName = localStorage.getItem("username");
     const friendsList = document.getElementById('friendsList');
     const messagesContainer = document.getElementById('messagesContainer');
@@ -116,13 +117,35 @@ function connectWebSocket() {
     };
 }
 
+async function dataUser() {
+    let data;
+    try {
+        const response = await fetch(`/api/get/${localStorage.getItem("openChat")}/`);
+        const friend = await response.json();
+        data = friend;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        data = null;  // Optionally, you can set it to null or handle the error case
+    }
+    
+    return data;
+}
+
+          
+
 async function fetchFriends() 
 {
+    let karim =  await dataUser();
+    if(localStorage.getItem("openChat"))
+    {
+        // fetchConversationHistory(karim.username)
+        selectFriend(karim);
+    }
     const friendData = await SecureApiRequest('/api/friend/get_friends/');
 
     const friendsToRender = friendData.friends.map(friend => ({
-        name: friend.username, 
-        avatar: friend.photo  
+        username: friend.username, 
+        photo: friend.photo  
     }));
 
     console.log("friends:", friendsToRender);
@@ -130,8 +153,10 @@ async function fetchFriends()
 }
 
 
-function renderFriends(friends) 
+
+async function renderFriends(friends) 
 {
+    
     const friendsList = document.getElementById('friendsList');
     friendsList.innerHTML = '';
 
@@ -139,8 +164,8 @@ function renderFriends(friends)
         const li = document.createElement('li');
         li.innerHTML = `
             <div class="friend-item">
-                <img src="${friend.avatar}" alt="${friend.name}'s avatar" class="friend-avatar">
-                <span class="friend-name">${friend.name}</span>
+                <img src="${friend.photo}" alt="${friend.username}'s avatar" class="friend-avatar">
+                <span class="friend-name">${friend.username}</span>
             </div>
         `;
         li.addEventListener('click', () => selectFriend(friend));
@@ -150,8 +175,9 @@ function renderFriends(friends)
 
 
 async function selectFriend(friend) {
-    currentRecipient = friend.name;
-    fetchConversationHistory(friend.name);
+    // console.log()
+    currentRecipient = friend.username;
+    fetchConversationHistory(friend.username);
     
     const chatArea = document.querySelector('.chat-area');
     chatArea.classList.remove('hidden');
@@ -164,8 +190,8 @@ async function selectFriend(friend) {
     const chatHeaderImage = document.getElementById('chatHeaderImage');
     const chatHeaderName = document.getElementById('chatHeaderName');
     
-    chatHeaderImage.src = friend.avatar;
-    chatHeaderName.textContent = friend.name;
+    chatHeaderImage.src = friend.photo;
+    chatHeaderName.textContent = friend.username;
 }
 
 function fetchConversationHistory(otherUser) {
@@ -344,9 +370,9 @@ async function displayConversationHistory(messages) {
 //     friendsList.innerHTML = '';
 //     friends.forEach(friend => {
 //         const li = document.createElement('li');
-//         li.textContent = friend.name;
+//         li.textContent = friend.username;
 //         li.dataset.id = friend.id; // Store the id in the DOM element
-//         li.addEventListener('click', () => selectFriend(friend.name));
+//         li.addEventListener('click', () => selectFriend(friend.username));
 //         friendsList.appendChild(li);
 //     });
 // }
