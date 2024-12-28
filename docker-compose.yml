@@ -8,7 +8,7 @@ services:
     depends_on:
       - api
     volumes:
-      - /home/mdouzi/last/frontend/front/:/var/www/html/
+      - /goinfre/mdouzi/docker/ft_transcendence/frontend/front/:/var/www/html/
     ports:
       - '443:443'
     networks:
@@ -22,14 +22,14 @@ services:
     depends_on:
       - postgres
     volumes:
-      - /home/mdouzi/last/backend/api/:/app
+      - /goinfre/mdouzi/docker/ft_transcendence/backend/api/:/app
     ports:
       - '8000:8000'
     networks:
       - network
     restart: always
     env_file:
-      - /home/mdouzi/last/.env
+      - /goinfre/mdouzi/docker/ft_transcendence/.env
 
   postgres:
     container_name: postgres
@@ -39,7 +39,7 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_DB=${DB_NAME}
     volumes:
-      - /home/mdouzi/last/postgres_data:/var/lib/postgresql/data
+      - /goinfre/mdouzi/docker/ft_transcendence/postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:

@@ -2,7 +2,7 @@ import { SanitizeInpute, GoLogin, showError, validatePassword, getCookie, delete
 import { handleLocation } from './app.js';
 import { SecureApiRequest} from './api.js';
 import { loadChatInterface } from './chat.js';
-import { loadGameFront }  from './game.js';
+import { loadGameFront }  from './loadGame.js';
 
 {/* <button id='test' style='z-index:10'>hey</button> */}
 

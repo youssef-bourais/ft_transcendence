@@ -1,97 +1,3 @@
-
-export function loadGameFront() {
-    const app = document.getElementById('goma');	
-    app.innerHTML = `
-          <div class="game-container">
-            <div class="canvas-section">
-                <div class="controls">
-                    <button onclick="game = startGame('1v1')">1 vs 1</button>
-                    <button onclick="game = startGame('1vAI')">1 vs AI</button>
-                    <button onclick="game = startGame('4player')">4 Players</button>
-                </div>
-                <canvas id="gameCanvas"></canvas>
-            </div>
-            <div class="customization-section">
-                <div class="customization">
-                    <h3>Game Customization</h3>
-                    <table>
-                        <tr>
-                            <td>Ball Speed:</td>
-                            <td><input type="number" id="BALL_SPEED" value="5"></td>
-                        </tr>
-                        <tr>
-                            <td>Paddle Speed:</td>
-                            <td><input type="number" id="PADDLE_SPEED" value="5"></td>
-                        </tr>
-                        <tr>
-                            <td>Winning Score (1 -> 10):</td>
-                            <td><input type="number" id="WINNING_SCORE" value="5"></td>
-                        </tr>
-                    </table>
-                    <button onclick="applySettings()">Apply Settings</button>
-                </div>
-
-                <div class="theme-selection">
-                    <h3>Select Game Theme</h3>
-                    <table>
-                        <tr>
-                            <td>Background Color:</td>
-                            <td>
-                                <select id="backgroundColor">
-                                    <option value="black">Black</option>
-                                    <option value="blue">Blue</option>
-                                    <option value="green">Green</option>
-                                    <option value="red">Red</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Paddle Color:</td>
-                            <td>
-                                <select id="paddleColor">
-                                    <option value="white">White</option>
-                                    <option value="yellow">Yellow</option>
-                                    <option value="cyan">Cyan</option>
-                                    <option value="magenta">Magenta</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ball Color:</td>
-                            <td>
-                                <select id="ballColor">
-                                    <option value="white">White</option>
-                                    <option value="orange">Orange</option>
-                                    <option value="purple">Purple</option>
-                                    <option value="pink">Pink</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
-                    <button onclick="applyTheme()">Apply Theme</button>
-                </div>
-                <div class="instructions">
-                    <p>Player 1 (Left): W/S</p>
-                    <p>Player 2 (Right): ↑/↓</p>
-                    <p>Player 3 (Top): A/D</p>
-                    <p>Player 4 (Bottom): ←/→</p>
-                </div>
-            </div>
-        </div>
-    `;
-    console.log('Game front loaded');
-
-    document.getElementById('btn-1v1').addEventListener('click', () => startGame('1v1'));
-    document.getElementById('btn-1vAI').addEventListener('click', () => startGame('1vAI'));
-    document.getElementById('btn-4player').addEventListener('click', () => startGame('4player'));
-
-    // Setup the game page
-    setupGamePage();
-}
-
-
-
-
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
 const PADDLE_WIDTH = 10;
@@ -362,6 +268,10 @@ class Game {
         });
     }
 
+    gameStop() {
+        this.gameOver = true;
+    }
+
     testBackground(CANVAS_HEIGHT, CANVAS_WIDTH, ctx, theme) {
     
     // Create image objects
@@ -449,35 +359,31 @@ class Game {
     }
 }
 
-// Game loop
 
-function setupGamePage(mode) {
+export function startGame(mode) {
+    const game = new Game(mode);
+    setupGamePage(game);
+}
+
+
+export function setupGamePage(game) {
+    console.log('Game page loaded');
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     canvas.width = CANVAS_WIDTH;
     canvas.height = CANVAS_HEIGHT;
 
-    let game = null;
     const keyboard = new KeyboardController();
 
-    window.startGame = (mode) => {
-        game = new Game(mode);
-        gameLoop();
-    };
-
     function gameLoop() {
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         if (game) {
             game.update(keyboard.keys);
             game.draw(ctx);
         }
         requestAnimationFrame(gameLoop);
     }
-
-    // window.updateGameSettings = (settings) => {
-    //     if (game) {
-    //         game.updateGameSettings(settings);
-    //     }
-    // };
+    gameLoop();
 }
 
 function applySettings() {
@@ -490,8 +396,8 @@ function applySettings() {
         PADDLE_SPEED: parseInt(paddleSpeed),
         WINNING_SCORE: parseInt(winningScore)
     };
-    // if(game) {
-    //     updateGameSettings(window.gameSettings);
-    // }
+    if(game) {
+        updateGameSettings(window.gameSettings);
+    }
 }
 
