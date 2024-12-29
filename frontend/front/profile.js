@@ -249,6 +249,14 @@ export function renderAll()
         let  nameNotification = document.getElementById("nameNotification")
         nameNotification.innerHTML = localStorage.getItem("username");
         inputSearch.addEventListener('input', (event) => {
+        //
+        // async function delayedExecution() {
+        //     console.log("Waiting for 2 seconds...");
+        //     await sleep(500);
+        //     console.log("This message is delayed by 2 seconds");
+        //     // Add your code here
+        // }
+
             const username = event.target.value;  
             let valid = 0;
 
