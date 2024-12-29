@@ -131,11 +131,11 @@ async function dataUser() {
     return data;
 }
 
-      let blockUser  = document.getElementsByClassName("block-user");
-    //   karim[0].
-    blockUser[0].addEventListener("click", function(){
+    //   let blockUser  = document.getElementsByClassName("block-user");
+    // //   karim[0].
+    // blockUser[0].addEventListener("click", function(){
         
-    })
+    // })
 
     async function removeFriend(friendID)
     {

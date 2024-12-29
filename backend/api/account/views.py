@@ -269,10 +269,8 @@ def add_friend(request):
     
     if not to_user_id:
         return Response({"error": "'to_user' field is required."}, status=status.HTTP_400_BAD_REQUEST)
-
     if not str(to_user_id).isdigit():
         return Response({"error": "'to_user' must be a numeric value."}, status=status.HTTP_400_BAD_REQUEST)
-
     try:
         to_user = get_object_or_404(CustomUser, id=to_user_id)
     except Http404:

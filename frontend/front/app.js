@@ -531,9 +531,9 @@ function renderAll()
                 i++;
             }
             if(valid == 1)
-                addFriendButton.innerHTML = "Message"
-            else
-                addFriendButton.innerHTML = "Add Friend +"
+                addFriendButton.innerHTML = "Message";
+            else if(valid == 0)
+                addFriendButton.innerHTML = "Add Friend +";
         }
         
     }
@@ -606,28 +606,37 @@ async function acceptRequest(id)
     const info = await SecureApiRequest("/api/friend/respond_friend_request/", "POST", `{"request_id": ${id}, "action": "accept"}`);
 }
 
+async function returnDataFriendsResquest()
+{
+    const info = await SecureApiRequest("/api/friend/list_friends_request/", "GET");
+    return info;
+}
 
 async function callForTopNav()
 {
-    const info = await SecureApiRequest("/api/friend/list_friends_request/", "GET");
-    console.log("info for see==> ",info.incoming_requests[0])
+    
+    // const info = await SecureApiRequest("/api/friend/list_friends_request/", "GET")
     let iconDownbutton =  document.getElementById("iconDownbutton");
     let poupapNotification = document.getElementById("poupapNotification")
     let valid = 0
-    poupapNotification.innerHTML = ``;
-    iconDownbutton.addEventListener('click', function(){
+    iconDownbutton.addEventListener('click', async function(){
+        
+        const info = await SecureApiRequest("/api/friend/list_friends_request/", "GET");
+       
+        poupapNotification.innerHTML = ``;
         
         // console.log("poupapNotification.style.display ===> ", poupapNotification.style.display)
         if(valid == 0)
         {
+            
             valid = 1;
             poupapNotification.style.display = "flex"
             let i = 0;
             if(info.incoming_requests.length > 0)
             {   
-                    while(i < info.incoming_requests.length)
+                while(i < info.incoming_requests.length)
                 {
-                    poupapNotification.innerHTML = `
+                    poupapNotification.innerHTML += `
                     <div class="container-request">
                         <div class="first-img"><img src="${info.incoming_requests[i].from_user_photo}" alt="" srcset=""></div>
                         <div class="second-name"><p>${info.incoming_requests[i].from_user}</p></div>
@@ -638,16 +647,32 @@ async function callForTopNav()
                 }
                 let button  = document.getElementsByClassName("third-button");
                 let j = 0;
-                while(j < button.length)
-                {
-                    button[j].addEventListener("click", function(){
-                        
+                let count = 0;
+                while (j < button.length) {
+                    let currentButton = button[j];
+                    currentButton.addEventListener("click", function() {
+                        console.log("count ok ===> ",count)
+                        count++
                         let requestId = this.id;
                         acceptRequest(requestId);
-                        console.log("Button clicked with request ID: ", requestId); 
-                    })
+                        console.log("Button clicked with request ID: ", requestId);
+                        let grandParent = currentButton.parentElement;
+                        grandParent.style.display = "none";
+                        if(button.length == 1 || button.length == count)
+                        {
+                            count = 0;
+                            poupapNotification.innerHTML = `
+                            <div class="container-request" style="display:flex; justify-content:center; align-items: center; height:50px;">
+                                <p>No one</p>
+                            </div>
+                            `;
+                        }
+                    });
+
                     j++;
                 }
+                
+               
                 
             }
             else
