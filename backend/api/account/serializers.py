@@ -45,6 +45,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         #     raise serializers.ValidationError({"password": list(e.messages)})
         attrs['password'] = bleach.clean(attrs['password']) 
         attrs['password2'] = bleach.clean(attrs['password2'])
+
+        print("password: ", attrs['password'])
+        print("password2:", attrs['password2'])
         if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError("Passwords do not match.")
         return attrs
@@ -99,6 +102,16 @@ class UserProfileUpdateSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         password = attrs.get('password')
         repeat_password = attrs.get('repeat_password')
+
+        print("password: ", password)
+        print("password2:", repeat_password)
+
+        if password:
+            if not repeat_password:
+                raise serializers.ValidationError("repeat_password field must be provided.")
+        if repeat_password:
+            if not password:
+                raise serializers.ValidationError("Passord field must be provided.")
         if password and repeat_password:
             # try:
             #     validate_password(password)

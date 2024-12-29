@@ -1088,7 +1088,6 @@ async function setupLoginPage()
                     localStorage.setItem("refreshToken", data.refresh);
                     localStorage.setItem("email", userinfo.email);
                     localStorage.setItem("photo", userinfo.photo);
-                    
 
                     history.pushState({}, "", "/profile"); 
                     handleLocation();

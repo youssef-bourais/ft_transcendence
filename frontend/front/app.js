@@ -2,6 +2,7 @@ import { routes, populateProfile} from './routes.js';
 import { togglePass, logout, clickEvent, GoLogin } from './utils.js';
 import { startChat } from './chat.js';
 import {SecureApiRequest} from './api.js';
+import {showError} from './utils.js';
 
 let currentState = { view: "login" };
 
@@ -71,6 +72,7 @@ function handleEvent(selector, isNavbar = false)
                     isNavigating = true;
 
                     const targetView = event.target.dataset.view || event.currentTarget.dataset.view;
+
                     history.pushState({}, "", targetView); 
                     handleLocation();
 
@@ -177,11 +179,9 @@ function uploadImage() {
  
 function renderAll() 
 {
-        
     console.log("render all ok bro ");
     if (inputSearch) 
     {
-    
         let  notFound = document.getElementById("not-found");
         let  nameSearch = document.getElementById("name-search");
         let  imgSearch = document.getElementById("img-search");
@@ -228,7 +228,7 @@ function renderAll()
                 passwordIdProfileConfirme.value = ""
                 });
 
-            editProfile.addEventListener("click", function() {
+                editProfile.addEventListener("click", function() {
                 containerEdit.style.display = "flex";
                 const photo = localStorage.getItem("photo");
                 const username = localStorage.getItem("username");
@@ -275,58 +275,41 @@ function renderAll()
         let fileInput = document.getElementById("file-input");
         let labelInput = document.getElementById("label-input");
         let imgUpdate = document.getElementById("img-update");
-        let send_image = localStorage.getItem("photo");
+        let send_image = "";//localStorage.getItem("photo");
+
+        let file = null;
         if(fileInput)
         {
             fileInput.addEventListener("change", function(event) {
-                const file = event.target.files[0];
-                if(file)
+                file = event.target.files[0];
+                if (file) 
                 {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        
-                        imgUpdate.src = e.target.result; 
-                        send_image = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
+                    imgUpdate.src = URL.createObjectURL(file); // Efficient file preview
                 }
+
+                // if(file)
+                // {
+                //     const reader = new FileReader();
+                //     reader.onload = function(e) {
+                //
+                //         imgUpdate.src = e.target.result; 
+                //         send_image = e.target.result;
+                //     };
+                //     reader.readAsDataURL(file);
+                // }
             });
         }
-
+// /Users/ybourais/Desktop/.Desktop/ft_transcendence/backend/api/media
         if(save)
         {
-            save.addEventListener("click", function() {
+            save.addEventListener("click", function() 
+            {
                 
-                // if(usernameIdProfile.value == "" || emailIdProfile.value == "" || passwordIdProfile.value == "" || passwordIdProfileConfirme.value == "")
-                //     validForm = 1;
-                // else
-                //     validForm = 0
-    
-                // if(passwordIdProfile.value != passwordIdProfileConfirme.value)
-                //     validPassword = 1;
-                // else
-                //     validPassword = 0;
-
-                // if(validForm == 1)
-                // {
-                //     containerError.style.display ="flex";
-                //     errorMessage.innerHTML = "Error in input !!!"
-                //     console.log("lowla", usernameIdProfile.value)
-                // }
-                // else if(validPassword == 1)
-                // {
-                //     containerError.style.display ="flex";
-                //     errorMessage.innerHTML = "password not correct !!!"
-                //     console.log("tania")
-                // }
-                // else
-                // {
-                    
                     function updateLocalstorage(UserData) 
                     {
                         if (UserData.username) localStorage.setItem('username', UserData.username);
                         if (UserData.email) localStorage.setItem('email', UserData.email);
-                        if (UserData.photo) localStorage.setItem('photo', UserData.photo);
+                        if (UserData.photo) localStorage.setItem('photo', " ../../backend/api" + UserData.photo);
                     }
                     async function sendRequestUpdateProfile() {
                         console.log("hi mister karim")
@@ -342,42 +325,85 @@ function renderAll()
                         const password = passwordIdProfile.value;
                         const repeat_password = passwordIdProfileConfirme.value;
                         const is_2fa_enabled = stateCheck;
-                        const photo = send_image; 
+                        let photo = send_image; 
 
-                        const UserData = {};
+
+                    const formData = new FormData();
+
+                    if (username) formData.append("username", username);
+                    if (email) formData.append("email", email);
+                    if (password) formData.append("password", password);
+                    if (repeat_password) formData.append("repeat_password", repeat_password);
+                    formData.append("is_2fa_enabled", is_2fa_enabled);
+                    if (file) formData.append("photo", file);
+
+                    const UserData = {};
+                    
+                    console.log("photo:", photo);
+                    console.log("UserData=================: ", formData);
+                    
+                    const is_upload = !!file;
+
+                    let body;
+
+                    if(is_upload)
+                        body = formData;
+                    else
+                    {
                         if (username) UserData.username = username;
                         if (email) UserData.email = email;
                         if (password) UserData.password = password;
                         if (repeat_password) UserData.repeat_password = repeat_password;
-                        if (is_2fa_enabled) UserData.is_2fa_enabled = is_2fa_enabled;
-                        if (photo) UserData.photo = photo;
-                       
-                        // const info = await SecureApiRequest("/api/update/profile/","PATCH", `{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "is_2fa_enabled":"${stateCheck}"}`);
-                        const info = await SecureApiRequest("/api/update/profile/","PATCH", UserData);
+                        UserData.is_2fa_enabled = is_2fa_enabled;
+                        body = UserData;
+                    }
 
-                        if (info && !info.error) 
+                    if (!is_upload && Object.entries(UserData).length === 0) 
+                        body = null;
+                    console.log("uplaod::::::::: ", is_upload);
+                    console.log("body::::::::: ", body);
+
+                    const info = await SecureApiRequest("/api/update/profile/","PATCH", body, is_upload);
+                    if (info && !info.error) 
+                    {
+                        console.log("localStorage updateeeeeed", info);
+                        if(!is_upload)
                             updateLocalstorage(UserData);
+                        else
+                            updateLocalstorage(formData);
+
+                        containerError.style.display = "block"
+                        showError("Profile updated successfully", "error-message");
+                    }
+                    else
+                    {
+                    
+                        const data = info.error;
+                        let errormessage = "";
+                        for (const key in data) 
+                            if (data[key]) 
+                                errormessage += `${data[key].join(", ")} `;
+                        containerError.style.display = "block"
+                        showError(errormessage, "error-message");
 
                     }
+                    photo = "";
+            }
                     sendRequestUpdateProfile();
-                    containerError.style.display = "none"
-                    containerEdit.style.display = "none";
+                    // containerError.style.display = "none"
+                    // containerEdit.style.display = "none";
                     validForm = 0;
                     validPassword = 0;
                     usernameIdProfile.value = ""
                     emailIdProfile.value = ""
                     passwordIdProfile.value = ""
                     passwordIdProfileConfirme.value = ""
+                    // stateCheck = None;
                 // }
                 
                 });
         }
             
-        // let fileInput = document.getElementById("file-input");
-        // let labelInput = document.getElementById("label-input");
-        // let imgUpdate = document.getElementById("img-update");
-        
-        
     
         if(inputSearch.value.length <= 0)
             output.style.display = "none";

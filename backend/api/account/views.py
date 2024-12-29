@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    views.py                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ybourais <ybourais@student.1337.ma>        +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/28 03:25:59 by ybourais          #+#    #+#              #
-#    Updated: 2024/12/28 09:33:32 by ybourais         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -310,7 +298,8 @@ def list_incoming_requests(request):
         friend_request_data = {
             "id": fr.id, 
             "from_user": fr.from_user.username, 
-            "from_user_id": fr.from_user.id 
+            "from_user_id": fr.from_user.id, 
+            "from_user_photo": fr.from_user.photo
         }
         requests_list.append(friend_request_data)
     return Response({"incoming_requests": requests_list}, status=status.HTTP_200_OK)
@@ -434,7 +423,16 @@ def update_profile(request):
 
     allowed_fields = {'username', 'email', 'password', 'repeat_password', 'is_2fa_enabled', 'photo'} 
 
+
+    print("request body:::::", request.body)
+    if not request.body:
+        return Response({"error": "Request body is empty."}, status=status.HTTP_400_BAD_REQUEST)
+
+
     invalid_fields = set(request.data.keys()) - allowed_fields
+    print("request, ", request)
+    print("request data: ", request.data.keys())
+    print("request data value: ", request.data)
     if invalid_fields:
         return Response(
             {"error": f"Invalid fields: {', '.join(invalid_fields)} are not allowed."},
@@ -445,6 +443,7 @@ def update_profile(request):
     photo_value = None
     file = request.FILES.get('photo')
     url = request.data.get('photo')
+    print("file", file)
 
     print("static url for image:::: ", static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
     if file:
@@ -473,6 +472,7 @@ def update_profile(request):
         serializer.initial_data['photo'] = photo_value
 
     if serializer.is_valid():
+        print("saaaaaaaaaaaaave")
         serializer.save()
         return Response({"message": "Profile updated successfully!", "data": serializer.data}, status=status.HTTP_200_OK)
     return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)

@@ -93,13 +93,14 @@ export function SanitizeInpute(str)
 }
 
 var timer = null;
-export function showError(message) 
+export function showError(message, elementId = "error") 
 {
+    console.log("hi");
     if (timer !== null) {
         clearTimeout(timer);
         timer = null;
     }
-    var errorElement = document.getElementById("error");
+    var errorElement = document.getElementById(elementId);
     errorElement.innerHTML = message;
     errorElement.style.display = 'block';
     timer = setTimeout(function(){ errorElement.style.display = 'none'; }, 4000);

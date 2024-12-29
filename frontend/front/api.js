@@ -38,22 +38,34 @@ export async function refreshAccessToken()
     }
 }
 
-export async function SecureApiRequest(endpoint, method = "GET", body = null) 
+export async function SecureApiRequest(endpoint, method = "GET", body = null, is_upload = false) 
 {
     let token = localStorage.getItem("accessToken");
     if(!token)
         return null;
+
+    let type = "application/json";
+
+    // if(is_upload)
+    //     type = "multipart/form-data";
     let headers = {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        // "Content-Type": type,
     };
+
+    if (!is_upload) 
+        headers["Content-Type"] = "application/json";
 
     let request = {
         method,
         headers,
     };
-        
-    if (body && typeof body !== "string") 
+    console.log("request in SecureApiRequest:", request);
+           
+    // if (is_upload) 
+    //     delete request.headers["Content-Type"];
+
+    if (body && typeof body !== "string" && is_upload === false) 
         request.body = JSON.stringify(body);
     else if(body) 
         request.body = body;
@@ -94,7 +106,10 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null)
         {
             const data = await response.json();
             console.log("SecureApiRequest: ", data);
-            return data.error;
+
+            console.log("status :", response.status, data.error);
+            console.log("data, ", data);
+            return data;
         }
     } 
     catch (error) 
