@@ -284,7 +284,7 @@ def add_friend(request):
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-#  curl http://127.0.0.1:8000/api/friend/list_friends_request/ \      
+#  curl http://127.0.0.1:8000/api/friend/list_friends_request/ \
 # -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1MzQ0MDk2LCJpYXQiOjE3MzUzNDA0OTYsImp0aSI6IjYyNGY4OTVmZTZlYjRiNzlhYjI1OGZkMDZiNTZkZGQxIiwidXNlcl9pZCI6MX0.OQm2N_0wiLckqjO5UfTe6_cNS2TiH3nFxJruIDBl_ew
 
 @api_view(['GET'])
@@ -297,7 +297,8 @@ def list_incoming_requests(request):
         friend_request_data = {
             "id": fr.id, 
             "from_user": fr.from_user.username, 
-            "from_user_id": fr.from_user.id 
+            "from_user_id": fr.from_user.id,
+            "from_user_photo":fr.from_user.photo
         }
         requests_list.append(friend_request_data)
     return Response({"incoming_requests": requests_list}, status=status.HTTP_200_OK)

@@ -158,19 +158,21 @@ async function renderFriends(friends)
 {
     
     const friendsList = document.getElementById('friendsList');
-    friendsList.innerHTML = '';
-
-    friends.forEach(friend => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <div class="friend-item">
-                <img src="${friend.photo}" alt="${friend.username}'s avatar" class="friend-avatar">
-                <span class="friend-name">${friend.username}</span>
-            </div>
-        `;
-        li.addEventListener('click', () => selectFriend(friend));
-        friendsList.appendChild(li);
-    });
+    if(friendsList)
+    {
+        friendsList.innerHTML = '';
+        friends.forEach(friend => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <div class="friend-item">
+                    <img src="${friend.photo}" alt="${friend.username}'s avatar" class="friend-avatar">
+                    <span class="friend-name">${friend.username}</span>
+                </div>
+            `;
+            li.addEventListener('click', () => selectFriend(friend));
+            friendsList.appendChild(li);
+        });
+    }
 }
 
 

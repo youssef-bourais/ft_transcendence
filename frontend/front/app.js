@@ -24,10 +24,11 @@ function toggleNavbarAndSearchBar(path)
         const username = localStorage.getItem("username");
         const email = localStorage.getItem("email");
         const photo = localStorage.getItem("photo"); 
-
+        // callForTopNav();
         setTimeout(function() {
             renderAll();
             tournamentOrders();
+            callForTopNav();
         }, 100); 
         if(path === '/profile' || path ==='/eachprofile')
         {
@@ -601,6 +602,79 @@ function tournamentOrders()
 //
 //
 //  });
+
+async function acceptRequest(id)
+{
+    const info = await SecureApiRequest("/api/friend/respond_friend_request/", "POST", `{"request_id": ${id}, "action": "accept"}`);
+}
+
+
+async function callForTopNav()
+{
+    const info = await SecureApiRequest("/api/friend/list_friends_request/", "GET");
+    console.log("info for see==> ",info.incoming_requests[0])
+    let iconDownbutton =  document.getElementById("iconDownbutton");
+    let poupapNotification = document.getElementById("poupapNotification")
+    let valid = 0
+    poupapNotification.innerHTML = ``;
+    iconDownbutton.addEventListener('click', function(){
+        
+        // console.log("poupapNotification.style.display ===> ", poupapNotification.style.display)
+        if(valid == 0)
+        {
+            valid = 1;
+            poupapNotification.style.display = "flex"
+            let i = 0;
+            if(info.incoming_requests.length > 0)
+            {   
+                    while(i < info.incoming_requests.length)
+                {
+                    poupapNotification.innerHTML = `
+                    <div class="container-request">
+                        <div class="first-img"><img src="${info.incoming_requests[i].from_user_photo}" alt="" srcset=""></div>
+                        <div class="second-name"><p>${info.incoming_requests[i].from_user}</p></div>
+                        <div class="third-button" id="${info.incoming_requests[i].id}"><button>accept</button></div>
+                    </div>
+                    `;
+                    i++;
+                }
+                let button  = document.getElementsByClassName("third-button");
+                let j = 0;
+                while(j < button.length)
+                {
+                    button[j].addEventListener("click", function(){
+                        
+                        let requestId = this.id;
+                        acceptRequest(requestId);
+                        console.log("Button clicked with request ID: ", requestId); 
+                    })
+                    j++;
+                }
+                
+            }
+            else
+            {
+                poupapNotification.innerHTML = `
+                    <div class="container-request" style="display:flex; justify-content:center; align-items: center; height:50px;">
+                        <p>No one</p>
+                    </div>
+                    `;
+            }
+        }
+        else if(valid == 1)
+        {
+            valid = 0;
+            console.log("111111111111111")
+            poupapNotification.style.display = "none"
+        }
+    })
+}
+
+async function displayRequestFriends()
+{   
+    
+    
+}
 
 window.togglePass = togglePass;
 window.clickEvent = clickEvent;
