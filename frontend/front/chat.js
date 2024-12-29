@@ -158,7 +158,7 @@ async function removeFriend(friendID)
     // localStorage.setItem('eachProfileUserName', data.username);
     
 }
-   
+
 
 async function fetchFriends() 
 {
