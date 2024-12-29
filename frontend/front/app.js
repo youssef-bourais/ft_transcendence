@@ -30,10 +30,8 @@ function toggleNavbarAndSearchBar(path)
             tournamentOrders();
             callForTopNav();
         }, 100); 
-        if(path === '/profile' || path ==='/eachprofile')
-        {
-            populateProfile(); 
-        }
+        
+        populateProfile(); 
 
         document.getElementById("user-username").textContent = username;
         document.getElementById("user-email").textContent = email;

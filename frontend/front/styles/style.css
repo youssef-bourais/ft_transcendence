@@ -790,24 +790,42 @@ body {
     right: 0;
     top: 100%;
     background-color: #222222;
-    border-radius: 4px;
+    border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 10;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 170px;
+    box-sizing: border-box;
+    padding-top: 20px;
 }
 
 #chatOptionsMenu button {
     display: block;
-    width: 100%;
+    width: 70%;
     padding: 0.5rem 1rem;
     text-align: left;
     background: none;
     border: none;
     color: #ffffff;
     cursor: pointer;
-}
-
-#chatOptionsMenu button:hover {
     background-color: #333333;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+#chatOptionsMenu  .block-user
+{
+    color: red;
+    margin-bottom: 20px;
+}
+#chatOptionsMenu button:hover {
+    transition: 0.5s all;
+    background-color: #1d1d1d;
 }
 
 .messages-container {
@@ -921,7 +939,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    visibility: hidden;
 }
 
 @media (max-width: 768px) {

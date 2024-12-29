@@ -49,7 +49,7 @@ export function loadChatInterface() {
 }
 
 async function initializeChat() {
-    let karim =  await dataUser();
+   
     currentUserName = localStorage.getItem("username");
     const friendsList = document.getElementById('friendsList');
     const messagesContainer = document.getElementById('messagesContainer');
@@ -131,7 +131,23 @@ async function dataUser() {
     return data;
 }
 
-          
+      let blockUser  = document.getElementsByClassName("block-user");
+    //   karim[0].
+    blockUser[0].addEventListener("click", function(){
+        
+    })
+
+    async function removeFriend(friendID)
+    {
+        const info = await SecureApiRequest("/api/friend/remove_friend/", "POST", `{"friend_id": "${friendID}"}`);
+        // if(!info)
+        //     return;
+        console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
+
+        // localStorage.setItem('eachProfileUserName', data.username);
+        
+    }
+   
 
 async function fetchFriends() 
 {
