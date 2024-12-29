@@ -386,6 +386,9 @@ body {
     border-radius:   100%;
     border: 1px  solid #eee;
     object-fit: cover;
+
+
+
 }
 
 .sidebar {
@@ -406,6 +409,7 @@ body {
     transition: all 0.5s ease;
     z-index: 5;
 }
+
 
 
 .sidebar.active {

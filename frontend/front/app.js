@@ -31,7 +31,7 @@ function toggleNavbarAndSearchBar(path)
             renderAll();
             tournamentOrders();
         }, 100); 
-        if(path === '/profile' || path ==='/eachprofile')
+        // if(path === '/profile' || path ==='/eachprofile')
         {
             populateProfile(); 
         }
@@ -146,6 +146,12 @@ function tournamentOrders()
     }
 }
 
+let btn = document.querySelector('#btn');
+let sidebar = document.querySelector('.sidebar');
+
+btn.onclick = function() {
+        sidebar.classList.toggle('active'); 
+    };   
 
 window.togglePass = togglePass;
 window.clickEvent = clickEvent;

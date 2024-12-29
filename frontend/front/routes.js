@@ -1032,6 +1032,29 @@ export function populateProfile()
             displayName.innerText = username;
         });
     }
+
+    const navbarphoto = document.getElementsByClassName("user-img");
+    if (navbarphoto.length > 0) 
+        navbarphoto[0].src = localStorage.getItem("photo");
+
+    const navbarname = document.getElementById("user-username");
+    if (navbarname) 
+    {
+        console.log("hola")
+        navbarname.innerHTML = localStorage.getItem("username");
+    }
+
+    const email = document.getElementById("user-email");
+    if (email) 
+        email.innerHTML = localStorage.getItem("email");
+
+    const emailProfile = document.getElementById("emailProfile");
+    if (emailProfile) 
+        emailProfile.innerHTML = localStorage.getItem("email");
+
+    const userNameProfile = document.getElementById("userNameProfile");
+    if (userNameProfile) 
+        userNameProfile.innerHTML = localStorage.getItem("username");
 }
 
 

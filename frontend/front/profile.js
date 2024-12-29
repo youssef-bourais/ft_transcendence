@@ -2,27 +2,21 @@
 
 import {showError} from './utils.js';
 import {SecureApiRequest} from './api.js';
-import {isValidUrl} from './routes.js';
+import {isValidUrl, populateProfile} from './routes.js';
 
 
 
 
-let btn = document.querySelector('#btn');
-let sidebar = document.querySelector('.sidebar');
+// let btn = document.querySelector('#btn');
 let  output = document.getElementById("container-outputs");
 export let inputSearch = document.getElementById('input_search');
 
 export function initRenderAllEvents()
 {
 
-    btn = document.querySelector('#btn');
-    sidebar = document.querySelector('.sidebar');
     output = document.getElementById("container-outputs");
     inputSearch = document.getElementById('input_search');
 
-    btn.onclick = function() {
-        sidebar.classList.toggle('active'); 
-    };   
 }
 
 
@@ -214,6 +208,9 @@ export function renderAll()
 
                         containerError.style.display = "block"
                         showError("Profile updated successfully", "error-message");
+                        populateProfile();
+                        
+                        
                     }
                     else
                     {
