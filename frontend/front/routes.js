@@ -884,7 +884,6 @@ async function OTPauth(value)
         password : password,
         otp: value
     };       
-    console.log("zobi: ", UserData.username, UserData.password, UserData.otp);
 
     try
     {
@@ -918,7 +917,23 @@ async function OTPauth(value)
 
             const info = await SecureApiRequest(`/api/get/${localStorage.getItem("username")}/`);
 
-            localStorage.setItem("photo", info.photo);
+
+            if (info.photo) 
+            {
+                let photo = info.photo;
+                    
+                if(!isValidUrl(photo))
+                {
+                    photo = `http://127.0.0.1:8000${photo}`;
+                    localStorage.setItem("photo", photo);
+                }
+                else
+                {
+                    localStorage.setItem("photo", photo);
+                }
+            }
+
+            // localStorage.setItem("photo", info.photo);
             localStorage.setItem("email", info.email);
 
             history.pushState({}, "", "/profile"); 
@@ -1037,7 +1052,14 @@ export function populateProfile()
 //     displayName.innerText = data.username;
 // });
 
-
+export function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
 
 
 async function setupLoginPage() 
@@ -1087,7 +1109,26 @@ async function setupLoginPage()
                     localStorage.setItem("accessToken", data.access);
                     localStorage.setItem("refreshToken", data.refresh);
                     localStorage.setItem("email", userinfo.email);
-                    localStorage.setItem("photo", userinfo.photo);
+
+                    console.log("photo: ", userinfo.photo);
+
+                    if (userinfo.photo) 
+                    {
+                        let photo = userinfo.photo;
+                        console.log("photo: ", photo);
+                            
+                        if(!isValidUrl(photo))
+                        {
+                            console.log("hello url is path:", isValidUrl(photo));
+                            photo = `http://127.0.0.1:8000${photo}`;
+                            localStorage.setItem("photo", photo);
+                        }
+                        else
+                        {
+                            console.log("is url")
+                            localStorage.setItem("photo", photo);
+                        }
+                    }
 
                     history.pushState({}, "", "/profile"); 
                     handleLocation();
@@ -1151,10 +1192,10 @@ async function setupRegisterPage()
             }
             else
             {
-                let errorMessage = "";
+                let errormessage = "";
                 for (const key in data) 
                     if (data[key]) 
-                        errorMessage += `${key}: ${data[key].join(", ")} `;
+                        errormessage += `${key}: ${data[key].join(", ")} `;
                 // errorMessage += "\n\n";
                 // button = document.getElementById("registerbutton"); 
                 //
