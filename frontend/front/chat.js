@@ -147,7 +147,6 @@ async function fetchFriends()
         username: friend.username, 
         photo: friend.photo  
     }));
-
     console.log("friends:", friendsToRender);
     renderFriends(friendsToRender);
 }
@@ -194,6 +193,8 @@ async function selectFriend(friend) {
     
     chatHeaderImage.src = friend.photo;
     chatHeaderName.textContent = friend.username;
+
+    localStorage.setItem("openChat", friend.username)
 }
 
 function fetchConversationHistory(otherUser) {

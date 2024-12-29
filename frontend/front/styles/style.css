@@ -666,11 +666,13 @@ body {
 }
 
 .chat-interface {
-    background-image: url("../images/lsd.jpg");
+    /* background-image: url("../images/background.jpg"); */
+    background-position: center;
+    background-position: 50% 0% 50% 100%; 
     /* filter: blur(8px);
     -webkit-filter: blur(8px); */
     /* background-image: linear-gradient(var(--red) , var(--black)); */
-    /* background-color: #000000; */
+    background-color: #000000;
     border-radius: 8px;
     height: 100%;
     display: flex;
@@ -809,6 +811,8 @@ body {
 }
 
 .messages-container {
+    background-image: url("../images/background.jpg");
+    background-position: center;
     flex: 1;
     padding: 1.5rem;
     overflow-y: auto;
@@ -821,13 +825,14 @@ body {
     max-width: 70%;
     padding: 0.8rem 1rem;
     border-radius: 1rem;
+    background-color: black;
     color: #ffffff;
     width: 300px; /* Adjust this value to fine-tune the width */
 }
 
 .messages.sent {
     align-self: flex-end;
-    background-color: #99185d23;
+    background-color: #000000;
     border-bottom-right-radius: 0.2rem;
 }
 
