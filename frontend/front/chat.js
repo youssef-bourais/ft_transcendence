@@ -1,6 +1,8 @@
 import { SecureApiRequest  } from './api.js';
 let socket = null;
-let currentRecipient = null;
+let currentRecipientGlobal = dataUser();
+let currentRecipient = currentRecipientGlobal.username;
+let currentRecipientId = currentRecipientGlobal.id;
 let friends = [];
 var currentUserName = null;
 
@@ -25,7 +27,7 @@ export function loadChatInterface() {
                         <i class='bx bx-dots-horizontal-rounded'></i>
                     </button>
                     <div id="chatOptionsMenu" class="hidden">
-                        <button class="block-user"><strong>Block user</strong></button>
+                        <button class="block-user" id="block-user"><strong>Block user</strong></button>
                         <button><strong>Invite for a game</strong></button>
                     </div>
                 </div>
@@ -64,16 +66,30 @@ async function initializeChat() {
             sendMessage();
         }
     });
-
+    
     chatOptionsButton.addEventListener('click', () => {
         chatOptionsMenu.classList.toggle('hidden');
     });
-
+    
     document.addEventListener('click', (e) => {
         if (!chatOptionsButton.contains(e.target) && !chatOptionsMenu.contains(e.target)) {
             chatOptionsMenu.classList.add('hidden');
         }
     });
+    
+    let blockUser  = document.getElementById("block-user");
+
+    blockUser.addEventListener("click", async function(){
+        let data = await dataUser();
+        console.log("====================remove friend==================== id:", data);
+        // if (currentRecipientId != null){
+            removeFriend(data.id);
+            localStorage.setItem("openChat", "");
+            let chatAreaForif = document.querySelector('.chat-area');
+            chatAreaForif.style.display = 'none';
+            fetchFriends();
+        // }
+    })
 
     connectWebSocket();
     fetchFriends();
@@ -120,9 +136,11 @@ function connectWebSocket() {
 async function dataUser() {
     let data;
     try {
+        // if (localStorage.getItem("openChat")){
         const response = await fetch(`/api/get/${localStorage.getItem("openChat")}/`);
         const friend = await response.json();
         data = friend;
+        // }
     } catch (error) {
         console.error("Error fetching data:", error);
         data = null;  // Optionally, you can set it to null or handle the error case
@@ -131,22 +149,15 @@ async function dataUser() {
     return data;
 }
 
-      let blockUser  = document.getElementsByClassName("block-user");
-    //   karim[0].
-    blockUser[0].addEventListener("click", function(){
-        
-    })
-
-    async function removeFriend(friendID)
-    {
-        const info = await SecureApiRequest("/api/friend/remove_friend/", "POST", `{"friend_id": "${friendID}"}`);
-        // if(!info)
-        //     return;
-        console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
-
-        // localStorage.setItem('eachProfileUserName', data.username);
-        
-    }
+async function removeFriend(friendID)
+{
+    const info = await SecureApiRequest("/api/friend/remove_friend/", "POST", `{"friend_id": "${friendID}"}`);
+    // if(!info)
+    //     return;
+    console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
+    // localStorage.setItem('eachProfileUserName', data.username);
+    
+}
    
 
 async function fetchFriends() 
@@ -194,6 +205,7 @@ async function renderFriends(friends)
 async function selectFriend(friend) {
     // console.log()
     currentRecipient = friend.username;
+    currentRecipientId = friend.id;
     fetchConversationHistory(friend.username);
     
     const chatArea = document.querySelector('.chat-area');
