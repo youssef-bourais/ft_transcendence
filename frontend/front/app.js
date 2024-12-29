@@ -307,9 +307,15 @@ function renderAll()
                 
                     function updateLocalstorage(UserData) 
                     {
-                        if (UserData.username) localStorage.setItem('username', UserData.username);
-                        if (UserData.email) localStorage.setItem('email', UserData.email);
-                        if (UserData.photo) localStorage.setItem('photo', " ../../backend/api" + UserData.photo);
+                        console.log("username", UserData.data.username);
+                        console.log("email", UserData.data.email);
+                        console.log("photo", UserData.data.photo);
+
+                        if (UserData.data.username) localStorage.setItem('username', UserData.data.username);
+                        if (UserData.data.email) localStorage.setItem('email', UserData.data.email);
+                        // const path = "http://127.0.0.1:8000" + UserData.data.photo;
+                        if (UserData.data.photo) localStorage.setItem('photo', "http://127.0.0.1:8000" + UserData.data.photo);
+                        console.log("photo in localstorage", path);
                     }
                     async function sendRequestUpdateProfile() {
                         console.log("hi mister karim")
@@ -367,10 +373,8 @@ function renderAll()
                     if (info && !info.error) 
                     {
                         console.log("localStorage updateeeeeed", info);
-                        if(!is_upload)
-                            updateLocalstorage(UserData);
-                        else
-                            updateLocalstorage(formData);
+                        
+                        updateLocalstorage(info);
 
                         containerError.style.display = "block"
                         showError("Profile updated successfully", "error-message");
