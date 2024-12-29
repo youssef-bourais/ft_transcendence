@@ -424,15 +424,15 @@ def update_profile(request):
     allowed_fields = {'username', 'email', 'password', 'repeat_password', 'is_2fa_enabled', 'photo'} 
 
 
-    print("request body:::::", request.body)
+    # print("request body:::::", request.body)
     if not request.body:
         return Response({"error": "Request body is empty."}, status=status.HTTP_400_BAD_REQUEST)
 
 
     invalid_fields = set(request.data.keys()) - allowed_fields
-    print("request, ", request)
-    print("request data: ", request.data.keys())
-    print("request data value: ", request.data)
+    # print("request, ", request)
+    # print("request data: ", request.data.keys())
+    # print("request data value: ", request.data)
     if invalid_fields:
         return Response(
             {"error": f"Invalid fields: {', '.join(invalid_fields)} are not allowed."},
@@ -443,9 +443,9 @@ def update_profile(request):
     photo_value = None
     file = request.FILES.get('photo')
     url = request.data.get('photo')
-    print("file", file)
+    # print("file", file)
 
-    print("static url for image:::: ", static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
+    # print("static url for image:::: ", static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
     if file:
         print("file")
         if not file.name.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):

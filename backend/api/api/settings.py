@@ -166,6 +166,8 @@ CHANNEL_LAYERS = {
     },
 }
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800
+
 MIDDLEWARE = [
     'django_prometheus.middleware.PrometheusBeforeMiddleware',
     #new 
