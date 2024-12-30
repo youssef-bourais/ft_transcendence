@@ -708,7 +708,6 @@ async function callForTopNav()
         else if(valid == 1)
         {
             valid = 0;
-            console.log("111111111111111")
             poupapNotification.style.display = "none"
         }
     })
