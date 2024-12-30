@@ -28,7 +28,6 @@ export function loadChatInterface() {
                     </button>
                     <div id="chatOptionsMenu" class="hidden">
                         <button class="block-user" id="block-user"><strong>Block user</strong></button>
-                        <button><strong>Invite for a game</strong></button>
                     </div>
                 </div>
             </div>
@@ -137,9 +136,9 @@ async function dataUser() {
     let data;
     try {
         // if (localStorage.getItem("openChat")){
-        const response = await fetch(`/api/get/${localStorage.getItem("openChat")}/`);
-        const friend = await response.json();
-        data = friend;
+            const response = await fetch(`/api/get/${localStorage.getItem("openChat")}/`);
+            const friend = await response.json();
+            data = friend;
         // }
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -195,7 +194,12 @@ async function renderFriends(friends)
                     <span class="friend-name">${friend.username}</span>
                 </div>
             `;
-            li.addEventListener('click', () => selectFriend(friend));
+            li.addEventListener('click', function(){
+                selectFriend(friend)
+                let chatAreaForif = document.querySelector('.chat-area');
+                chatAreaForif.style.display = "flex"   
+            });
+                
             friendsList.appendChild(li);
         });
     }

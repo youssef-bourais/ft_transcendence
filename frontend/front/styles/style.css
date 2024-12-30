@@ -797,7 +797,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 170px;
+    height: 100px;
     box-sizing: border-box;
     padding-top: 20px;
 }
@@ -988,7 +988,7 @@ body {
     display: flex;
     justify-content: center; /* Horizontally center */
     align-items: center;    /* Vertically center */
-    height: 100vh;          /* Make the container fill the viewport */
+    height: 100vh;          /* Make the container fill the viewport */  
     text-align: center;     /* Center text inside the div */
     margin: 0;              /* Remove default margin */
 }
@@ -997,4 +997,6 @@ body {
     max-width: 600px;       /* Optional: Restrict width for better readability */
     font-size: 30px;
 }
+
+
 

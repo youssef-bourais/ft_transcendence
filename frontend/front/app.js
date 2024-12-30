@@ -618,9 +618,30 @@ async function callForTopNav()
     // const info = await SecureApiRequest("/api/friend/list_friends_request/", "GET")
     let iconDownbutton =  document.getElementById("iconDownbutton");
     let poupapNotification = document.getElementById("poupapNotification")
+    let removeNotifcationBackground = document.getElementsByClassName("removeNotifcationBackground")[0];
     let valid = 0
+    document.body.addEventListener('click', function(event) {
+        if (event.target.classList.length > 0) {
+          const classNames = event.target.classList.toString();
+          let array = ["poupap-notifacation", "second-name", "first-img", "third-button", "container-request", "first-imgI", "second-nameP", "third-buttonB"]
+          let I = 0;
+          let validNot = 0;
+          while(I < array.length)
+          {
+            if(classNames != array[I])
+            {
+                // alert(1)
+                validNot++;
+            }
+            I++;
+          }
+          if(validNot == 8)
+            poupapNotification.style.display = "none"
+            validNot = 0;
+        }
+      });
     iconDownbutton.addEventListener('click', async function(){
-        
+       
         const info = await SecureApiRequest("/api/friend/list_friends_request/", "GET");
        
         poupapNotification.innerHTML = ``;
@@ -638,9 +659,9 @@ async function callForTopNav()
                 {
                     poupapNotification.innerHTML += `
                     <div class="container-request">
-                        <div class="first-img"><img src="${info.incoming_requests[i].from_user_photo}" alt="" srcset=""></div>
-                        <div class="second-name"><p>${info.incoming_requests[i].from_user}</p></div>
-                        <div class="third-button" id="${info.incoming_requests[i].id}"><button>accept</button></div>
+                        <div class="first-img"><img class="first-imgI" src="${info.incoming_requests[i].from_user_photo}" alt="" srcset=""></div>
+                        <div class="second-name"><p class="second-nameP">${info.incoming_requests[i].from_user}</p></div>
+                        <div class="third-button" id="${info.incoming_requests[i].id}"><button class="third-buttonB">accept</button></div>
                     </div>
                     `;
                     i++;
@@ -693,9 +714,8 @@ async function callForTopNav()
     })
 }
 
-async function displayRequestFriends()
-{   
-    
+async function removeNotification()
+{
     
 }
 

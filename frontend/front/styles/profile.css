@@ -275,6 +275,7 @@ input[type="search"]::-webkit-search-cancel-button {
         box-sizing: border-box;
         padding-top: 10px;
         overflow-y: scroll;
+        z-index: 1000000;
         display: none;
     }
     
@@ -366,7 +367,17 @@ input[type="search"]::-webkit-search-cancel-button {
 
 
 
-
+    .removeNotifcationBackground
+    {
+        position: fixed;
+        left: 0;
+        top: 0;
+        background-color: rgba(0, 0, 0, 0.772);
+        width: 100vw;
+        height: 100vh;
+        z-index: 6;
+        display: none;
+    }
 
 
 
