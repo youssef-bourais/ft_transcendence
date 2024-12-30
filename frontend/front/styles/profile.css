@@ -246,7 +246,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .container-top .container-profile .profile
 {
-    width: 45% ;
+    width: 285px;
     height: 54px ;
     background-color: rgba(233, 233, 233, 0.11) ;
     border-radius: 10px ;
@@ -256,7 +256,136 @@ input[type="search"]::-webkit-search-cancel-button {
     box-sizing: border-box ;
     padding-left: 5px ;
     flex-direction: row;
+    background-color: red;
+    position: relative;
 }
+    .container-top .container-profile .profile .poupap-notifacation
+    {
+        
+        position: absolute;
+        left: 0;
+        top: 60px;
+        width: 285px;
+        height: 300px;
+        background-image: url('../images/background.jpg');
+        border-radius: 10px;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+        padding-top: 10px;
+        overflow-y: scroll;
+        z-index: 1000000;
+        display: none;
+    }
+    
+    .container-top .container-profile .profile .poupap-notifacation .container-request
+    {
+        width: 90%;
+        /* height: 50px; */
+        padding: 5px 1px 5px 1px;
+        background-color: black;
+        border-radius: 10px;
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .container-top .container-profile .profile .poupap-notifacation .container-request .first-img
+    {
+        width: 70px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* background-color: red; */
+    }
+    .container-top .container-profile .profile .poupap-notifacation .container-request .first-img img
+    {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+    }
+
+    .container-top .container-profile .profile .poupap-notifacation .container-request .second-name
+    {
+        width: 37%;
+        display: flex;
+        align-items: center;
+        color: white;
+    }
+
+    .container-top .container-profile .profile .poupap-notifacation .container-request .third-button
+    {
+        width: 35%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .container-top .container-profile .profile .poupap-notifacation .container-request .third-button button
+    {
+        width: 70px;
+        height: 30px;
+        background-color: #99185D;
+        color: white;
+        border: 1px solid black;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 0;
+        font-size: 14px;
+    }
+    .container-top .container-profile .profile .poupap-notifacation .container-request .third-button button:hover
+    {
+        transition: 0.5s all;
+        background-color: #66103E;
+    }
+
+
+
+
+
+    .container-top .container-profile .profile img
+    {
+        width: 40px;
+        border-radius: 50%;
+    }
+    .container-top .container-profile .profile .container-notification
+    {
+        box-sizing: border-box;
+        padding-left: 20px;
+        padding-top: 5px;
+        height: 100%;
+        width: 80%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+
+
+
+
+
+
+
+    .removeNotifcationBackground
+    {
+        position: fixed;
+        left: 0;
+        top: 0;
+        background-color: rgba(0, 0, 0, 0.772);
+        width: 100vw;
+        height: 100vh;
+        z-index: 6;
+        display: none;
+    }
+
+
+
+
+
+
+
 
 .container-top .container-profile .profile img
 {
@@ -1060,10 +1189,11 @@ input[type="search"]::-webkit-search-cancel-button {
     .container-edit .container-card-edit
     {
         /* opacity: 0.8; */
-        background-image: url('./../images/and');
+        background-image: url('./../images/background.jpg');
+        background-size: cover;
+        background-position: center;
         width: 600px;
         height: 600px;
-        background-color: black;
         border-radius: 20px;
         padding-top: 35px;
     }

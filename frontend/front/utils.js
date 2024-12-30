@@ -102,6 +102,8 @@ export function showError(message, elementId = "error")
     }
     var errorElement = document.getElementById(elementId);
     errorElement.innerHTML = message;
+    // if(elementId === "error")
+    //     errorElement.style.color = 'white';
     errorElement.style.display = 'block';
     timer = setTimeout(function(){ errorElement.style.display = 'none'; }, 4000);
 }

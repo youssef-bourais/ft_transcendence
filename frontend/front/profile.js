@@ -3,6 +3,7 @@
 import {showError} from './utils.js';
 import {SecureApiRequest} from './api.js';
 import {isValidUrl, populateProfile} from './routes.js';
+import { handleLocation } from './app.js';
 
 
 
@@ -341,9 +342,13 @@ export function renderAll()
                 var i = 0;
                 while(i < info.friends.length)
                 {
+                    let photo = info.friends[i].photo;
+                    if(!isValidUrl(photo))
+                        photo = `http://127.0.0.1:8000${photo}`;
+
                     friendsContainer.innerHTML += `
                     <div class="container-setting">
-                        <div class="container-img"><img style="border-radius: 50%;" src="${info.friends[i].photo}" ></div>
+                        <div class="container-img"><img style="border-radius: 50%;" src="${photo}" ></div>
                         <div class="container-name">
                             <p class="display-name">${info.friends[i].username}</p>
                             <!-- <p>${info.friends[i].username}</p> -->
@@ -416,57 +421,145 @@ export function renderAll()
 
         });
     }
-    let addFriendButton = document.getElementById("addFriendButton");
-    async function checkButtonAddFriend() 
-    {
+let addFriendButton = document.getElementById("addFriendButton");
+async function checkButtonAddFriend() 
+{
 
-
-        if(addFriendButton)
-        {
-            const info = await SecureApiRequest("/api/friend/get_friends/");
-            // if(!info)
-            //     return;
-
-            console.log("i am inside checkButtonAddFriend ok bro", info)
-            let i = 0;
-            let valid = 0;
-            while(i < info.friends.length)
-            {
-                if(info.friends[i].unsername == localStorage.getItem("username"))
-                    valid = 1;
-                i++;
-            }
-            if(valid == 1)
-                addFriendButton.innerHTML = "Message"
-            else
-                addFriendButton.innerHTML = "Add Friend +"
-        }
-
-    }
-    checkButtonAddFriend()
-
-
-
-    async function sendFriend()
-    {
-        const info = await SecureApiRequest("/api/friend/add/", "POST", `{"to_user": "${localStorage.getItem("eachProfileUserId")}"}`);
-        // if(!info)
-        //     return;
-        console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
-
-        // localStorage.setItem('eachProfileUserName', data.username);
-
-    }
 
     if(addFriendButton)
     {
-        addFriendButton.addEventListener("click", function(event) {
-            if(addFriendButton.innerHTML == "Add Friend +")
-            {
-                sendFriend();
-            }
-        });
+        const info = await SecureApiRequest("/api/friend/get_friends/");
+        // if(!info)
+        //     return;
+
+        console.log("i am inside checkButtonAddFriend ok bro", info)
+        let i = 0;
+        let valid = 0;
+        console.log("nchofo info ====> ",info.friends, localStorage.getItem("eachProfileUserName"))
+        while(i < info.friends.length)
+        {
+            console.log("comp ==> ",info.friends[i].username)
+            if(info.friends[i].username == localStorage.getItem("eachProfileUserName"))
+                valid = 1;
+            i++;
+        }
+        if(valid == 1)
+            addFriendButton.innerHTML = "Message";
+        else if(valid == 0)
+            addFriendButton.innerHTML = "Add Friend +";
     }
+
+}
+checkButtonAddFriend()
+
+
+
+async function sendFriend()
+{
+    const info = await SecureApiRequest("/api/friend/add/", "POST", `{"to_user": "${localStorage.getItem("eachProfileUserId")}"}`);
+    // if(!info)
+    //     return;
+    console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
+
+    // localStorage.setItem('eachProfileUserName', data.username);
+
+}
+
+if(addFriendButton)
+{
+    addFriendButton.addEventListener("click", function(event) {
+        if(addFriendButton.innerHTML == "Add Friend +")
+        {
+            sendFriend();
+        }
+        else if(addFriendButton.innerHTML == "Message")
+        {
+            // alert("1")
+            localStorage.setItem("openChat",localStorage.getItem("eachProfileUserName"));
+            history.pushState({}, "", '/chat'); 
+
+            handleLocation();
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // let addFriendButton = document.getElementById("addFriendButton");
+    // async function checkButtonAddFriend() 
+    // {
+    //
+    //
+    //     if(addFriendButton)
+    //     {
+    //         const info = await SecureApiRequest("/api/friend/get_friends/");
+    //         // if(!info)
+    //         //     return;
+    //
+    //         console.log("i am inside checkButtonAddFriend ok bro", info)
+    //         let i = 0;
+    //         let valid = 0;
+    //         while(i < info.friends.length)
+    //         {
+    //             if(info.friends[i].unsername == localStorage.getItem("username"))
+    //                 valid = 1;
+    //             i++;
+    //         }
+    //         if(valid == 1)
+    //             addFriendButton.innerHTML = "Message"
+    //         else
+    //             addFriendButton.innerHTML = "Add Friend +"
+    //     }
+    //
+    // }
+    // checkButtonAddFriend()
+    //
+    //
+    //
+    // async function sendFriend()
+    // {
+    //     const info = await SecureApiRequest("/api/friend/add/", "POST", `{"to_user": "${localStorage.getItem("eachProfileUserId")}"}`);
+    //     // if(!info)
+    //     //     return;
+    //     console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
+    //
+    //     // localStorage.setItem('eachProfileUserName', data.username);
+    //
+    // }
+    //
+    // if(addFriendButton)
+    // {
+    //     addFriendButton.addEventListener("click", function(event) {
+    //         if(addFriendButton.innerHTML == "Add Friend +")
+    //         {
+    //             sendFriend();
+    //         }
+    //     });
+    // }
 
 }
 

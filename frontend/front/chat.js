@@ -1,8 +1,11 @@
 import { SecureApiRequest  } from './api.js';
 let socket = null;
-let currentRecipient = null;
+let currentRecipientGlobal = dataUser();
+let currentRecipient = currentRecipientGlobal.username;
+let currentRecipientId = currentRecipientGlobal.id;
 let friends = [];
 var currentUserName = null;
+import {isValidUrl} from './routes.js';
 
 export function loadChatInterface() {
     const content = document.getElementById('con');
@@ -25,8 +28,7 @@ export function loadChatInterface() {
                         <i class='bx bx-dots-horizontal-rounded'></i>
                     </button>
                     <div id="chatOptionsMenu" class="hidden">
-                        <button class="block-user"><strong>Block user</strong></button>
-                        <button><strong>Invite for a game</strong></button>
+                        <button class="block-user" id="block-user"><strong>Block user</strong></button>
                     </div>
                 </div>
             </div>
@@ -44,11 +46,12 @@ export function loadChatInterface() {
     `;
     // content.innerHTML = `<h1>hola</h1>`;
     console.log("alexander");
+    
     initializeChat();
 }
 
-function initializeChat() {
-
+async function initializeChat() {
+   
     currentUserName = localStorage.getItem("username");
     const friendsList = document.getElementById('friendsList');
     const messagesContainer = document.getElementById('messagesContainer');
@@ -63,16 +66,30 @@ function initializeChat() {
             sendMessage();
         }
     });
-
+    
     chatOptionsButton.addEventListener('click', () => {
         chatOptionsMenu.classList.toggle('hidden');
     });
-
+    
     document.addEventListener('click', (e) => {
         if (!chatOptionsButton.contains(e.target) && !chatOptionsMenu.contains(e.target)) {
             chatOptionsMenu.classList.add('hidden');
         }
     });
+    
+    let blockUser  = document.getElementById("block-user");
+
+    blockUser.addEventListener("click", async function(){
+        let data = await dataUser();
+        console.log("====================remove friend==================== id:", data);
+        // if (currentRecipientId != null){
+            removeFriend(data.id);
+            localStorage.setItem("openChat", "");
+            let chatAreaForif = document.querySelector('.chat-area');
+            chatAreaForif.style.display = 'none';
+            fetchFriends();
+        // }
+    })
 
     connectWebSocket();
     fetchFriends();
@@ -116,42 +133,89 @@ function connectWebSocket() {
     };
 }
 
+async function dataUser() {
+    let data;
+    try {
+        if (localStorage.getItem("openChat")){
+            const response = await fetch(`/api/get/${localStorage.getItem("openChat")}/`);
+            const friend = await response.json();
+            data = friend;
+        }
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        data = null;  // Optionally, you can set it to null or handle the error case
+    }
+    
+    return data;
+}
+
+async function removeFriend(friendID)
+{
+    const info = await SecureApiRequest("/api/friend/remove_friend/", "POST", `{"friend_id": "${friendID}"}`);
+    // if(!info)
+    //     return;
+    console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
+    // localStorage.setItem('eachProfileUserName', data.username);
+    
+}
+
+
 async function fetchFriends() 
 {
+    let karim =  await dataUser();
+    if(localStorage.getItem("openChat"))
+    {
+        // fetchConversationHistory(karim.username)
+        selectFriend(karim);
+    }
     const friendData = await SecureApiRequest('/api/friend/get_friends/');
 
     const friendsToRender = friendData.friends.map(friend => ({
-        name: friend.username, 
-        avatar: friend.photo  
+        username: friend.username, 
+        photo: friend.photo  
     }));
-
     console.log("friends:", friendsToRender);
     renderFriends(friendsToRender);
 }
 
 
-function renderFriends(friends) 
-{
-    const friendsList = document.getElementById('friendsList');
-    friendsList.innerHTML = '';
 
-    friends.forEach(friend => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <div class="friend-item">
-                <img src="${friend.avatar}" alt="${friend.name}'s avatar" class="friend-avatar">
-                <span class="friend-name">${friend.name}</span>
-            </div>
-        `;
-        li.addEventListener('click', () => selectFriend(friend));
-        friendsList.appendChild(li);
-    });
+async function renderFriends(friends) 
+{
+    
+    const friendsList = document.getElementById('friendsList');
+    if(friendsList)
+    {
+        friendsList.innerHTML = '';
+        friends.forEach(friend => {
+            const li = document.createElement('li');
+            let photo = friend.photo;
+             if(!isValidUrl(photo))
+                photo = `http://127.0.0.1:8000${photo}`;
+
+            li.innerHTML = `
+                <div class="friend-item">
+                    <img src="${photo}" alt="${friend.username}'s avatar" class="friend-avatar">
+                    <span class="friend-name">${friend.username}</span>
+                </div>
+            `;
+            li.addEventListener('click', function(){
+                selectFriend(friend)
+                let chatAreaForif = document.querySelector('.chat-area');
+                chatAreaForif.style.display = "flex"   
+            });
+                
+            friendsList.appendChild(li);
+        });
+    }
 }
 
 
 async function selectFriend(friend) {
-    currentRecipient = friend.name;
-    fetchConversationHistory(friend.name);
+    // console.log()
+    currentRecipient = friend.username;
+    currentRecipientId = friend.id;
+    fetchConversationHistory(friend.username);
     
     const chatArea = document.querySelector('.chat-area');
     chatArea.classList.remove('hidden');
@@ -164,8 +228,14 @@ async function selectFriend(friend) {
     const chatHeaderImage = document.getElementById('chatHeaderImage');
     const chatHeaderName = document.getElementById('chatHeaderName');
     
-    chatHeaderImage.src = friend.avatar;
-    chatHeaderName.textContent = friend.name;
+    let photo = friend.photo;
+    if(!isValidUrl(photo))
+        photo = `http://127.0.0.1:8000${photo}`;
+
+    chatHeaderImage.src = photo;
+    chatHeaderName.textContent = friend.username;
+
+    localStorage.setItem("openChat", friend.username)
 }
 
 function fetchConversationHistory(otherUser) {
@@ -344,9 +414,9 @@ async function displayConversationHistory(messages) {
 //     friendsList.innerHTML = '';
 //     friends.forEach(friend => {
 //         const li = document.createElement('li');
-//         li.textContent = friend.name;
+//         li.textContent = friend.username;
 //         li.dataset.id = friend.id; // Store the id in the DOM element
-//         li.addEventListener('click', () => selectFriend(friend.name));
+//         li.addEventListener('click', () => selectFriend(friend.username));
 //         friendsList.appendChild(li);
 //     });
 // }
