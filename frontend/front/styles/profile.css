@@ -234,6 +234,7 @@ input[type="search"]::-webkit-search-cancel-button {
     align-items:end;
 }
 
+
 @media(max-width: 1987px)
 {
     .container-top .container-profile   

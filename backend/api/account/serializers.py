@@ -68,6 +68,13 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 
+from friendship.models import Friend, FriendshipRequest
+
+class FriendshipRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FriendshipRequest
+        fields = '__all__'
+
 from django.contrib.auth.hashers import make_password
 
 class UserProfileUpdateSerializer(serializers.ModelSerializer):

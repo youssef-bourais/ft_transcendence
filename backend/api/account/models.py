@@ -16,3 +16,5 @@ class CustomUser(AbstractUser):
     otp_code = models.CharField(max_length=6, blank=True, null=True) 
     otp_created_at = models.DateTimeField(blank=True, null=True)
     
+
+

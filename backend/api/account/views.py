@@ -337,6 +337,30 @@ def respond_friend_request(request):
         return Response({"error": "Invalid action. Use 'accept' or 'reject'."}, status=status.HTTP_400_BAD_REQUEST)
 
 
+# ─ curl http://127.0.0.1:8000/api/friend/list_sent_requests/ \                                                                                                                                                                                                                                                        ─╯
+# -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1NTIwMjQzLCJpYXQiOjE3MzU1MTEzMDUsImp0aSI6IjU0NTIzNTdmMGYzMjQwZjc4YjY3OTg5ZDE1OTAxNDI1IiwidXNlcl9pZCI6Mn0.0AaznhwMHKOCk7Ae4-CpcNnMXJeOTnCY1574EVwD478"
+# {"sent_requests":[{"id":4,"message":"","created":"2024-12-29T22:30:57.483701Z","rejected":null,"viewed":null,"from_user":2,"to_user":109746},{"id":5,"message":"","created":"2024-12-30T00:01:32.058163Z","rejected":null,"viewed":null,"from_user":2,"to_user":4}]}%
+
+
+from .serializers import FriendshipRequestSerializer
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_all_sent_requests(request):
+
+    list_request = Friend.objects.sent_requests(user=request.user)
+    for request in list_request:
+        print("=======Request ID: ", request.id)
+        print("=======From User: ", request.from_user)
+        print("=======To User: ", request.to_user)
+        print("=======: ", request.created)
+    
+    serialized_requests = FriendshipRequestSerializer(list_request, many=True)
+
+    return Response({"sent_requests": serialized_requests.data}, status=status.HTTP_200_OK)
+    # return Response({"sent_requests": "hi"}, status=status.HTTP_200_OK)
+
+
 #  curl  http://127.0.0.1:8000/api/friend/get_friends/ \                                                                                                                                                                         ─╯
 # -H "Authorization: Bearer eyJh
 
@@ -356,6 +380,7 @@ def get_friends(request):
             "photo": friend.photo
         }
         friend_list.append(friend_data)
+
     # if not friend_list:
     #     return Response({"friend_list emty"}, status=status.HTTP_204_NO_CONTENT)
     return Response({"friends": friend_list}, status=status.HTTP_200_OK)

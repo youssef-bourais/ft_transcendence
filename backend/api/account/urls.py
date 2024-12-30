@@ -1,6 +1,6 @@
 
 from django.urls import path, include
-from .views import  endpoint, get_friends, get_user, register_user, delete_user, login_with_42, callback_from_42 , custom_token_obtain_pair, logouthttponly, add_friend, get_friends, list_incoming_requests, remove_friend, respond_friend_request, remove_friend, update_profile 
+from .views import  endpoint, get_friends, get_user, register_user, delete_user, login_with_42, callback_from_42 , custom_token_obtain_pair, logouthttponly, add_friend, get_friends, list_incoming_requests, remove_friend, respond_friend_request, remove_friend, update_profile , list_all_sent_requests
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -34,5 +34,8 @@ urlpatterns = [
     path('friend/remove_friend/', remove_friend, name='remove_friend'),
 
     path('update/profile/', update_profile, name='update_profile'),
+
+
+    path('friend/list_sent_requests/', list_all_sent_requests, name='list_all_sent_requests'),
 ]
 
