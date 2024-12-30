@@ -185,29 +185,24 @@ def callback_from_42(request):
     user = CustomUser.objects.filter(email=email).first()
     user2 = CustomUser.objects.filter(username=username).first()
 
-    if user or user2:
-        print("not now")
-        if user and  not user2:
-            if user.id != intra_id:
-                user.photo = photo
-                user.username = username
-                user.email = email
-                user.save()
-        if user2 and not user:
-            if user2.id != intra_id:
-                print("NOw")
-                user2.photo = photo
-                user2.username = username
-                user2.email = email
-                print("NOw")
-                user2.save()
-                print("NOwwww")
-        else: 
+    if user and user2:
+        if user.id != user2.id:
             user2.delete()
             user.photo = photo
             user.username = username
-            user.email = email
             user.save()
+        else:
+            print("hello")
+            user.photo = photo
+            user.save()
+    elif user and not user2:
+        user.photo = photo
+        user.username = username
+        user.save()
+    elif user2 and not user:
+        user2.photo = photo
+        user2.username = username
+        user2.save()
     else:
         user = CustomUser.objects.create(
             id=intra_id, 
