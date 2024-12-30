@@ -2,6 +2,7 @@ import { routes, populateProfile} from './routes.js';
 import { togglePass, logout, clickEvent, GoLogin } from './utils.js';
 import { inputSearch, renderAll } from './profile.js';
 import {SecureApiRequest} from './api.js';
+import { isValidUrl } from './routes.js';
 
 
 
@@ -608,9 +609,16 @@ async function callForTopNav()
             {   
                 while(i < info.incoming_requests.length)
                 {
+                    let photo = info.incoming_requests[i].from_user_photo;
+                    if(!isValidUrl(photo))
+                    {
+                        console.log("hello url is path:", isValidUrl(photo));
+                        photo = `http://127.0.0.1:8000${photo}`;
+                    }
+
                     poupapNotification.innerHTML += `
                     <div class="container-request">
-                        <div class="first-img"><img class="first-imgI" src="${info.incoming_requests[i].from_user_photo}" alt="" srcset=""></div>
+                        <div class="first-img"><img class="first-imgI" src="${photo}" alt="" srcset=""></div>
                         <div class="second-name"><p class="second-nameP">${info.incoming_requests[i].from_user}</p></div>
                         <div class="third-button" id="${info.incoming_requests[i].id}"><button class="third-buttonB">accept</button></div>
                     </div>

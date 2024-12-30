@@ -106,8 +106,6 @@ def get_user(request, id_or_name):
         else:
             user = CustomUser.objects.get(username=id_or_name)
         
-
-        # friends = Friend.objects.friends(request.user)
         user_data = {
             'id': user.id,
             'username': user.username,
@@ -115,8 +113,6 @@ def get_user(request, id_or_name):
             'photo': user.photo,
             'is_2fa_enabled':user.is_2fa_enabled,
             'otp_code':user.otp_code,
-            # 'friends': list(user.friends.values('id', 'username', 'email'))
-            # 'friends':user.friends
         }
         return Response(user_data, status=status.HTTP_200_OK)
     except CustomUser.DoesNotExist:
