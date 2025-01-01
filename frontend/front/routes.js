@@ -546,6 +546,7 @@ export const routes = {
     
    "/tournament" : {
         html : `
+        <div class="containerCount"><div class="sircleCount"><p class="countPlace"></p></div></div>
             <div class="parent-container-join-tournament">
             <div class="container-box">
                 <div class="container-icon"><i class="fa-solid fa-circle-xmark" id="close-tournament"></i></div>
@@ -707,7 +708,7 @@ export const routes = {
                                         <rect x="1690" y="70" width="400" height="400" rx="50%" ry="50%" fill="white"/>
                                     </mask>
                                     <image  class="imagePlayer" xlink:href="./images/avatar.png" x="1690" y="70" width="400" height="400" mask="url(#rounded-mask4)" />
-                                    <text x="1660"class="namePlayer" y="585" font-family="Arial" font-size="60" fill="white">none</text>
+                                    <text x="1750"class="namePlayer" y="585" font-family="Arial" font-size="60" fill="white">none</text>
 
                                     <mask id="rounded-mask5">
                                         <rect x="2400" y="345" width="150" height="150" rx="50%" ry="50%" fill="white"/>

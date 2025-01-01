@@ -288,6 +288,8 @@ async function startTournament()
     let parentContainerJoinTournament = document.getElementsByClassName("parent-container-join-tournament")[0];
     let startTournament = document.getElementById("startTournament");
     let containerFriend = document.getElementsByClassName("container-friend");
+    let containerCount = document.getElementsByClassName("containerCount")[0];
+
     function displayLoadingFriend(arg)
     {
         let j = 0;
@@ -300,9 +302,11 @@ async function startTournament()
     }
     if(joinTournament)
     {
+        
         let imgaePlayer = document.getElementsByClassName("imagePlayer");
             let namePlayer  = document.getElementsByClassName("namePlayer");
             joinTournament.addEventListener("click", function(){
+                displayContainerFriends()
                 displayLoadingFriend("flex")
             parentContainerJoinTournament.style.display = "flex";
             localStorage.setItem("player1", "")
@@ -375,75 +379,86 @@ async function startTournament()
         })
 
 
+        async function displayContainerFriends()
+        {
+            const info = await SecureApiRequest("/api/friend/get_friends/");
+                console.log("infoooooooooooooooooooooooo", info)
 
-        const info = await SecureApiRequest("/api/friend/get_friends/");
-        console.log("infoooooooooooooooooooooooo", info)
-        if(info.friends.length > 0)
-        {   
-            console.log("=======================nchooofo chono kayin aderari sf========================")
-            containerFriends.innerHTML = ``;
-            let i = 0;
-            while(i < info.friends.length)
-            {
-                let photo = info.friends[i].photo;
-                    if(!isValidUrl(photo))
-                        photo = `http://127.0.0.1:8000${photo}`;
-                containerFriends.innerHTML += `
-                <div class="container-friend">
-                    <div class="container-img"><img src="${photo}" alt=""></div>
-                    <div class="container-name"><p>${info.friends[i].username}</p></div>
-                    <div class="container-button"><button class="buttonAdd" id="${info.friends[i].id}">ADD</button> <button class="buttonRemove" id="${info.friends[i].id}">REMOVE</button></div>
-                </div>
-                `
-                i++;
-            }
-            if(info.friends.length < 3)
-                startTournament.innerHTML = "CAN'T"
 
-            let buttonAdd = document.getElementsByClassName("buttonAdd");
-            let buttonRemove = document.getElementsByClassName("buttonRemove")
-            let imgaePlayer = document.getElementsByClassName("imagePlayer");
-
-            let count = 0;
-            if(buttonAdd.length > 0 && info.friends.length >= 0 && count < 4)
-            {
-                
-                let j = 0;
-                let numberP = 1;
-                while(j < buttonAdd.length)
-                {
-                    let currentButton = buttonAdd[j];
-                    currentButton.addEventListener("click", function(){
-                        if(currentButton.disabled == false && !localStorage.getItem("player3"))
-                        {
-                            if(!localStorage.getItem("player1"))
-                                localStorage.setItem("player1", this.id);
-                            else if(!localStorage.getItem("player2"))
-                                localStorage.setItem("player2", this.id);
-                           else if(!localStorage.getItem("player3"))
-                                localStorage.setItem("player3", this.id);
-                            currentButton.disabled = true;
-                            currentButton.style.backgroundColor = "#66103E"
-                        }
-                        // console.log("player 1=======>", localStorage.getItem("player1"))
-                    })
-                    j++;
-                }
-                j = 0;
-                let numbers  = 1;
-                while(j < buttonAdd.length)
-                {
-                    if(numbers <= 4 && buttonAdd[j].id == localStorage.getItem(`player${numbers}`))
+                if(info.friends.length > 0)
+                {   
+                    console.log("=======================nchooofo chono kayin aderari sf========================")
+                    containerFriends.innerHTML = ``;
+                    let i = 0;
+                    while(i < info.friends.length)
                     {
-                        buttonAdd[j].style.backgroundColor = "#66103E";
-                        buttonAdd[j].disabled = true;
-                        numbers++;
+                        let photo = info.friends[i].photo;
+                            if(!isValidUrl(photo))
+                                photo = `http://127.0.0.1:8000${photo}`;
+                        containerFriends.innerHTML += `
+                        <div class="container-friend">
+                            <div class="container-img"><img src="${photo}" alt=""></div>
+                            <div class="container-name"><p>${info.friends[i].username}</p></div>
+                            <div class="container-button"><button class="buttonAdd" id="${info.friends[i].id}">ADD</button> <button class="buttonRemove" id="${info.friends[i].id}">REMOVE</button></div>
+                        </div>
+                        
+                        `
+                        i++;
                     }
-                    j++;
+                    if(info.friends.length < 3)
+                        startTournament.innerHTML = "CAN'T"
+
+                    let buttonAdd = document.getElementsByClassName("buttonAdd");
+                    let buttonRemove = document.getElementsByClassName("buttonRemove")
+                    let imgaePlayer = document.getElementsByClassName("imagePlayer");
+
+                    let count = 0;
+                    if(buttonAdd.length > 0 && info.friends.length >= 0 && count < 4)
+                    {
+                        
+                        let j = 0;
+                        let numberP = 1;
+                        while(j < buttonAdd.length)
+                        {
+                            let currentButton = buttonAdd[j];
+                            currentButton.addEventListener("click", function(){
+                                if(currentButton.disabled == false && !localStorage.getItem("player3"))
+                                {
+                                    if(!localStorage.getItem("player1"))
+                                        localStorage.setItem("player1", this.id);
+                                    else if(!localStorage.getItem("player2"))
+                                        localStorage.setItem("player2", this.id);
+                                else if(!localStorage.getItem("player3"))
+                                        localStorage.setItem("player3", this.id);
+                                    currentButton.disabled = true;
+                                    currentButton.style.backgroundColor = "#66103E"
+                                }
+                                // console.log("player 1=======>", localStorage.getItem("player1"))
+                            })
+                            j++;
+                        }
+                        j = 0;
+                        let numbers  = 1;
+                        while(j < buttonAdd.length)
+                        {
+                            if(numbers <= 4 && buttonAdd[j].id == localStorage.getItem(`player${numbers}`))
+                            {
+                                buttonAdd[j].style.backgroundColor = "#66103E";
+                                buttonAdd[j].disabled = true;
+                                numbers++;
+                            }
+                            j++;
+                        }
+                    }
                 }
-            }
         }
         
+        
+        
+
+
+
+
         startTournament.addEventListener("click", function(){
             let imgaePlayer = document.getElementsByClassName("imagePlayer");
             let namePlayer = document.getElementsByClassName("namePlayer");
@@ -499,10 +514,29 @@ async function startTournament()
                     j++;
                 }
                
+                // make the container of friend display none
                 displayLoadingFriend("none")
-                // localStorage.setItem("player1", "")
-                // localStorage.setItem("player2", "")
-                // localStorage.setItem("player3", "")
+                containerFriends.innerHTML = "<div class='loader'></div>"
+                containerFriends.style.justifyContent = "center"
+
+                function callContainerCount()
+                {
+                    containerCount.style.display = "flex"
+                    let count = 3; 
+                    const countdownElement = document.getElementsByClassName('countPlace')[0];
+                    const interval = setInterval(() => {
+                    countdownElement.textContent = count; 
+                    count--;
+
+                    if (count < 0) {
+                        clearInterval(interval); // Stop the interval when count reaches 0
+                        countdownElement.textContent = "Go!"; 
+                        // containerCount.style.display = "none"
+
+                    }
+                    }, 1000);
+                }
+
                 function intilizeNameImage()
                 {
                     imgaePlayer[0].setAttribute('xlink:href', localStorage.getItem(`player${1}Image`))
@@ -517,9 +551,14 @@ async function startTournament()
                     namePlayer[5].textContent = localStorage.getItem(`player${3}Name`)
                     console.log("i want to see if is full or no okkkkkkkkkkkkkkkkkkkkkk",localStorage.getItem(`username`))
                     parentContainerJoinTournament.style.display = "none";
+                    containerFriends.innerHTML = ""
+                    containerFriends.style.justifyContent = "none"
+                    callContainerCount()
+                    // setTimeout(() => intilizeNameImage(), 3000);
                 }
 
                 setTimeout(() => intilizeNameImage(), 3000);
+                
             }
         })
 
@@ -539,6 +578,7 @@ async function startTournament()
             namePlayer[4].textContent = localStorage.getItem(`username`)
             namePlayer[5].textContent = localStorage.getItem(`player${3}Name`)
         }
+
     }
 }
 
@@ -549,5 +589,3 @@ window.logout = logout;
 window.addEventListener("popstate", handleLocation);
 
 window.addEventListener("DOMContentLoaded", handleLocation);
-
-
