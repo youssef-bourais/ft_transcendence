@@ -1175,3 +1175,179 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 
+
+
+
+
+
+
+
+
+.parent-container-join-tournament
+{
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.338);
+    width: 100vw;
+    height: 100vh;
+    z-index: 12;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.parent-container-join-tournament .container-box
+{
+    width: 800px;
+    height: 670px;
+    background-color: black;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.parent-container-join-tournament .container-box .container-icon
+{
+    box-sizing: border-box;
+    padding-right: 15px;
+    padding-top: 15px;
+    color: white;
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+.parent-container-join-tournament .container-box .container-icon i
+{
+    font-size: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.parent-container-join-tournament .container-box .container-title
+{
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0;
+}
+.parent-container-join-tournament .container-box .container-title p
+{
+    color: white;
+    font-size: 30px;
+    /* font-weight: bold; */
+}
+.parent-container-join-tournament .container-box .container-desc
+{
+    color: white;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.parent-container-join-tournament .container-box .container-friends
+{
+    width: 450px;
+    height: 350px;
+    background-image: url('../images/background.jpg');
+    overflow-y: scroll;
+    box-sizing: border-box;
+    padding: 10px;
+    padding-top: 25px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+}
+.parent-container-join-tournament .container-box .container-friends .container-friend
+{
+    width: 90%;
+    /* height: 50px; */
+    border-radius: 10px;
+    background-color: black;
+    display: flex;
+    margin-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.parent-container-join-tournament .container-box .container-friends .container-friend .container-img
+{
+    width: 70px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.parent-container-join-tournament .container-box .container-friends .container-friend .container-img img
+{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.parent-container-join-tournament .container-box .container-friends .container-friend .container-name
+{
+    width: 35%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+}
+.parent-container-join-tournament .container-box .container-friends .container-friend .container-button
+{
+    width: 46%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-sizing: border-box;
+    padding-right: 2px;
+}
+.parent-container-join-tournament .container-box .container-friends .container-friend .container-button button
+{
+    width: 70px;
+    height: 35px;
+    cursor: pointer;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 0;
+    background-color: #99185D;
+}
+
+.parent-container-join-tournament .container-box .container-friends .container-friend .container-button button:hover{
+    transition: 0.5s all;
+    background-color: #66103E;
+}
+
+
+.parent-container-join-tournament .container-box .container-start
+{
+    color: white;
+}
+
+.parent-container-join-tournament .container-box .container-start button
+{
+    width: 100px;
+    height: 35px;
+    color: white;
+    background-color: #99185D;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0;
+    font-size: 15px;
+}
+.parent-container-join-tournament .container-box .container-start button:hover
+{
+    transition: 0.5s all;
+    background-color: #66103E;
+}

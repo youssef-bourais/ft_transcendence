@@ -1,4 +1,5 @@
 import { SecureApiRequest  } from './api.js';
+import { handleLocation } from './app.js';
 let socket = null;
 let currentRecipientGlobal = dataUser();
 let currentRecipient = currentRecipientGlobal.username;
@@ -84,10 +85,10 @@ async function initializeChat() {
         console.log("====================remove friend==================== id:", data);
         // if (currentRecipientId != null){
             removeFriend(data.id);
-            localStorage.setItem("openChat", "");
             let chatAreaForif = document.querySelector('.chat-area');
             chatAreaForif.style.display = 'none';
             fetchFriends();
+            localStorage.setItem("openChat", "");
         // }
     })
 
@@ -134,18 +135,18 @@ function connectWebSocket() {
 }
 
 async function dataUser() {
-    let data;
-    try {
-        if (localStorage.getItem("openChat")){
-            const response = await fetch(`/api/get/${localStorage.getItem("openChat")}/`);
-            const friend = await response.json();
-            data = friend;
+    let data = null;
+
+        try {
+            if (localStorage.getItem("openChat")){
+                const response = await fetch(`/api/get/${localStorage.getItem("openChat")}/`);
+                const friend = await response.json();
+                data = friend;
+            }   
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            data = null;  // Optionally, you can set it to null or handle the error case
         }
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        data = null;  // Optionally, you can set it to null or handle the error case
-    }
-    
     return data;
 }
 
@@ -227,6 +228,17 @@ async function selectFriend(friend) {
     const chatHeader = document.getElementById('chatHeader');
     const chatHeaderImage = document.getElementById('chatHeaderImage');
     const chatHeaderName = document.getElementById('chatHeaderName');
+
+    chatHeaderName.addEventListener("click", function(){
+        localStorage.setItem('eachProfileUserName', localStorage.getItem("openChat"));
+        history.pushState({}, "", '/eachprofile'); 
+        handleLocation();
+    })
+    chatHeaderImage.addEventListener("click", function(){
+        localStorage.setItem('eachProfileUserName', localStorage.getItem("openChat"));
+        history.pushState({}, "", '/eachprofile'); 
+        handleLocation();
+    })
     
     let photo = friend.photo;
     if(!isValidUrl(photo))

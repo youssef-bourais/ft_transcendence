@@ -1004,3 +1004,7 @@ body {
 
 
 
+.chat-header-left #chatHeaderName
+{
+    cursor: pointer !important;
+}

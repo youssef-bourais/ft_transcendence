@@ -421,18 +421,20 @@ export function renderAll()
 
         });
     }
+
 let addFriendButton = document.getElementById("addFriendButton");
+async function returnDataFriendsResquest()
+{
+    const info = await SecureApiRequest("/api/friend/list_sent_requests/", "GET");
+    return info;
+}
 async function checkButtonAddFriend() 
 {
-
-
     if(addFriendButton)
     {
         const info = await SecureApiRequest("/api/friend/get_friends/");
-        // if(!info)
-        //     return;
+        const info2 = await SecureApiRequest("/api/friend/list_sent_requests/", "GET");
 
-        console.log("i am inside checkButtonAddFriend ok bro", info)
         let i = 0;
         let valid = 0;
         console.log("nchofo info ====> ",info.friends, localStorage.getItem("eachProfileUserName"))
@@ -443,7 +445,16 @@ async function checkButtonAddFriend()
                 valid = 1;
             i++;
         }
-        if(valid == 1)
+        i = 0;
+        while(i < info2.sent_requests.length)
+        {
+            if(info2.sent_requests[i].to_user == localStorage.getItem("eachProfileUserId"))
+                valid = 2;
+            i++;
+        }
+        if(valid == 2)
+            addFriendButton.innerHTML = "Panding";
+        else if(valid == 1)
             addFriendButton.innerHTML = "Message";
         else if(valid == 0)
             addFriendButton.innerHTML = "Add Friend +";
@@ -471,6 +482,7 @@ if(addFriendButton)
         if(addFriendButton.innerHTML == "Add Friend +")
         {
             sendFriend();
+            checkButtonAddFriend()
         }
         else if(addFriendButton.innerHTML == "Message")
         {
