@@ -413,11 +413,11 @@ async function startTournament()
                     let imgaePlayer = document.getElementsByClassName("imagePlayer");
 
                     let count = 0;
-                    if(buttonAdd.length > 0 && info.friends.length >= 0 && count < 4)
+                    if(buttonAdd.length > 0 && info.friends.length >= 0 && count < 4 && info.friends.length >= 3)
                     {
                         
                         let j = 0;
-                        let numberP = 1;
+                        let numberP = 0;
                         while(j < buttonAdd.length)
                         {
                             let currentButton = buttonAdd[j];
@@ -428,7 +428,7 @@ async function startTournament()
                                         localStorage.setItem("player1", this.id);
                                     else if(!localStorage.getItem("player2"))
                                         localStorage.setItem("player2", this.id);
-                                else if(!localStorage.getItem("player3"))
+                                    else if(!localStorage.getItem("player3"))
                                         localStorage.setItem("player3", this.id);
                                     currentButton.disabled = true;
                                     currentButton.style.backgroundColor = "#66103E"
