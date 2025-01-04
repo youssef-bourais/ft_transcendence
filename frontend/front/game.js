@@ -285,7 +285,27 @@ export class Game {
 
 
     
-
+    resetGame() {
+        // Reset gameOver state
+        this.gameOver = false;
+        gameOver = false;
+    
+        // Reset ball position and speed
+        this.ball.reset();
+    
+        // Reset paddle positions and scores
+        this.paddles.forEach((paddle, index) => {
+            paddle.score = 0;
+            if (paddle.orientation === 'vertical') {
+                paddle.y = CANVAS_HEIGHT / 2; // Reset vertical paddles to center
+            } else {
+                paddle.x = CANVAS_WIDTH / 2; // Reset horizontal paddles to center
+            }
+        });
+    
+        // Reset animation frame and other game states
+        animationFrameId = requestAnimationFrame();
+    }
     draw(ctx) {
         // Clear canvas
         ctx.fillStyle = '#000';
@@ -329,29 +349,39 @@ export class Game {
             ctx.fillStyle = '#fff';
             ctx.font = '48px Arial';
             ctx.fillText('Game Over!', CANVAS_WIDTH/2 - 100, CANVAS_HEIGHT/2);
-            cancelAnimationFrame(animationFrameId); 
+            cancelAnimationFrame(animationFrameId);
             
             if(localStorage.getItem("gameEnd") == "start")
-            {
+            {   
                 localStorage.setItem("gameEnd", "end")
-                setTimeout(() => update(), 1000);
-                this.gameStop()
+                if(localStorage.getItem("game1") == "start")
+                    localStorage.setItem("game1", "end")
+                else if(localStorage.getItem("game2") == "start")
+                    localStorage.setItem("game2", "end")
+                else if(localStorage.getItem("game3") == "start")
+                    localStorage.setItem("game3", "end")
+                // else if()
+                setTimeout(() => updateMy(), 1000);
             }
-            
+            this.resetGame();
             // alert("hiii")
         }
 
     }
 }
 
-function update () {
+
+function updateMy () {
     let con = document.getElementById("con");
     con.innerHTML =   loadTournament();
     setTimeout(() => returnTournament(), 100);
 }
 function returnTournament() {
-    let containeStartGame = document.getElementsByClassName("containeStartGame")[0];
-    containeStartGame.style.display = "flex";
+    if(localStorage.getItem("game3") != "end")
+    {
+        let containeStartGame = document.getElementsByClassName("containeStartGame")[0];
+        containeStartGame.style.display = "flex";
+    }
     startTournament();
     
 

@@ -291,8 +291,8 @@ function deisplayNoneMain()
     con.style.justifyContent = "space-around"
     con.style.height = "90%"
     con.style.alignItems = "center"
-    // con.innerHTML = loadTournament();
-    loadGameTournament();
+    con.innerHTML = '';
+    loadGameTournament("1v1");
 }
 
 function callContainerCount()
@@ -409,6 +409,9 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
             localStorage.setItem("game2", "")
             localStorage.setItem("game3", "")
             localStorage.setItem("gameEnd", "")
+            localStorage.setItem("firstWin", "")
+            localStorage.setItem("secondWin", "")
+            localStorage.setItem("Winner", "")
             // localStorage.setItem("player4", "")
             // let player1 = {
             //     id: inputElement.id,
@@ -472,6 +475,9 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                 localStorage.setItem("game2", "")
                 localStorage.setItem("game3", "")
                 localStorage.setItem("gameEnd", "")
+                localStorage.setItem("firstWin", "")
+                localStorage.setItem("secondWin", "")
+                localStorage.setItem("Winner", "")
                 
         })
 
@@ -648,20 +654,23 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
 
     }
     let continueButton = document.getElementById("continueButton")
-    // if(continueButton)
-    // {
+    if(continueButton)
+    {
 
         continueButton.addEventListener("click", function() {
-            // loadGameTournament();
-            // let con = document.getElementById("con");
-            // con.style.display = "flex"
-            // con.style.justifyContent = "space-around"
-            // con.style.height = "90%"
-            // con.style.alignItems = "center"
-            alert(1)
-            deisplayNoneMain()
+            
+            if(localStorage.getItem("game2") != "end")
+                localStorage.setItem("game2", "start")
+            else if(localStorage.getItem("game3") != "end")
+                localStorage.setItem("game3", "start")
+
+            if(localStorage.getItem("game3") != "end")
+            {
+                localStorage.setItem("gameEnd", "start")
+                deisplayNoneMain()
+            }
         })
-    // }
+    }
 }
 
 
