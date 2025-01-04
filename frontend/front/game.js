@@ -1,3 +1,7 @@
+
+import {loadTournament } from './tournamentHtml.js'
+import {intilizeNameImage2} from "./app.js"
+
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
 const PADDLE_WIDTH = 10;
@@ -9,7 +13,7 @@ let WINNING_SCORE = 5;
 let GAME_MODE = '1v1';
 let animationFrameId = null;
 
-
+export let gameOver = false;
 // KeyboardController class
 class KeyboardController {
     constructor() {
@@ -270,12 +274,16 @@ export class Game {
             }
         });
     }
-
+  
     gameStop() {
         this.gameOver = true;
+        gameOver = true;
+       
     }
     // Call the function to test it    
 
+
+    
 
     draw(ctx) {
         // Clear canvas
@@ -321,11 +329,31 @@ export class Game {
             ctx.font = '48px Arial';
             ctx.fillText('Game Over!', CANVAS_WIDTH/2 - 100, CANVAS_HEIGHT/2);
             cancelAnimationFrame(animationFrameId); 
+            
+            if(localStorage.getItem("gameEnd") == "start")
+            {
+                localStorage.setItem("gameEnd", "end")
+                setTimeout(() => update(), 1000);
+            }
+            
+            // alert("hiii")
         }
 
     }
 }
 
+function update (params) {
+    let con = document.getElementById("con");
+    con.innerHTML = '<div class="containeStartGame"><button>Continue</button></div>' + loadTournament();
+    setTimeout(() => returnTournament(), 100);
+}
+function returnTournament() {
+    let containeStartGame = document.getElementsByClassName("containeStartGame")[0];
+    containeStartGame.style.display = "flex";
+    
+
+    intilizeNameImage2()
+}
 
 export function startGame(mode) {
     const game = new Game(mode);

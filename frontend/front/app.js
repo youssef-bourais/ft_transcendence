@@ -3,6 +3,11 @@ import { togglePass, logout, clickEvent, GoLogin } from './utils.js';
 import { inputSearch, renderAll } from './profile.js';
 import {SecureApiRequest} from './api.js';
 import { isValidUrl } from './routes.js';
+import {loadGameTournament} from './gameTournament.js';
+import {loadTournament } from './tournamentHtml.js'
+
+
+
 
 
 
@@ -278,6 +283,88 @@ async function callForTopNav()
     })
 }
 
+function deisplayNoneMain()
+{
+    
+    let con = document.getElementById("con");
+    con.style.display = "flex"
+    con.style.justifyContent = "space-around"
+    con.style.height = "90%"
+    con.style.alignItems = "center"
+    // con.innerHTML = loadTournament();
+    loadGameTournament();
+}
+
+function callContainerCount()
+{
+    let containerCount = document.getElementsByClassName("containerCount")[0];
+    containerCount.style.display = "flex"
+    let count = 3; 
+    let countdownElement = document.getElementsByClassName('countPlace')[0];
+    let interval = setInterval(() => {
+    countdownElement.textContent = count; 
+    count--;
+
+    if (count < 0) {
+        clearInterval(interval); // Stop the interval when count reaches 0
+        countdownElement.textContent = "Go!"; 
+        // containerCount.style.display = "none"
+        setTimeout(() => deisplayNoneMain(), 1000);
+    }
+    }, 1000);
+}
+
+
+
+export function intilizeNameImage2()
+{
+    let imgaePlayer = document.getElementsByClassName("imagePlayer");
+    let namePlayer  = document.getElementsByClassName("namePlayer");
+    let parentContainerJoinTournament = document.getElementsByClassName("parent-container-join-tournament")[0];
+    let containerFriends = document.getElementsByClassName("container-friends")[0];
+    imgaePlayer[0].setAttribute('xlink:href', localStorage.getItem(`player${1}Image`))
+    imgaePlayer[1].setAttribute('xlink:href', localStorage.getItem(`player${2}Image`))
+    imgaePlayer[5].setAttribute('xlink:href', localStorage.getItem(`player${3}Image`))
+    imgaePlayer[6].setAttribute('xlink:href', localStorage.getItem(`photo`))
+
+
+    namePlayer[0].textContent = localStorage.getItem(`player${1}Name`)
+    namePlayer[1].textContent = localStorage.getItem(`player${2}Name`)
+    namePlayer[4].textContent = localStorage.getItem(`username`)
+    namePlayer[5].textContent = localStorage.getItem(`player${3}Name`)
+    console.log("i want to see if is full or no okkkkkkkkkkkkkkkkkkkkkk",localStorage.getItem(`username`))
+    parentContainerJoinTournament.style.display = "none";
+    containerFriends.innerHTML = ""
+    containerFriends.style.justifyContent = "none"
+    // setTimeout(() => intilizeNameImage(), 3000);
+}
+
+
+function intilizeNameImage()
+{
+    let imgaePlayer = document.getElementsByClassName("imagePlayer");
+    let namePlayer  = document.getElementsByClassName("namePlayer");
+    let parentContainerJoinTournament = document.getElementsByClassName("parent-container-join-tournament")[0];
+    let containerFriends = document.getElementsByClassName("container-friends")[0];
+    imgaePlayer[0].setAttribute('xlink:href', localStorage.getItem(`player${1}Image`))
+    imgaePlayer[1].setAttribute('xlink:href', localStorage.getItem(`player${2}Image`))
+    imgaePlayer[5].setAttribute('xlink:href', localStorage.getItem(`player${3}Image`))
+    imgaePlayer[6].setAttribute('xlink:href', localStorage.getItem(`photo`))
+
+
+    namePlayer[0].textContent = localStorage.getItem(`player${1}Name`)
+    namePlayer[1].textContent = localStorage.getItem(`player${2}Name`)
+    namePlayer[4].textContent = localStorage.getItem(`username`)
+    namePlayer[5].textContent = localStorage.getItem(`player${3}Name`)
+    console.log("i want to see if is full or no okkkkkkkkkkkkkkkkkkkkkk",localStorage.getItem(`username`))
+    parentContainerJoinTournament.style.display = "none";
+    containerFriends.innerHTML = ""
+    containerFriends.style.justifyContent = "none"
+    callContainerCount()
+    // setTimeout(() => intilizeNameImage(), 3000);
+}
+
+
 
 
 async function startTournament()
@@ -285,7 +372,8 @@ async function startTournament()
     let joinTournament = document.getElementById("join-tournament")
     let closeTournament = document.getElementById("close-tournament")
     let containerFriends = document.getElementsByClassName("container-friends")[0];
-    let parentContainerJoinTournament = document.getElementsByClassName("parent-container-join-tournament")[0];
+let parentContainerJoinTournament = document.getElementsByClassName("parent-container-join-tournament")[0];
+   
     let startTournament = document.getElementById("startTournament");
     let containerFriend = document.getElementsByClassName("container-friend");
     let containerCount = document.getElementsByClassName("containerCount")[0];
@@ -303,8 +391,7 @@ async function startTournament()
     if(joinTournament)
     {
         
-        let imgaePlayer = document.getElementsByClassName("imagePlayer");
-            let namePlayer  = document.getElementsByClassName("namePlayer");
+          
             joinTournament.addEventListener("click", function(){
                 displayContainerFriends()
                 displayLoadingFriend("flex")
@@ -318,12 +405,18 @@ async function startTournament()
             localStorage.setItem(`player1Name`, "")
             localStorage.setItem(`player2Name`, "")
             localStorage.setItem(`player3Name`, "")
+            localStorage.setItem("game1", "")
+            localStorage.setItem("game2", "")
+            localStorage.setItem("game3", "")
+            localStorage.setItem("gameEnd", "")
             // localStorage.setItem("player4", "")
             // let player1 = {
             //     id: inputElement.id,
             //     value: inputElement.value,
             //     type: inputElement.type
             //   };
+            let imgaePlayer = document.getElementsByClassName("imagePlayer");
+            let namePlayer  = document.getElementsByClassName("namePlayer");
             let buttonAdd = document.getElementsByClassName("buttonAdd");
                 let j = 0;
                 let numbers  = 1;
@@ -359,7 +452,6 @@ async function startTournament()
                 let numbers  = 1;
                 while(j < buttonAdd.length)
                 {
-                    
                     console.log("waaaaaa heyaaaaaa ana ka 5ewiiiik hena okkk")
                     buttonAdd[j].style.backgroundColor = "#99185D";
                     buttonAdd[j].disabled = false;
@@ -376,6 +468,11 @@ async function startTournament()
                 localStorage.setItem(`player1Name`, "")
                 localStorage.setItem(`player2Name`, "")
                 localStorage.setItem(`player3Name`, "")
+                localStorage.setItem("game1", "")
+                localStorage.setItem("game2", "")
+                localStorage.setItem("game3", "")
+                localStorage.setItem("gameEnd", "")
+                
         })
 
 
@@ -462,7 +559,8 @@ async function startTournament()
         startTournament.addEventListener("click", function(){
             let imgaePlayer = document.getElementsByClassName("imagePlayer");
             let namePlayer = document.getElementsByClassName("namePlayer");
-        
+            localStorage.setItem("game1", "start")
+            localStorage.setItem("gameEnd", "start")
             if(localStorage.getItem("player1") && localStorage.getItem("player2") && localStorage.getItem("player3"))
             {
                 let i = 1;
@@ -513,55 +611,24 @@ async function startTournament()
                     }
                     j++;
                 }
+
+                
                
                 // make the container of friend display none
                 displayLoadingFriend("none")
                 containerFriends.innerHTML = "<div class='loader'></div>"
                 containerFriends.style.justifyContent = "center"
 
-                function callContainerCount()
-                {
-                    containerCount.style.display = "flex"
-                    let count = 3; 
-                    const countdownElement = document.getElementsByClassName('countPlace')[0];
-                    const interval = setInterval(() => {
-                    countdownElement.textContent = count; 
-                    count--;
+                
 
-                    if (count < 0) {
-                        clearInterval(interval); // Stop the interval when count reaches 0
-                        countdownElement.textContent = "Go!"; 
-                        // containerCount.style.display = "none"
-
-                    }
-                    }, 1000);
-                }
-
-                function intilizeNameImage()
-                {
-                    imgaePlayer[0].setAttribute('xlink:href', localStorage.getItem(`player${1}Image`))
-                    imgaePlayer[1].setAttribute('xlink:href', localStorage.getItem(`player${2}Image`))
-                    imgaePlayer[5].setAttribute('xlink:href', localStorage.getItem(`player${3}Image`))
-                    imgaePlayer[6].setAttribute('xlink:href', localStorage.getItem(`photo`))
-
-
-                    namePlayer[0].textContent = localStorage.getItem(`player${1}Name`)
-                    namePlayer[1].textContent = localStorage.getItem(`player${2}Name`)
-                    namePlayer[4].textContent = localStorage.getItem(`username`)
-                    namePlayer[5].textContent = localStorage.getItem(`player${3}Name`)
-                    console.log("i want to see if is full or no okkkkkkkkkkkkkkkkkkkkkk",localStorage.getItem(`username`))
-                    parentContainerJoinTournament.style.display = "none";
-                    containerFriends.innerHTML = ""
-                    containerFriends.style.justifyContent = "none"
-                    callContainerCount()
-                    // setTimeout(() => intilizeNameImage(), 3000);
-                }
+                
 
                 setTimeout(() => intilizeNameImage(), 3000);
                 
             }
         })
-
+        // loadGameFront
+        // container-main-home
 
         if(localStorage.getItem("player1Image"))
         {

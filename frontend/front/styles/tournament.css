@@ -322,6 +322,15 @@ input[type="search"]::-webkit-search-cancel-button {
     cursor: pointer;
 }
 
+.container-main-home2
+{
+    width: 100%;
+    height: 89vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
 
 .container-main-home
 {
@@ -1401,4 +1410,22 @@ input[type="search"]::-webkit-search-cancel-button {
     justify-content: center;
     align-items: center ;
     cursor: pointer;
+  }
+
+
+
+
+  .containeStartGame
+  {
+    position: fixed;
+    z-index: 12;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.38);
+    display: none;
   }
