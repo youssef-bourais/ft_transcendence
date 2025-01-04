@@ -367,7 +367,7 @@ function intilizeNameImage()
 
 
 
-async function startTournament()
+export async function startTournament()
 {
     let joinTournament = document.getElementById("join-tournament")
     let closeTournament = document.getElementById("close-tournament")
@@ -647,7 +647,25 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
         }
 
     }
+    let continueButton = document.getElementById("continueButton")
+    // if(continueButton)
+    // {
+
+        continueButton.addEventListener("click", function() {
+            // loadGameTournament();
+            // let con = document.getElementById("con");
+            // con.style.display = "flex"
+            // con.style.justifyContent = "space-around"
+            // con.style.height = "90%"
+            // con.style.alignItems = "center"
+            alert(1)
+            deisplayNoneMain()
+        })
+    // }
 }
+
+
+
 
 window.togglePass = togglePass;
 window.clickEvent = clickEvent;

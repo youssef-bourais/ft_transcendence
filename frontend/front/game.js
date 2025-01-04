@@ -1,6 +1,7 @@
 
 import {loadTournament } from './tournamentHtml.js'
 import {intilizeNameImage2} from "./app.js"
+import {startTournament} from './app.js'
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
@@ -334,6 +335,7 @@ export class Game {
             {
                 localStorage.setItem("gameEnd", "end")
                 setTimeout(() => update(), 1000);
+                this.gameStop()
             }
             
             // alert("hiii")
@@ -342,14 +344,15 @@ export class Game {
     }
 }
 
-function update (params) {
+function update () {
     let con = document.getElementById("con");
-    con.innerHTML = '<div class="containeStartGame"><button>Continue</button></div>' + loadTournament();
+    con.innerHTML =   loadTournament();
     setTimeout(() => returnTournament(), 100);
 }
 function returnTournament() {
     let containeStartGame = document.getElementsByClassName("containeStartGame")[0];
     containeStartGame.style.display = "flex";
+    startTournament();
     
 
     intilizeNameImage2()

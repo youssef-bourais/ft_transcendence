@@ -4,7 +4,7 @@ export function loadTournament()
 {
     return(`
     
-    
+    <div class="containeStartGame"><button id="continueButton">Continue</button></div>
     <div class="containerCount"><div class="sircleCount"><p class="countPlace"></p></div></div>
     <div class="parent-container-join-tournament">
     <div class="container-box">
