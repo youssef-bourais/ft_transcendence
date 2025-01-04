@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   routes.js                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ahajji <ahajji@student.1337.ma>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/27 00:47:11 by ybourais          #+#    #+#             */
-/*   Updated: 2024/12/28 21:11:33 by ahajji           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 import { SanitizeInpute, GoLogin, showError, validatePassword, getCookie, deleteCookie, clickEvent, logout} from './utils.js';
 import { handleLocation } from './app.js';

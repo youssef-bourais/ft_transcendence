@@ -1,6 +1,7 @@
 import { loadGameFront } from './gameLoad.js'
 
 import { setupGamePage  } from './game.js';
+import { SecureApiRequest } from './api.js';
 
 export function gameMenu() {
     const content = document.getElementById('goma');
@@ -115,13 +116,19 @@ export function gameMenu() {
 }
 
 
-function matchMaking() {
+async function matchMaking() {
     const content = document.getElementById('goma');
     if (!content) {
         console.error('Error: game-container not found!!!');
         return;
     }
-    
+    const data = await SecureApiRequest('/api/friend/get_friends/');
+    console.log(data.friends[0].username);
+    let friends = data.friends.map(friend => ({
+        id: friend.id,
+        name: friend.username
+    }));
+    console.log(friends);
 }
 
 
@@ -143,6 +150,7 @@ window.selectMode = function (mode) {
         if (mode === '1v1') {
             
         }
+        matchMaking();
        loadGameFront(mode);
     }, 3000);
 };
