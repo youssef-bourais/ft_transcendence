@@ -1,6 +1,6 @@
 import { startGame } from './game.js';
 import {gameOver} from './game.js';
-
+import { startGameTournament } from './game1v1.js';
 export function loadGameTournament(mode, names) {
     // const app = document.getElementsByClassName('container-main-home')[0];
     const app = document.getElementById("con");
@@ -146,7 +146,7 @@ export function loadGameTournament(mode, names) {
     `;
     
     displayUserInfo(); // Call the function to display user info
-    startGame(mode);
+    startGameTournament();
     console.log("start game called and displayUser called");
 }
 

@@ -310,8 +310,10 @@ export class Game {
         });
     
         // Reset animation frame and other game states
-        animationFrameId = requestAnimationFrame();
+       cancelAnimationFrame(animationFrameId);
     }
+
+
     draw(ctx) {
         // Clear canvas
         ctx.fillStyle = '#000';
@@ -417,6 +419,9 @@ export function setupGamePage(game) {
             console.log("ball speed zbi =====", BALL_SPEED);
             game.update(keyboard.keys);
             game.draw(ctx);
+        }
+        else {
+            game.reset();
         }
        animationFrameId =  requestAnimationFrame(gameLoop);
     }
