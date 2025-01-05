@@ -1,6 +1,5 @@
-import { startGame } from './game.js';
-import {gameOver} from './game.js';
 import { startGameTournament } from './game1v1.js';
+
 export function loadGameTournament(mode, names) {
     // const app = document.getElementsByClassName('container-main-home')[0];
     const app = document.getElementById("con");
@@ -138,8 +137,6 @@ export function loadGameTournament(mode, names) {
         <div class="instructions">
             <p>Player 1 (Left): W/S</p>
             <p>Player 2 (Right): ↑/↓</p>
-            <p>Player 3 (Top): A/D</p>
-            <p>Player 4 (Bottom): ←/→</p>
         </div>
         <div class="user-info" id="userInfo"></div>
     </div>
