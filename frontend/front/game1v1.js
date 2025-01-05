@@ -380,6 +380,7 @@ export function startGameTournament() {
     const game = new Game(canvas);
 
     function gameLoop() {
+    
         game.update();
         game.draw();
         animationFrameId = requestAnimationFrame(gameLoop);

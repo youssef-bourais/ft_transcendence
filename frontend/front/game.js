@@ -1,9 +1,3 @@
-
-
-import {loadTournament } from './tournamentHtml.js'
-import {intilizeNameImage2} from "./app.js"
-import {startTournament} from './app.js'
-
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
 const PADDLE_WIDTH = 10;
@@ -14,10 +8,8 @@ let PADDLE_SPEED = 12;
 let WINNING_SCORE = 5;
 let GAME_MODE = '1v1';
 let animationFrameId = null;
-let score1 = 0;
-let score2 = 0;
 
-export let gameOver = false;
+
 // KeyboardController class
 class KeyboardController {
     constructor() {
@@ -264,11 +256,9 @@ export class Game {
         } else {
             if (this.ball.x < 0) {
                 this.paddles[1].score++;
-                score2 += 1;
                 this.ball.reset();
             } else if (this.ball.x > CANVAS_WIDTH) {
                 this.paddles[0].score++;
-                score1 += 1;
                 this.ball.reset();
             }
         }
@@ -276,42 +266,15 @@ export class Game {
         this.paddles.forEach(paddle => {
             if (paddle.score >= WINNING_SCORE) {
                 this.gameOver = true;
-                score1 = 0;
-                score2 = 0;
+
             }
         });
     }
-  
-    gameStop() {
-        this.gameOver = true;
-        gameOver = true;
-       
+
+    isGameOver() {
+        return this.gameOver;
     }
     // Call the function to test it    
-
-
-    
-    resetGame() {
-        // Reset gameOver state
-        this.gameOver = false;
-        gameOver = false;
-    
-        // Reset ball position and speed
-        this.ball.reset();
-    
-        // Reset paddle positions and scores
-        this.paddles.forEach((paddle, index) => {
-            paddle.score = 0;
-            if (paddle.orientation === 'vertical') {
-                paddle.y = CANVAS_HEIGHT / 2; // Reset vertical paddles to center
-            } else {
-                paddle.x = CANVAS_WIDTH / 2; // Reset horizontal paddles to center
-            }
-        });
-    
-        // Reset animation frame and other game states
-       cancelAnimationFrame(animationFrameId);
-    }
 
 
     draw(ctx) {
@@ -357,52 +320,24 @@ export class Game {
             ctx.fillStyle = '#fff';
             ctx.font = '48px Arial';
             ctx.fillText('Game Over!', CANVAS_WIDTH/2 - 100, CANVAS_HEIGHT/2);
-            cancelAnimationFrame(animationFrameId);
-            
-            if(localStorage.getItem("gameEnd") == "start")
-            {   
-                localStorage.setItem("gameEnd", "end")
-                if(localStorage.getItem("game1") == "start")
-                    localStorage.setItem("game1", "end")
-                else if(localStorage.getItem("game2") == "start")
-                    localStorage.setItem("game2", "end")
-                else if(localStorage.getItem("game3") == "start")
-                    localStorage.setItem("game3", "end")
-                // else if()
-                setTimeout(() => updateMy(), 1000);
-            }
-            this.resetGame();
-            // alert("hiii")
         }
 
     }
 }
 
 
-function updateMy () {
-    let con = document.getElementById("con");
-    con.innerHTML =   loadTournament();
-    setTimeout(() => returnTournament(), 100);
-}
-function returnTournament() {
-    if(localStorage.getItem("game3") != "end")
-    {
-        let containeStartGame = document.getElementsByClassName("containeStartGame")[0];
-        containeStartGame.style.display = "flex";
-    }
-    startTournament();
-    
-
-    intilizeNameImage2()
-}
-
 export function startGame(mode) {
-    score1 = 0;
-    score2 = 0;
     const game = new Game(mode);
     setupGamePage(game);
 }
 
+
+function stopGame() {
+    if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    }
+}
 
 export function setupGamePage(game) {
     console.log('Game page loaded');
@@ -416,14 +351,16 @@ export function setupGamePage(game) {
     function gameLoop() {
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         if (game) {
-            console.log("ball speed zbi =====", BALL_SPEED);
+            console.log('Game loop running');
             game.update(keyboard.keys);
             game.draw(ctx);
         }
-        else {
-            game.reset();
+        if(game.isGameOver()) {
+            stopGame();
+            return;
         }
        animationFrameId =  requestAnimationFrame(gameLoop);
+
     }
     gameLoop();
 }
