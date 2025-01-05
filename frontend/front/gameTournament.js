@@ -172,7 +172,6 @@ function displayUserInfo() {
     }
     else if(localStorage.getItem("game3") == "start")
     {
-        alert(1);
         username = localStorage.getItem("firstWinName");
         userPic = localStorage.getItem("firstWinImage");
         username2 = localStorage.getItem("secondWinName");
