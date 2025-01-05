@@ -195,6 +195,31 @@ class Game {
             this.gameOver = true;
         }
     }
+    resetGame() {
+        // Reset gameOver state
+        this.gameOver = false;
+        // thisgameOver = false;
+    
+        // Reset ball position and speed
+        this.ball.reset();
+    
+        // Reset paddle positions and scores
+        this.paddles.forEach((paddle, index) => {
+            paddle.score = 0;
+            if (paddle.orientation === 'vertical') {
+                paddle.y = CANVAS_HEIGHT / 2; // Reset vertical paddles to center
+            } else {
+                paddle.x = CANVAS_WIDTH / 2; // Reset horizontal paddles to center
+            }
+        });
+        
+        // cancelAnimationFrame();
+        // Reset animation frame and other game states
+        // if (animationFrameId) {
+            cancelAnimationFrame();
+        //     animationFrameId = null; // Clear the ID
+        // }
+    }
 
     draw() {
         // Clear canvas
@@ -229,9 +254,17 @@ class Game {
             const winner = score1 >= WINNING_SCORE ? 'Player 1 Wins!' : 'Player 2 Wins!';
             this.ctx.fillText(winner, CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
             this.ctx.font = '24px Arial';
-            //this.cleanup();
+                       
             if(localStorage.getItem("gameEnd") == "start")
             {   
+                console.log("screw1", score1)
+                console.log("score2", score2)
+                if(localStorage.getItem("game1") == "start")
+                {
+                    
+                }
+
+
                 localStorage.setItem("gameEnd", "end")
                 if(localStorage.getItem("game1") == "start")
                     localStorage.setItem("game1", "end")
@@ -239,10 +272,11 @@ class Game {
                     localStorage.setItem("game2", "end")
                 else if(localStorage.getItem("game3") == "start")
                     localStorage.setItem("game3", "end")
-                    
+               
                 // else if()
                 setTimeout(() => updateMy(), 1000);
             }
+            this.resetGame();
         }
     }
 
@@ -250,8 +284,10 @@ class Game {
         this.keyboard.removeEventListeners();
         if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
         }
     }
+    
 }
 
 

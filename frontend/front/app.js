@@ -10,7 +10,6 @@ import {loadTournament } from './tournamentHtml.js'
 
 
 
-
 let currentState = { view: "login" };
 let isNavigating = false;
 
@@ -409,6 +408,9 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
             localStorage.setItem("game2", "")
             localStorage.setItem("game3", "")
             localStorage.setItem("gameEnd", "")
+            localStorage.setItem("firstWin", "")
+            localStorage.setItem("firstWinImage", "")
+            localStorage.setItem("firstWinName", "")
             localStorage.setItem("firstWin", "")
             localStorage.setItem("secondWin", "")
             localStorage.setItem("Winner", "")

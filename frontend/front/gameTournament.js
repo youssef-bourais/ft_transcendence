@@ -159,17 +159,23 @@ function displayUserInfo() {
     let username2 ;
     let userPic2 ;
 
-    if(localStorage.getItem("game1"))
+    if(localStorage.getItem("game1") == "start")
     {
         username = localStorage.getItem('player1Name');
         userPic = localStorage.getItem('player1Image');
         username2 = localStorage.getItem('player2Name');
         userPic2 = localStorage.getItem('player2Image');
     }
-    // else if(localStorage.getItem("game2"))
+    else if(localStorage.getItem("game2") == "start")
+    {
+        username = localStorage.getItem('username');
+        userPic = localStorage.getItem('photo');
+        username2 = localStorage.getItem('player3Name');
+        userPic2 = localStorage.getItem('player3Image');
+    }
+    // else if(localStorage.getItem("game3") == "start")
     // {
-    //     username2 = localStorage.getItem('player2Name');
-    //     userPic2 = localStorage.getItem('player2Image');
+
     // }
 
     // Create user info elements
