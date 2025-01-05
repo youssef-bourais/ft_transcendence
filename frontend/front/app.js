@@ -413,7 +413,11 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
             localStorage.setItem("firstWinName", "")
             localStorage.setItem("firstWin", "")
             localStorage.setItem("secondWin", "")
+            localStorage.setItem("secondWinName", "")
+            localStorage.setItem("secondWinImage", "")
             localStorage.setItem("Winner", "")
+            localStorage.setItem("WinnerImage", "")
+            localStorage.setItem("WinnerName", "")
             // localStorage.setItem("player4", "")
             // let player1 = {
             //     id: inputElement.id,
@@ -437,12 +441,16 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                     j++;
                 }
                 imgaePlayer[0].setAttribute('xlink:href', "./images/avatar.png")
+                imgaePlayer[4].setAttribute('xlink:href', "./images/avatar.png")
+                imgaePlayer[2].setAttribute('xlink:href', "./images/avatar.png")
                 imgaePlayer[1].setAttribute('xlink:href', "./images/avatar.png")
                 imgaePlayer[5].setAttribute('xlink:href', "./images/avatar.png")
                 imgaePlayer[6].setAttribute('xlink:href', "./images/avatar.png")
 
                 namePlayer[0].textContent = "none"
                 namePlayer[1].textContent = "none"
+                namePlayer[2].textContent = "none"
+                namePlayer[6].textContent = "none"
                 namePlayer[4].textContent = "none"
                 namePlayer[5].textContent = "none"
         })
@@ -477,6 +485,9 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                 localStorage.setItem("game2", "")
                 localStorage.setItem("game3", "")
                 localStorage.setItem("gameEnd", "")
+                localStorage.setItem("firstWin", "")
+                localStorage.setItem("firstWinImage", "")
+                localStorage.setItem("firstWinName", "")
                 localStorage.setItem("firstWin", "")
                 localStorage.setItem("secondWin", "")
                 localStorage.setItem("Winner", "")
@@ -635,13 +646,32 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                 
             }
         })
+        let imgaePlayer = document.getElementsByClassName("imagePlayer");
+            let namePlayer  = document.getElementsByClassName("namePlayer");
         // loadGameFront
         // container-main-home
+        if(localStorage.getItem("game1") == "end" && localStorage.getItem("player1Image"))
+        {
+            // localStorage.setItem("game1", "");
+            imgaePlayer[2].setAttribute('xlink:href', localStorage.getItem(`firstWinImage`))
+            namePlayer[2].textContent = localStorage.getItem(`firstWinName`)
+        }
+        if(localStorage.getItem("game2") == "end")
+        {
+            // localStorage.setItem("game2", "");
+            imgaePlayer[4].setAttribute('xlink:href', localStorage.getItem(`secondWinImage`))
+            namePlayer[6].textContent = localStorage.getItem(`secondWinName`)
+        }
+        if(localStorage.getItem("game3") == "end")
+        {
+            // localStorage.setItem("game2", "");
+            imgaePlayer[3].setAttribute('xlink:href', localStorage.getItem(`WinnerImage`))
+            namePlayer[3].textContent = localStorage.getItem(`WinnerName`)
+        }
 
         if(localStorage.getItem("player1Image"))
         {
-            let imgaePlayer = document.getElementsByClassName("imagePlayer");
-            let namePlayer  = document.getElementsByClassName("namePlayer");
+            
 
             imgaePlayer[0].setAttribute('xlink:href', localStorage.getItem(`player${1}Image`))
             imgaePlayer[1].setAttribute('xlink:href', localStorage.getItem(`player${2}Image`))

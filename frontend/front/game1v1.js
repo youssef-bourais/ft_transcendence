@@ -245,6 +245,7 @@ class Game {
         this.ctx.textAlign = 'center';
         this.ctx.fillText(score1, CANVAS_WIDTH/4, 60);
         this.ctx.fillText(score2, 3*CANVAS_WIDTH/4, 60);
+        console.log("game still running !!!!!!!!!!!! ch3ndak akhawa")
 
         if (this.gameOver) {
             this.ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
@@ -259,11 +260,52 @@ class Game {
             {   
                 console.log("screw1", score1)
                 console.log("score2", score2)
+
                 if(localStorage.getItem("game1") == "start")
                 {
-                    
+                    if(score1 > score2)
+                    {
+                        localStorage.setItem("firstWin", localStorage.getItem("player1"))
+                        localStorage.setItem("firstWinImage", localStorage.getItem("player1Image"))
+                        localStorage.setItem("firstWinName", localStorage.getItem("player1Name"))
+                    }
+                    if(score2 > score1)
+                    {
+                        localStorage.setItem("firstWin", localStorage.getItem("player2"))
+                        localStorage.setItem("firstWinImage", localStorage.getItem("player2Image"))
+                        localStorage.setItem("firstWinName", localStorage.getItem("player2Name"))
+                    }
                 }
-
+                else if(localStorage.getItem("game2") == "start")
+                {
+                    if(score1 > score2)
+                    {
+                        localStorage.setItem("secondWin", localStorage.getItem("username"))
+                        localStorage.setItem("secondWinImage", localStorage.getItem("photo"))
+                        localStorage.setItem("secondWinName", localStorage.getItem("username"))
+                    }
+                    if(score2 > score1)
+                    {
+                        localStorage.setItem("secondWin", localStorage.getItem("player3"))
+                        localStorage.setItem("secondWinImage", localStorage.getItem("player3Image"))
+                        localStorage.setItem("secondWinName", localStorage.getItem("player3Name"))
+                    }
+                }
+                else if(localStorage.getItem("game3") == "start")
+                {
+                    if(score1 > score2)
+                    {
+                        localStorage.setItem("Winner", localStorage.getItem("firstWin"))
+                        localStorage.setItem("WinnerImage", localStorage.getItem("secondWinImage"))
+                        localStorage.setItem("WinnerName", localStorage.getItem("secondWinName"))
+                    }
+                    if(score2 > score1)
+                    {
+                        localStorage.setItem("Winner", localStorage.getItem("secondWin"))
+                        localStorage.setItem("WinnerImage", localStorage.getItem("secondWinImage"))
+                        localStorage.setItem("WinnerName", localStorage.getItem("secondWinName"))
+                    }
+                }
 
                 localStorage.setItem("gameEnd", "end")
                 if(localStorage.getItem("game1") == "start")

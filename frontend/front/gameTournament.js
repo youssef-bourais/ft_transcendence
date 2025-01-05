@@ -173,10 +173,14 @@ function displayUserInfo() {
         username2 = localStorage.getItem('player3Name');
         userPic2 = localStorage.getItem('player3Image');
     }
-    // else if(localStorage.getItem("game3") == "start")
-    // {
-
-    // }
+    else if(localStorage.getItem("game3") == "start")
+    {
+        alert(1);
+        username = localStorage.getItem("firstWinName");
+        userPic = localStorage.getItem("firstWinImage");
+        username2 = localStorage.getItem("secondWinName");
+        userPic2 = localStorage.getItem("secondWinImage");
+    }
 
     // Create user info elements
     userInfoContainer.innerHTML = /*html*/ `
