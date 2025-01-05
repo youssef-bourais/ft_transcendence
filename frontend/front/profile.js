@@ -104,16 +104,16 @@ export function renderAll()
             });
         }
 
-        fetch(`/api/get/${localStorage.getItem("username")}/`)
-        .then(response => response.json())
-        .then(data => {
-            if(data.id > 100)
-                editProfile.style.display = "none"
-            console.log("i am here in data");
-        })
-        .catch(error => {
+        // fetch(`/api/get/${localStorage.getItem("username")}/`)
+        // .then(response => response.json())
+        // .then(data => {
+        //     if(data.id > 100)
+        //         editProfile.style.display = "none"
+        //     console.log("i am here in data");
+        // })
+        // .catch(error => {
 
-        });
+        // });
 
 
         let fileInput = document.getElementById("file-input");

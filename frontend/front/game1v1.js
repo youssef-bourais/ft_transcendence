@@ -275,6 +275,8 @@ class Game {
                         localStorage.setItem("firstWinImage", localStorage.getItem("player2Image"))
                         localStorage.setItem("firstWinName", localStorage.getItem("player2Name"))
                     }
+                    localStorage.setItem("player1Score", score1)
+                    localStorage.setItem("player2Score", score2)
                 }
                 else if(localStorage.getItem("game2") == "start")
                 {
@@ -290,14 +292,16 @@ class Game {
                         localStorage.setItem("secondWinImage", localStorage.getItem("player3Image"))
                         localStorage.setItem("secondWinName", localStorage.getItem("player3Name"))
                     }
+                    localStorage.setItem("player3Score", score1)
+                    localStorage.setItem("player4Score", score2)
                 }
                 else if(localStorage.getItem("game3") == "start")
                 {
                     if(score1 > score2)
                     {
                         localStorage.setItem("Winner", localStorage.getItem("firstWin"))
-                        localStorage.setItem("WinnerImage", localStorage.getItem("secondWinImage"))
-                        localStorage.setItem("WinnerName", localStorage.getItem("secondWinName"))
+                        localStorage.setItem("WinnerImage", localStorage.getItem("firstWinImage"))
+                        localStorage.setItem("WinnerName", localStorage.getItem("firstWinName"))
                     }
                     if(score2 > score1)
                     {
@@ -305,6 +309,8 @@ class Game {
                         localStorage.setItem("WinnerImage", localStorage.getItem("secondWinImage"))
                         localStorage.setItem("WinnerName", localStorage.getItem("secondWinName"))
                     }
+                    localStorage.setItem("firstWinScore", score1)
+                    localStorage.setItem("secondWinScore", score2)
                 }
 
                 localStorage.setItem("gameEnd", "end")

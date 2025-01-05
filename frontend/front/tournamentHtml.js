@@ -22,6 +22,7 @@ export function loadTournament()
     <div class="container-main-home">
         <div class="child-container-main-home">
             <!-- start make the left side of main -->
+            <!--
             <div class="left-side">
                 <div class="titles">
                     <p>Global Ranking</p>
@@ -118,6 +119,7 @@ export function loadTournament()
                     </div>
                 </div>
             </div>
+            -->
             <!-- finish make the left side of main -->
 
             <!-- start main the midle side -->
@@ -137,7 +139,7 @@ export function loadTournament()
                             <rect x="1" y="23" width="694" height="178" rx="89" fill="#D9D9D9" fill-opacity="0.55" stroke="white" stroke-width="2"/>
                             <rect x="1" y="633" width="694" height="178" rx="89" fill="#D9D9D9" fill-opacity="0.55" stroke="white" stroke-width="2"/>
                             <rect x="697" y="328" width="694" height="178" rx="89" fill="#D9D9D9" fill-opacity="0.55" stroke="white" stroke-width="2"/>
-                            <rect opacity="0.55" x="1537.5" y="1.5" width="693" height="831" rx="106.5" fill="#D9D9D9" stroke="white" stroke-width="3"/>
+                            <rect opacity="0.55" x="1537.5" y="1.5" width="693" height="831" rx="106.5" fill="#66103E" stroke="white" stroke-width="3"/>
                             <rect x="-1" y="1" width="694" height="178" rx="89" transform="matrix(-1 0 0 1 3766 22)" fill="#D9D9D9" fill-opacity="0.55" stroke="white" stroke-width="2"/>
                             <rect x="-1" y="1" width="694" height="178" rx="89" transform="matrix(-1 0 0 1 3766 632)" fill="#D9D9D9" fill-opacity="0.55" stroke="white" stroke-width="2"/>
                             <rect x="-1" y="1" width="694" height="178" rx="89" transform="matrix(-1 0 0 1 3070 327)" fill="#D9D9D9" fill-opacity="0.55" stroke="white" stroke-width="2"/>
@@ -217,59 +219,12 @@ export function loadTournament()
                     <div class="container-bottom">
                         <div class="container-title"><p>Match details</p></div>
                         <div class="container-details">
-                            <div class="first-side">
-                                <div class="container-row">
-                                    <div class="child-container-row">
-                                        <div class="first-part">
-                                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                                            <p>1</p>
-                                        </div>
-                                        <div class="second-part">
-                                            <p>VS</p>
-                                            <div class="container-time">20 mints ago</div>
-                                        </div>
-                                        <div class="third-part">
-                                            <p>1</p>
-                                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="container-row">
-                                    <div class="child-container-row">
-                                        <div class="first-part">
-                                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                                            <p>1</p>
-                                        </div>
-                                        <div class="second-part">
-                                            <p>VS</p>
-                                            <div class="container-time">20 mints ago</div>
-                                        </div>
-                                        <div class="third-part">
-                                            <p>1</p>
-                                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="first-side" id="ScoreGame1">
                                 
                             </div>
                             
-                            <div class="second-halef">
-                                <div class="container-row">
-                                    <div class="child-container-row">
-                                        <div class="first-part">
-                                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                                            <p>1</p>
-                                        </div>
-                                        <div class="second-part">
-                                            <p>VS</p>
-                                            <div class="container-time">20 mints ago</div>
-                                        </div>
-                                        <div class="third-part">
-                                            <p>1</p>
-                                            <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="second-halef" id="ScoreGame2">
+                                
                             </div>
                         </div>
                     </div>

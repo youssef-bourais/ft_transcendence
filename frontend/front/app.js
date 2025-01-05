@@ -404,6 +404,11 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
             localStorage.setItem(`player1Name`, "")
             localStorage.setItem(`player2Name`, "")
             localStorage.setItem(`player3Name`, "")
+            localStorage.setItem(`player1Score`, "")
+            localStorage.setItem(`player2Score`, "")
+            localStorage.setItem(`player3Score`, "")
+            localStorage.setItem(`firstWinScore`, "")
+            localStorage.setItem(`secondWinScore`, "")
             localStorage.setItem("game1", "")
             localStorage.setItem("game2", "")
             localStorage.setItem("game3", "")
@@ -418,6 +423,10 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
             localStorage.setItem("Winner", "")
             localStorage.setItem("WinnerImage", "")
             localStorage.setItem("WinnerName", "")
+            let ScoreGame1 = document.getElementById("ScoreGame1")
+            let ScoreGame2 = document.getElementById("ScoreGame2")
+            ScoreGame1.innerHTML = ``
+            ScoreGame2.innerHTML = ``
             // localStorage.setItem("player4", "")
             // let player1 = {
             //     id: inputElement.id,
@@ -442,12 +451,14 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                 }
                 imgaePlayer[0].setAttribute('xlink:href', "./images/avatar.png")
                 imgaePlayer[4].setAttribute('xlink:href', "./images/avatar.png")
+                imgaePlayer[3].setAttribute('xlink:href', "./images/avatar.png")
                 imgaePlayer[2].setAttribute('xlink:href', "./images/avatar.png")
                 imgaePlayer[1].setAttribute('xlink:href', "./images/avatar.png")
                 imgaePlayer[5].setAttribute('xlink:href', "./images/avatar.png")
                 imgaePlayer[6].setAttribute('xlink:href', "./images/avatar.png")
 
                 namePlayer[0].textContent = "none"
+                namePlayer[3].textContent = "none"
                 namePlayer[1].textContent = "none"
                 namePlayer[2].textContent = "none"
                 namePlayer[6].textContent = "none"
@@ -481,6 +492,11 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                 localStorage.setItem(`player1Name`, "")
                 localStorage.setItem(`player2Name`, "")
                 localStorage.setItem(`player3Name`, "")
+                localStorage.setItem(`player1Score`, "")
+                localStorage.setItem(`player2Score`, "")
+                localStorage.setItem(`player3Score`, "")
+                localStorage.setItem(`firstWinScore`, "")
+                localStorage.setItem(`secondWinScore`, "")
                 localStorage.setItem("game1", "")
                 localStorage.setItem("game2", "")
                 localStorage.setItem("game3", "")
@@ -490,8 +506,11 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                 localStorage.setItem("firstWinName", "")
                 localStorage.setItem("firstWin", "")
                 localStorage.setItem("secondWin", "")
+                localStorage.setItem("secondWinName", "")
+                localStorage.setItem("secondWinImage", "")
                 localStorage.setItem("Winner", "")
-                
+                localStorage.setItem("WinnerImage", "")
+                localStorage.setItem("WinnerName", "")
         })
 
 
@@ -703,6 +722,74 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
             }
         })
     }
+
+
+    let ScoreGame1 = document.getElementById("ScoreGame1")
+    let ScoreGame2 = document.getElementById("ScoreGame2")
+    if(localStorage.getItem("player1Score"))
+    {
+        ScoreGame1.innerHTML += `
+        <div class="container-row">
+            <div class="child-container-row">
+                <div class="first-part">
+                    <div class="container-img"><img src="${localStorage.getItem("player1Image")}" alt=""></div>
+                    <p>${localStorage.getItem("player1Score")}</p>
+                </div>
+                <div class="second-part">
+                    <p>VS</p>
+                    <div class="container-time">Just now</div>
+                </div>
+                <div class="third-part">
+                    <p>${localStorage.getItem("player2Score")}</p>
+                    <div class="container-img"><img src="${localStorage.getItem("player2Image")}" alt=""></div>
+                </div>
+            </div>
+        </div>
+        `
+        if(localStorage.getItem("player3Score"))
+        {
+            ScoreGame1.innerHTML += `
+            <div class="container-row">
+                <div class="child-container-row">
+                    <div class="first-part">
+                        <div class="container-img"><img src="${localStorage.getItem("photo")}" alt=""></div>
+                        <p>${localStorage.getItem("player3Score")}</p>
+                    </div>
+                    <div class="second-part">
+                        <p>VS</p>
+                        <div class="container-time">Just now</div>
+                    </div>
+                    <div class="third-part">
+                        <p>${localStorage.getItem("player4Score")}</p>
+                        <div class="container-img"><img src="${localStorage.getItem("player3Image")}" alt=""></div>
+                    </div>
+                </div>
+            </div>
+            `
+        }
+    }
+    if(localStorage.getItem("firstWinScore"))
+    {
+        ScoreGame2.innerHTML += `
+        <div class="container-row">
+            <div class="child-container-row">
+                <div class="first-part">
+                    <div class="container-img"><img src="${localStorage.getItem("firstWinImage")}" alt=""></div>
+                    <p>${localStorage.getItem("firstWinScore")}</p>
+                </div>
+                <div class="second-part">
+                    <p>VS</p>
+                    <div class="container-time">Just now</div>
+                </div>
+                <div class="third-part">
+                    <p>${localStorage.getItem("secondWinScore")}</p>
+                    <div class="container-img"><img src="${localStorage.getItem("secondWinImage")}" alt=""></div>
+                </div>
+            </div>
+        </div>
+        `
+    }
+    
 }
 
 

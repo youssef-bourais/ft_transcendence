@@ -257,10 +257,12 @@ export const routes = {
                                         <p  class="display-name">Abdelkarim hajji</p>
                                         <p>Not in your friends list</p>
                                     </div>
+                                    <!--
                                     <div class="container-send-request">
                                         <div class="container-send"><i class="fa-solid fa-link"></i></i> <p>Chalange</p></div>
                                         <div class="container-block"><i class="fa-solid fa-user-slash"></i><p>Block</p></div>
                                     </div>
+                                    -->
                                     <div class="container-history-friends">
                                         <div class="contaienr-history-profile"><p>History</p></div>
                                     </div>
