@@ -1,7 +1,7 @@
 import { startGame } from './game.js';
 import {gameOver} from './game.js';
 
-export function loadGameTournament(mode) {
+export function loadGameTournament(mode, names) {
     // const app = document.getElementsByClassName('container-main-home')[0];
     const app = document.getElementById("con");
     if (!app) {

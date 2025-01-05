@@ -1,4 +1,5 @@
 
+
 import {loadTournament } from './tournamentHtml.js'
 import {intilizeNameImage2} from "./app.js"
 import {startTournament} from './app.js'
@@ -13,6 +14,8 @@ let PADDLE_SPEED = 12;
 let WINNING_SCORE = 5;
 let GAME_MODE = '1v1';
 let animationFrameId = null;
+let score1 = 0;
+let score2 = 0;
 
 export let gameOver = false;
 // KeyboardController class
@@ -261,9 +264,11 @@ export class Game {
         } else {
             if (this.ball.x < 0) {
                 this.paddles[1].score++;
+                score2 += 1;
                 this.ball.reset();
             } else if (this.ball.x > CANVAS_WIDTH) {
                 this.paddles[0].score++;
+                score1 += 1;
                 this.ball.reset();
             }
         }
@@ -271,7 +276,8 @@ export class Game {
         this.paddles.forEach(paddle => {
             if (paddle.score >= WINNING_SCORE) {
                 this.gameOver = true;
-
+                score1 = 0;
+                score2 = 0;
             }
         });
     }
@@ -389,6 +395,8 @@ function returnTournament() {
 }
 
 export function startGame(mode) {
+    score1 = 0;
+    score2 = 0;
     const game = new Game(mode);
     setupGamePage(game);
 }
