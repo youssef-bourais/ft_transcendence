@@ -263,6 +263,9 @@ class Game {
 
                 if(localStorage.getItem("game1") == "start")
                 {
+
+                    localStorage.setItem("game1Time",returnTime())
+                    addUserData(localStorage.getItem("player1Name"),localStorage.getItem("player1Image"),score1,localStorage.getItem("player2Name"),localStorage.getItem("player2Image"), score2,returnTime())
                     if(score1 > score2)
                     {
                         localStorage.setItem("firstWin", localStorage.getItem("player1"))
@@ -280,7 +283,7 @@ class Game {
                 }
                 else if(localStorage.getItem("game2") == "start")
                 {
-                    addUserData(localStorage.getItem("username"),localStorage.getItem("photo"),score1,localStorage.getItem("player3Name"),localStorage.getItem("player3Image"), score2)
+                    addUserData(localStorage.getItem("username"),localStorage.getItem("photo"),score1,localStorage.getItem("player3Name"),localStorage.getItem("player3Image"), score2,returnTime())
                     if(score1 > score2)
                     {
                         localStorage.setItem("secondWin", localStorage.getItem("username"))
@@ -298,8 +301,8 @@ class Game {
                 }
                 else if(localStorage.getItem("game3") == "start")
                 {
-                    if(localStorage.getItem("secondWinName") == localStorage.getItem("username"))
-                        addUserData(localStorage.getItem("firstWinName"),localStorage.getItem("firstWinImage"),score1,localStorage.getItem("secondWinName"),localStorage.getItem("secondWinImage"), score2)
+                    // if(localStorage.getItem("secondWinName") == localStorage.getItem("username"))
+                        addUserData(localStorage.getItem("firstWinName"),localStorage.getItem("firstWinImage"),score1,localStorage.getItem("secondWinName"),localStorage.getItem("secondWinImage"), score2,returnTime())
                     if(score1 > score2)
                     {
                         localStorage.setItem("Winner", localStorage.getItem("firstWin"))
@@ -366,7 +369,13 @@ function returnTournament() {
 
 
 
-
+function returnTime()
+{
+    const currentTime = new Date();
+    const hours = currentTime.getHours();
+    const minutes = currentTime.getMinutes();
+    return(`${hours}:${minutes}`)
+}
 
 
 

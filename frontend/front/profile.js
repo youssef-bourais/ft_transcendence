@@ -59,12 +59,11 @@ export function renderAll()
 
 
 
-
         let containerHistoryChalange = document.getElementById("container-history-chalange");
         if(containerHistoryChalange)
         {
             const users = JSON.parse(localStorage.getItem("users"))
-            if (users.length > 0) {
+            if (users && users.length > 0) {
                 let index = 0;
                 containerHistoryChalange.innerHTML  = ``
                 // Using a while loop to iterate over the array
@@ -76,7 +75,7 @@ export function renderAll()
                         containerHistoryChalange.innerHTML += `
                             <div class="child-container-chalange">
                                 <div class="contaienr-chalange-img-left"><img src="${user.imagePlayer1}" alt=""><p>${user.scorePlayer1}</p></div>
-                                <div class="container-VS">VS</div>
+                                <div class="container-VS">${user.time}</div>
                                 <div class="contaienr-chalange-img-right"><p>${user.scorePlayer2}</p><img src="${user.imagePlayer2}" alt=""> </div>
                             </div>
                         `;
@@ -91,7 +90,6 @@ export function renderAll()
 
         if(cancel)
         {
-
             // editProfile
             cancel.addEventListener("click", function() {
                 containerEdit.style.display = "none";

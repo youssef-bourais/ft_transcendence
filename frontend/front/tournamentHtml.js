@@ -22,104 +22,15 @@ export function loadTournament()
     <div class="container-main-home">
         <div class="child-container-main-home">
             <!-- start make the left side of main -->
-            <!--
             <div class="left-side">
                 <div class="titles">
-                    <p>Global Ranking</p>
-                    <p>Best players</p>
+                    <p style="text-align:center;">History Matches</p>
+                    <p>All matches players</p>
                 </div>
-                <div class="container-best-players">
-                    <div class="container-best-player">
-                        <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                        <div class="container-name">
-                            <p>Abdelkarim hajji</p>
-                            <p>54823XP</p>
-                        </div>
-                        <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
-                    </div>
-                    <div class="container-best-player">
-                        <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                        <div class="container-name">
-                            <p>Abdelkarim hajji</p>
-                            <p>54823XP</p>
-                        </div>
-                        <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
-                    </div>
-                    <div class="container-best-player">
-                        <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                        <div class="container-name">
-                            <p>Abdelkarim hajji</p>
-                            <p>54823XP</p>
-                        </div>
-                        <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
-                    </div>
-                    <div class="container-best-player">
-                        <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                        <div class="container-name">
-                            <p>Abdelkarim hajji</p>
-                            <p>54823XP</p>
-                        </div>
-                        <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
-                    </div>
-                    <div class="container-best-player">
-                        <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                        <div class="container-name">
-                            <p>Abdelkarim hajji</p>
-                            <p>54823XP</p>
-                        </div>
-                        <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
-                    </div>
-                    <div class="container-best-player">
-                        <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                        <div class="container-name">
-                            <p>Abdelkarim hajji</p>
-                            <p>54823XP</p>
-                        </div>
-                        <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
-                    </div>
-                    <div class="container-best-player">
-                        <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                        <div class="container-name">
-                            <p>Abdelkarim hajji</p>
-                            <p>54823XP</p>
-                        </div>
-                        <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
-                    </div><div class="container-best-player">
-                        <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                        <div class="container-name">
-                            <p>Abdelkarim hajji</p>
-                            <p>54823XP</p>
-                        </div>
-                        <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
-                    </div>
-
-                    <div class="container-best-player">
-                        <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                        <div class="container-name">
-                            <p>Abdelkarim hajji</p>
-                            <p>54823XP</p>
-                        </div>
-                        <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
-                    </div>
-                    <div class="container-best-player">
-                        <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                        <div class="container-name">
-                            <p>Abdelkarim hajji</p>
-                            <p>54823XP</p>
-                        </div>
-                        <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
-                    </div>
-                    <div class="container-best-player">
-                        <div class="container-img"><img src="./images/avatar.png" alt=""></div>
-                        <div class="container-name">
-                            <p>Abdelkarim hajji</p>
-                            <p>54823XP</p>
-                        </div>
-                        <div class="container-badge"><img src="./images/prize_winner.svg" alt=""></div>
-                    </div>
+                <div class="container-best-players" id="container-best-players">
+                    
                 </div>
             </div>
-            -->
             <!-- finish make the left side of main -->
 
             <!-- start main the midle side -->

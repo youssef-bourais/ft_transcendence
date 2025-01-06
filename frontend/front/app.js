@@ -39,6 +39,7 @@ function toggleNavbarAndSearchBar(path)
             tournamentOrders();
             callForTopNav();
             startTournament()
+            listHistoryEachProfile()
             callLocalStorageLogic()
         }, 100); 
         
@@ -283,6 +284,15 @@ async function callForTopNav()
     })
 }
 
+function returnTime()
+{
+    const currentTime = new Date();
+    const hours = currentTime.getHours();
+    const minutes = currentTime.getMinutes();
+    return(`${hours}:${minutes}`)
+}
+
+
 function deisplayNoneMain()
 {
     
@@ -292,6 +302,7 @@ function deisplayNoneMain()
     con.style.height = "90%"
     con.style.alignItems = "center"
     con.innerHTML = '';
+    
     loadGameTournament("1v1");
 }
 
@@ -712,9 +723,15 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
         continueButton.addEventListener("click", function() {
             
             if(localStorage.getItem("game2") != "end")
+            {
+                localStorage.setItem("game2Time",returnTime())
                 localStorage.setItem("game2", "start")
+            }
             else if(localStorage.getItem("game3") != "end")
+            {
+                localStorage.setItem("game3Time",returnTime())
                 localStorage.setItem("game3", "start")
+            }
 
             if(localStorage.getItem("game3") != "end")
             {
@@ -727,7 +744,7 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
 
     let ScoreGame1 = document.getElementById("ScoreGame1")
     let ScoreGame2 = document.getElementById("ScoreGame2")
-    if(localStorage.getItem("player1Score"))
+    if(localStorage.getItem("player1Score") && ScoreGame1)
     {
         ScoreGame1.innerHTML += `
         <div class="container-row">
@@ -738,7 +755,7 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                 </div>
                 <div class="second-part">
                     <p>VS</p>
-                    <div class="container-time">Just now</div>
+                    <div class="container-time">${localStorage.getItem("game1Time")}</div>
                 </div>
                 <div class="third-part">
                     <p>${localStorage.getItem("player2Score")}</p>
@@ -747,7 +764,7 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
             </div>
         </div>
         `
-        if(localStorage.getItem("player3Score"))
+        if(localStorage.getItem("player3Score") && ScoreGame1)
         {
             ScoreGame1.innerHTML += `
             <div class="container-row">
@@ -758,7 +775,7 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                     </div>
                     <div class="second-part">
                         <p>VS</p>
-                        <div class="container-time">Just now</div>
+                        <div class="container-time">${localStorage.getItem("game2Time")}</div>
                     </div>
                     <div class="third-part">
                         <p>${localStorage.getItem("player4Score")}</p>
@@ -769,7 +786,7 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
             `
         }
     }
-    if(localStorage.getItem("firstWinScore"))
+    if(localStorage.getItem("firstWinScore") && ScoreGame2)
     {
         ScoreGame2.innerHTML += `
         <div class="container-row">
@@ -780,7 +797,7 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                 </div>
                 <div class="second-part">
                     <p>VS</p>
-                    <div class="container-time">Just now</div>
+                    <div class="container-time">${localStorage.getItem("game3Time")}</div>
                 </div>
                 <div class="third-part">
                     <p>${localStorage.getItem("secondWinScore")}</p>
@@ -790,8 +807,37 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
         </div>
         `
     }
-   
+   let containerBestPlayers = document.getElementById("container-best-players")
+   if(containerBestPlayers)
+   {
+    alert(1)
+        const users = JSON.parse(localStorage.getItem("users"))
+        if (users && users.length > 0) {
+            let index = 0;
+            containerBestPlayers.innerHTML  = ``
+            // Using a while loop to iterate over the array
+            
+            while (index < users.length) {
+                const user = users[index];
+                
+                    containerBestPlayers.innerHTML += `
+                        <div class="child-container-chalange">
+                            <div class="contaienr-chalange-img-left"><img src="${user.imagePlayer1}" alt=""><p>${user.scorePlayer1}</p></div>
+                            <div class="container-VS">${user.time}</div>
+                            <div class="contaienr-chalange-img-right"><p>${user.scorePlayer2}</p><img src="${user.imagePlayer2}" alt=""> </div>
+                        </div>
+                    `;
+                // Increment the index to move to the next user
+                index++;
+            }
+        } else {
+            console.log("No users found in localStorage.");
+        }
+   }
 }
+
+
+
 
 function callLocalStorageLogic() {
     function initializeUsersArray() {
@@ -807,16 +853,9 @@ function callLocalStorageLogic() {
     }
 
     initializeUsersArray();
-    const username = localStorage.getItem("username");
-    const photo = localStorage.getItem("photo");
-
-    if (username && photo) {
-        addUserIfNotExists(username, photo);
-    } else {
-        console.error("Username or photo is missing in localStorage!");
-    }
 }
-export function addUserData(namePlayer1, imagePlayer1, scorePlayer1, namePlayer2, imagePlayer2, scorePlayer2) {
+
+export function addUserData(namePlayer1, imagePlayer1, scorePlayer1, namePlayer2, imagePlayer2, scorePlayer2, time) {
     let users = JSON.parse(localStorage.getItem("users")) || [];
     const newUser = {
         namePlayer1, 
@@ -824,11 +863,47 @@ export function addUserData(namePlayer1, imagePlayer1, scorePlayer1, namePlayer2
         scorePlayer1, 
         namePlayer2, 
         imagePlayer2, 
-        scorePlayer2
+        scorePlayer2,
+        time
     };
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
 }
+
+
+
+function listHistoryEachProfile()
+{
+    let listHistoryInEachProfile = document.getElementById("listHistoryInEachProfile")
+    if(listHistoryInEachProfile)
+    {
+        const users = JSON.parse(localStorage.getItem("users"))
+            if (users && users.length > 0) {
+                let index = 0;
+                listHistoryInEachProfile.innerHTML  = ``
+                // Using a while loop to iterate over the array
+                
+                while (index < users.length) {
+                    const user = users[index];
+                    if(localStorage.getItem("eachProfileUserName") == user.namePlayer1 || localStorage.getItem("eachProfileUserName") == user.namePlayer2)
+                    {
+                        listHistoryInEachProfile.innerHTML += `
+                            <div class="child-container-chalange">
+                                <div class="contaienr-chalange-img-left"><img src="${user.imagePlayer1}" alt=""><p>${user.scorePlayer1}</p></div>
+                                <div class="container-VS">${user.time}</div>
+                                <div class="contaienr-chalange-img-right"><p>${user.scorePlayer2}</p><img src="${user.imagePlayer2}" alt=""> </div>
+                            </div>
+                        `;
+                    }
+                    // Increment the index to move to the next user
+                    index++;
+                }
+            } else {
+                console.log("No users found in localStorage.");
+            }
+    }
+}
+
 
  
 window.togglePass = togglePass;
