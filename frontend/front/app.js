@@ -810,7 +810,6 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
    let containerBestPlayers = document.getElementById("container-best-players")
    if(containerBestPlayers)
    {
-    alert(1)
         const users = JSON.parse(localStorage.getItem("users"))
         if (users && users.length > 0) {
             let index = 0;

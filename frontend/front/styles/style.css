@@ -28,7 +28,12 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+ol, ul{
+    padding-left: 0 !important;
+}
+p{
+    margin-bottom: 0    !important;
+}
 html, body {
     height: 100%;
     background-image: linear-gradient(var(--blue) , var(--base2));

@@ -15,7 +15,7 @@ export function loadChatInterface() {
     <div class="child-container-main-home">
     <div class="chat-interface">
         <div class="friends-list">
-            <h2>Chat</h2>
+            <h2 class="bg-danger text-white">Chat</h2>
             <ul id="friendsList"></ul>
         </div>
         <div class="chat-area hidden">
@@ -36,7 +36,7 @@ export function loadChatInterface() {
             <div id="messagesContainer" class="messages-container"></div>
             <div class="input-area">
                 <input type="text" id="messageInput" placeholder="Type your message...">
-                <button id="sendButton">
+                <button id="sendButton" class="bg-danger">
                     <i class='bx bxs-send'></i>
                 </button>
             </div>
