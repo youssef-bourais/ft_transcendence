@@ -837,6 +837,7 @@ input[type="search"]::-webkit-search-cancel-button {
     border: 1px solid black;
     background-color: rgb(150, 33, 33);
     color: white;
+    padding: 0;
 }
 
 .midle-side .container-update-info .container-save button:hover

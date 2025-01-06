@@ -383,14 +383,14 @@ input[type="search"]::-webkit-search-cancel-button {
 {
     font-size: 2.5em;
     font-weight: bold;
-    margin-bottom: 50px;
+    margin-bottom: 50px !important;
 }
 
 .container-main-home .child-container-main-home .left-side .titles p:last-child
 {
     font-size: 1em;
     color: rgba(255, 255, 255, 0.779);
-    margin-bottom: 30px;
+    margin-bottom: 30px !important;
 }
 
 .container-main-home .child-container-main-home .left-side .container-best-players
@@ -1146,6 +1146,7 @@ input[type="search"]::-webkit-search-cancel-button {
     background-color: var(--red);
     color: white;
     cursor: pointer;
+    padding: 0;
 }
 
 .container-chat .container-main .container-outputs .container-out-friend button:hover
