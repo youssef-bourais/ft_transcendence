@@ -266,17 +266,9 @@ export const routes = {
                                     <div class="container-history-friends">
                                         <div class="contaienr-history-profile"><p>History</p></div>
                                     </div>
-                                    <div class="container-chalange">
-                                        <div class="child-container-chalange">
-                                            <div class="contaienr-chalange-img-left"><img src="./images/avatar.png" alt=""><p>1</p></div>
-                                            <div class="container-VS">VS</div>
-                                            <div class="contaienr-chalange-img-right"><p>1</p><img src="./images/avatar.png" alt=""> </div>
-                                        </div>
-                                        <div class="child-container-chalange">
-                                            <div class="contaienr-chalange-img-left"><img src="./images/avatar.png" alt=""><p>1</p></div>
-                                            <div class="container-VS">VS</div>
-                                            <div class="contaienr-chalange-img-right"><p>1</p><img src="./images/avatar.png" alt=""> </div>
-                                        </div>
+                                    <div class="container-chalange" id="container-history-chalange">
+                                       
+                                        
                                     
                                     </div>
                                     

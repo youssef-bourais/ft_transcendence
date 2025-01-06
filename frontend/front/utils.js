@@ -56,7 +56,20 @@ export async function logout()
             console.log("status: ", response.status);
             console.log('Refresh token successfully blacklisted.');
 
-            localStorage.clear();
+            function clearLocalStorageExcept(keyToKeep) {
+                const dataToKeep = localStorage.getItem(keyToKeep);
+
+                localStorage.clear();
+
+                if (dataToKeep !== null) {
+                    localStorage.setItem(keyToKeep, dataToKeep);
+                    console.log(`The key '${keyToKeep}' has been kept.`);
+                } else {
+                    console.log(`No data found for '${keyToKeep}' to restore.`);
+                }
+            }
+
+            clearLocalStorageExcept("users");
             history.pushState({}, "", "/");
             handleLocation();
         }

@@ -39,6 +39,7 @@ function toggleNavbarAndSearchBar(path)
             tournamentOrders();
             callForTopNav();
             startTournament()
+            callLocalStorageLogic()
         }, 100); 
         
         populateProfile(); 
@@ -789,12 +790,47 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
         </div>
         `
     }
-    
+   
 }
 
+function callLocalStorageLogic() {
+    function initializeUsersArray() {
+        const storedUsers = localStorage.getItem("users");
 
+        if (!storedUsers) {
+            const emptyArray = [];
+            localStorage.setItem("users", JSON.stringify(emptyArray));
+            console.log("The 'users' array has been initialized in localStorage.");
+        } else {
+            console.log("The 'users' array already exists in localStorage.");
+        }
+    }
 
+    initializeUsersArray();
+    const username = localStorage.getItem("username");
+    const photo = localStorage.getItem("photo");
 
+    if (username && photo) {
+        addUserIfNotExists(username, photo);
+    } else {
+        console.error("Username or photo is missing in localStorage!");
+    }
+}
+export function addUserData(namePlayer1, imagePlayer1, scorePlayer1, namePlayer2, imagePlayer2, scorePlayer2) {
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    const newUser = {
+        namePlayer1, 
+        imagePlayer1, 
+        scorePlayer1, 
+        namePlayer2, 
+        imagePlayer2, 
+        scorePlayer2
+    };
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+}
+
+ 
 window.togglePass = togglePass;
 window.clickEvent = clickEvent;
 window.logout = logout;

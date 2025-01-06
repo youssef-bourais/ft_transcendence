@@ -1,7 +1,7 @@
 import {loadTournament } from './tournamentHtml.js'
 import {intilizeNameImage2} from "./app.js"
 import {startTournament} from './app.js'
-
+import {addUserData} from './app.js'
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
@@ -280,6 +280,7 @@ class Game {
                 }
                 else if(localStorage.getItem("game2") == "start")
                 {
+                    addUserData(localStorage.getItem("username"),localStorage.getItem("photo"),score1,localStorage.getItem("player3Name"),localStorage.getItem("player3Image"), score2)
                     if(score1 > score2)
                     {
                         localStorage.setItem("secondWin", localStorage.getItem("username"))
@@ -297,6 +298,8 @@ class Game {
                 }
                 else if(localStorage.getItem("game3") == "start")
                 {
+                    if(localStorage.getItem("secondWinName") == localStorage.getItem("username"))
+                        addUserData(localStorage.getItem("firstWinName"),localStorage.getItem("firstWinImage"),score1,localStorage.getItem("secondWinName"),localStorage.getItem("secondWinImage"), score2)
                     if(score1 > score2)
                     {
                         localStorage.setItem("Winner", localStorage.getItem("firstWin"))
