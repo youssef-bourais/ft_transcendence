@@ -46,7 +46,7 @@ export function loadChatInterface() {
     </div>
     `;
     // content.innerHTML = `<h1>hola</h1>`;
-    console.log("alexander");
+    // console.log("alexander");
     
     initializeChat();
 }
@@ -82,7 +82,7 @@ async function initializeChat() {
 
     blockUser.addEventListener("click", async function(){
         let data = await dataUser();
-        console.log("====================remove friend==================== id:", data);
+        // console.log("====================remove friend==================== id:", data);
         // if (currentRecipientId != null){
             removeFriend(data.id);
             let chatAreaForif = document.querySelector('.chat-area');
@@ -112,7 +112,7 @@ export function startChat() {
 }
 
 function connectWebSocket() {
-    socket = new WebSocket(`https://${window.location.host}/ws/chat`);
+    socket = new WebSocket(`wss://${window.location.host}/ws/chat`);
 
     socket.onopen = function(e) {
         console.log("WebSocket connection established");
@@ -155,7 +155,7 @@ async function removeFriend(friendID)
     const info = await SecureApiRequest("/api/friend/remove_friend/", "POST", `{"friend_id": "${friendID}"}`);
     // if(!info)
     //     return;
-    console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
+    // console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
     // localStorage.setItem('eachProfileUserName', data.username);
     
 }
@@ -163,20 +163,27 @@ async function removeFriend(friendID)
 
 async function fetchFriends() 
 {
-    let karim =  await dataUser();
-    if(localStorage.getItem("openChat"))
-    {
-        // fetchConversationHistory(karim.username)
-        selectFriend(karim);
-    }
     const friendData = await SecureApiRequest('/api/friend/get_friends/');
 
     const friendsToRender = friendData.friends.map(friend => ({
         username: friend.username, 
         photo: friend.photo  
     }));
-    console.log("friends:", friendsToRender);
+    const usernameExists = friendData.friends.some(friend => friend.username === localStorage.getItem("openChat"));
+    // console.log("//////////////////////", usernameExists, "//////////////////////");
+    if (!usernameExists)
+        localStorage.setItem("openChat", "");
+    // console.log("friends:", friendsToRender);
+
+
     renderFriends(friendsToRender);
+    let karim =  await dataUser();
+    // console.log("//////////////////////", localStorage.getItem("openChat"), "//////////////////////");
+    if(localStorage.getItem("openChat"))
+    {
+        // fetchConversationHistory(karim.username)
+        selectFriend(karim);
+    }
 }
 
 
