@@ -2,9 +2,9 @@ const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
 const PADDLE_WIDTH = 10;
 const PADDLE_HEIGHT = 100;
-const BALL_SIZE = 20;
-let BALL_SPEED = 8;
-let PADDLE_SPEED = 12;
+const BALL_SIZE = 15;
+let BALL_SPEED = 5;
+let PADDLE_SPEED = 8;
 let WINNING_SCORE = 5;
 let GAME_MODE = '1v1';
 let animationFrameId = null;
@@ -64,35 +64,29 @@ class Ball {
     }
 
     reset() {
-        // Always in the vertical center
+        this.x = CANVAS_WIDTH / 2;
         this.y = CANVAS_HEIGHT / 2;
-
-        // Randomly choose left or right side
         if (Math.random() < 0.5) {
-            this.x = BALL_SIZE * 2;
-            this.dx = BALL_SPEED; // move right
+            this.dx = BALL_SPEED * 1;
         } else {
-            this.x = CANVAS_WIDTH - BALL_SIZE * 2;
-            this.dx = -BALL_SPEED; // move left
+            this.dx = -BALL_SPEED * -1;
         }
-
-        // Give a random vertical component
-        this.dy = (Math.random() - 0.5) * BALL_SPEED;
+        this.dy = BALL_SPEED * (Math.random() * 2 - 1);
     }
 
     update() {
         this.x += this.dx;
         this.y += this.dy;
+
+        // Bounce off top and bottom
         if (this.y < 0 || this.y > CANVAS_HEIGHT) {
             this.dy *= -1;
         }
     }
 
     draw(ctx) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, BALL_SIZE / 2, 0, Math.PI * 2);
         ctx.fillStyle = '#fff';
-        ctx.fill();
+        ctx.fillRect(this.x - BALL_SIZE/2, this.y - BALL_SIZE/2, BALL_SIZE, BALL_SIZE);
     }
 }
 
@@ -134,9 +128,9 @@ class Paddle {
         const targetY = ball.y;
         if (Math.abs(this.y - targetY) > PADDLE_HEIGHT/4) {
             if (this.y < targetY) {
-                this.y += PADDLE_SPEED * 0.8;
+                this.y += PADDLE_SPEED * 1;
             } else {
-                this.y -= PADDLE_SPEED * 0.8;
+                this.y -= PADDLE_SPEED * 1;
             }
         }
     }
@@ -150,6 +144,8 @@ class Paddle {
         }
     }
 }
+
+
 
 
 // Game class && logic
@@ -291,7 +287,6 @@ export class Game {
         ctx.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT / 2);
         ctx.strokeStyle = '#fff';
         ctx.stroke();
-        //this.testBackground(CANVAS_HEIGHT, CANVAS_WIDTH, ctx);
 
         // Draw game elements
         this.ball.draw(ctx);
@@ -327,7 +322,8 @@ export class Game {
 
 
 export function startGame(mode) {
-    const game = new Game(mode);
+    let game = null;
+    game =  new Game(mode);
     setupGamePage(game);
 }
 
@@ -340,7 +336,6 @@ function stopGame() {
 }
 
 export function setupGamePage(game) {
-    console.log('Game page loaded');
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     canvas.width = CANVAS_WIDTH;

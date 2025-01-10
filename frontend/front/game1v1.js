@@ -7,9 +7,9 @@ const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
 const PADDLE_WIDTH = 10;
 const PADDLE_HEIGHT = 100;
-const BALL_SIZE = 20;
-let BALL_SPEED = 8;
-let PADDLE_SPEED = 12;
+const BALL_SIZE = 15;
+let BALL_SPEED = 7;
+let PADDLE_SPEED = 8;
 let WINNING_SCORE = 5;
 
 // Add reset function for scores
@@ -71,35 +71,32 @@ class Ball {
     }
 
     reset() {
-        this.x = CANVAS_WIDTH / 2;  // Start from center
+        this.x = CANVAS_WIDTH / 2;
         this.y = CANVAS_HEIGHT / 2;
-        
-        // Random initial direction with normalized speed
-        const angle = (Math.random() * Math.PI / 2) - Math.PI / 4; // -45 to 45 degrees
-        this.dx = Math.cos(angle) * BALL_SPEED * (Math.random() < 0.5 ? 1 : -1);
-        this.dy = Math.sin(angle) * BALL_SPEED;
+        if (Math.random() < 0.5) {
+            this.dx = BALL_SPEED * 1;
+        } else {
+            this.dx = -BALL_SPEED * -1;
+        }
+        this.dy = BALL_SPEED * (Math.random() * 2 - 1);
     }
 
     update() {
         this.x += this.dx;
         this.y += this.dy;
-        
-        // Bounce off top and bottom with small random factor
-        if (this.y <= BALL_SIZE/2 || this.y >= CANVAS_HEIGHT - BALL_SIZE/2) {
+
+        // Bounce off top and bottom
+        if (this.y < 0 || this.y > CANVAS_HEIGHT) {
             this.dy *= -1;
-            this.dy += (Math.random() - 0.5) * 0.5; // Add slight randomness
-            this.y = Math.max(BALL_SIZE/2, Math.min(this.y, CANVAS_HEIGHT - BALL_SIZE/2));
         }
     }
 
     draw(ctx) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, BALL_SIZE / 2, 0, Math.PI * 2);
         ctx.fillStyle = '#fff';
-        ctx.fill();
-        ctx.closePath();
+        ctx.fillRect(this.x - BALL_SIZE/2, this.y - BALL_SIZE/2, BALL_SIZE, BALL_SIZE);
     }
 }
+
 
 class Paddle {
     constructor(x, y) {
@@ -170,7 +167,7 @@ class Game {
                 this.ball.y <= paddle.y + paddle.height/2
             ) {
                 // Reverse ball direction and adjust angle based on hit position
-                this.ball.dx *= -1.1; // Slight speed increase on hits
+                this.ball.dx *= -1.01; // Slight speed increase on hits
                 const hitPos = (this.ball.y - paddle.y) / (paddle.height/2);
                 this.ball.dy = hitPos * BALL_SPEED;
                 
@@ -196,11 +193,7 @@ class Game {
         }
     }
     resetGame() {
-        // Reset gameOver state
         this.gameOver = false;
-        // thisgameOver = false;
-    
-        // Reset ball position and speed
         this.ball.reset();
     
         // Reset paddle positions and scores
@@ -212,13 +205,13 @@ class Game {
                 paddle.x = CANVAS_WIDTH / 2; // Reset horizontal paddles to center
             }
         });
-        
-        // cancelAnimationFrame();
-        // Reset animation frame and other game states
-        // if (animationFrameId) {
-            cancelAnimationFrame();
-        //     animationFrameId = null; // Clear the ID
-        // }
+            try {
+
+                cancelAnimationFrame(animationFrameId);
+                this.keyboard.removeEventListeners();
+            } catch(error) {
+                console.log("folhaha")
+            }
     }
 
     draw() {
