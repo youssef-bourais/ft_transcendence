@@ -1,4 +1,5 @@
 import { startGame } from './game.js';
+import { startGame4players } from './game4Players.js';
 
 export function loadGameFront(mode) {
     const app = document.getElementById('goma');	
@@ -82,8 +83,6 @@ export function loadGameFront(mode) {
         #gameCanvas {
             border: 2px solid skyblue;
             border-radius: 4px;
-            width: 800px; /* Set canvas width */
-            height: 800px; /* Set canvas height */
         }
     
         #userInfo .user-info {
@@ -142,9 +141,15 @@ export function loadGameFront(mode) {
         <div class="user-info" id="userInfo"></div>
     </div>
     `;
-    
-    displayUserInfo(); // Call the function to display user info
+
+    if(mode == '1VAI'){
+        displayUserInfo();
+    } else if(mode == '4player'){
+        console.log("4 players mode");
+        startGame4players();
+    } else {
     startGame(mode);
+    }
     console.log("start game called and displayUser called");
 }
 

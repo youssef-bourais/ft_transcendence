@@ -116,25 +116,11 @@ export function gameMenu() {
 }
 
 
-async function matchMaking() {
-    const content = document.getElementById('goma');
-    if (!content) {
-        console.error('Error: game-container not found!!!');
-        return;
-    }
-    const data = await SecureApiRequest('/api/friend/get_friends/');
-    console.log(data.friends[0].username);
-    let friends = data.friends.map(friend => ({
-        id: friend.id,
-        name: friend.username
-    }));
-    console.log(friends);
-}
-
 
 
 // Function to handle mode selection
 window.selectMode = function (mode) {
+
     const content = document.getElementById('goma');
     if (!content) {
         console.error('Error: game-container not found!!!');
@@ -150,9 +136,9 @@ window.selectMode = function (mode) {
         if (mode === '1v1') {
             
         }
-        matchMaking();
        loadGameFront(mode);
     }, 3000);
+    
 };
 
 

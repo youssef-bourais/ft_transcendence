@@ -3,12 +3,12 @@ import {intilizeNameImage2} from "./app.js"
 import {startTournament} from './app.js'
 import {addUserData} from './app.js'
 
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 800;
+const CANVAS_WIDTH = 700;
+const CANVAS_HEIGHT = 500;
 const PADDLE_WIDTH = 10;
 const PADDLE_HEIGHT = 100;
 const BALL_SIZE = 15;
-let BALL_SPEED = 7;
+let BALL_SPEED = 5;
 let PADDLE_SPEED = 8;
 let WINNING_SCORE = 5;
 
@@ -205,13 +205,7 @@ class Game {
                 paddle.x = CANVAS_WIDTH / 2; // Reset horizontal paddles to center
             }
         });
-            try {
-
-                cancelAnimationFrame(animationFrameId);
-                this.keyboard.removeEventListeners();
-            } catch(error) {
-                console.log("folhaha")
-            }
+        cancelAnimationFrame();
     }
 
     draw() {
