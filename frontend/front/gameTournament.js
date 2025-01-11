@@ -83,8 +83,8 @@ export function loadGameTournament(mode, names) {
         #gameCanvas {
             border: 2px solid skyblue;
             border-radius: 4px;
-            width: 800px; /* Set canvas width */
-            height: 800px; /* Set canvas height */
+            width: 700px; /* Set canvas width */
+            height: 500px; /* Set canvas height */
         }
     
         #userInfo .user-info {
