@@ -11,7 +11,7 @@ const BALL_SIZE = 15;
 let BALL_SPEED = 5;
 let PADDLE_SPEED = 8;
 let WINNING_SCORE = 5;
-
+let stop = false;
 // Add reset function for scores
 function resetScores() {
     score1 = 0;
@@ -130,6 +130,7 @@ class Game {
         this.ctx = canvas.getContext('2d');
         this.keyboard = new KeyboardController();
         this.reset();
+        stop = false;
     }
 
     reset() {
@@ -205,7 +206,8 @@ class Game {
                 paddle.x = CANVAS_WIDTH / 2; // Reset horizontal paddles to center
             }
         });
-        cancelAnimationFrame();
+        // cancelAnimationFrame();
+        stop = true;
     }
 
     draw() {
@@ -232,7 +234,7 @@ class Game {
         this.ctx.textAlign = 'center';
         this.ctx.fillText(score1, CANVAS_WIDTH/4, 60);
         this.ctx.fillText(score2, 3*CANVAS_WIDTH/4, 60);
-        console.log("game still running !!!!!!!!!!!! ch3ndak akhawa")
+        //("game still running !!!!!!!!!!!! ch3ndak akhawa")
 
         if (this.gameOver) {
             this.ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
@@ -245,8 +247,8 @@ class Game {
                        
             if(localStorage.getItem("gameEnd") == "start")
             {   
-                console.log("screw1", score1)
-                console.log("score2", score2)
+                //("screw1", score1)
+                //("score2", score2)
 
                 if(localStorage.getItem("game1") == "start")
                 {
@@ -383,6 +385,12 @@ export function startGameTournament() {
         game.update();
         game.draw();
         animationFrameId = requestAnimationFrame(gameLoop);
+        if(stop == true)
+        {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+            return;
+        }
     }
 
     gameLoop();

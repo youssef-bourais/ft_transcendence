@@ -346,7 +346,7 @@ export function setupGamePage(game) {
     function gameLoop() {
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         if (game) {
-            console.log('Game loop running');
+            //('Game loop running');
             game.update(keyboard.keys);
             game.draw(ctx);
         }

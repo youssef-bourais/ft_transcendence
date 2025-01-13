@@ -6,7 +6,7 @@ export async function refreshAccessToken()
     try 
     {
         const refreshToken = localStorage.getItem("refreshToken");
-        // console.log("refreshToken in refreshAccessToken======", refreshToken);
+        // //("refreshToken in refreshAccessToken======", refreshToken);
 
             const response = await fetch(`/api/token/refresh/`, {
             method: "POST",
@@ -16,7 +16,7 @@ export async function refreshAccessToken()
             body: JSON.stringify({ refresh: refreshToken }),
         });
 
-        console.log("status in refreshToken function:", response.status);
+        //("status in refreshToken function:", response.status);
 
         if (!response.ok) 
         {
@@ -26,7 +26,7 @@ export async function refreshAccessToken()
         else
         {
             const data = await response.json();
-            console.log("New access token retrieved successfully.");
+            //("New access token retrieved successfully.");
             localStorage.setItem("accessToken", data.access);
         }
     } 
@@ -60,7 +60,7 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null, is
         method,
         headers,
     };
-    console.log("request in SecureApiRequest:", request);
+    //("request in SecureApiRequest:", request);
            
     // if (is_upload) 
     //     delete request.headers["Content-Type"];
@@ -86,7 +86,7 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null, is
             if (retryResponse.ok) 
             {
                 const data = await retryResponse.json();
-                console.log("Request retried successfully after token refresh.");
+                //("Request retried successfully after token refresh.");
                 return data;
             }
             console.error("accessToken refresh failed.");
@@ -98,17 +98,17 @@ export async function SecureApiRequest(endpoint, method = "GET", body = null, is
         }
         if (response.ok) 
         {
-            console.log("feth from api");
+            //("feth from api");
             const data = await response.json();
             return data;
         } 
         if(!response.ok)
         {
             const data = await response.json();
-            console.log("SecureApiRequest: ", data);
+            //("SecureApiRequest: ", data);
 
-            console.log("status :", response.status, data.error);
-            console.log("data, ", data);
+            //("status :", response.status, data.error);
+            //("data, ", data);
             return data;
         }
     } 

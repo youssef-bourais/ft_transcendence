@@ -23,7 +23,7 @@ export function initRenderAllEvents()
 
 export function renderAll() 
 {
-    console.log("render all ok bro ");
+    //("render all ok bro ");
     if (inputSearch) 
     {
         let  notFound = document.getElementById("not-found");
@@ -84,7 +84,7 @@ export function renderAll()
                     index++;
                 }
             } else {
-                console.log("No users found in localStorage.");
+                //("No users found in localStorage.");
             }
         }
 
@@ -118,7 +118,7 @@ export function renderAll()
                 fetch(`/api/get/${localStorage.getItem("username")}/`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log("get item ===> ", data)
+                    //("get item ===> ", data)
                     if(data.is_2fa_enabled == true)
                         checkBox.checked = true
                     else
@@ -126,7 +126,7 @@ export function renderAll()
                         usernameIdProfile.value = "";//data.username;
                         emailIdProfile.value = "";//data.email;
 
-                    console.log("i am here in data");
+                    //("i am here in data");
                 })
                 .catch(error => {
 
@@ -139,7 +139,7 @@ export function renderAll()
         // .then(data => {
         //     if(data.id > 100)
         //         editProfile.style.display = "none"
-        //     console.log("i am here in data");
+        //     //("i am here in data");
         // })
         // .catch(error => {
 
@@ -169,9 +169,9 @@ export function renderAll()
 
                     function updateLocalstorage(UserData) 
                     {
-                        console.log("username", UserData.data.username);
-                        console.log("email", UserData.data.email);
-                        console.log("photo", UserData.data.photo);
+                        //("username", UserData.data.username);
+                        //("email", UserData.data.email);
+                        //("photo", UserData.data.photo);
 
                         if (UserData.data.username) localStorage.setItem('username', UserData.data.username);
                         if (UserData.data.email) localStorage.setItem('email', UserData.data.email);
@@ -179,13 +179,13 @@ export function renderAll()
                         if (UserData.data.photo) localStorage.setItem('photo', "http://127.0.0.1:8000" + UserData.data.photo);
                     }
                     async function sendRequestUpdateProfile() {
-                        console.log("hi mister karim")
+                        //("hi mister karim")
                         let stateCheck;
                         if(checkBox.checked)
                             stateCheck = true;
                         else
                             stateCheck = false;
-                        console.log(`{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "photo":"${send_image}", "is_2fa_enabled":"${stateCheck}"}`)
+                        //(`{"username":"${usernameIdProfile.value}", "email":"${emailIdProfile.value}", "password":"${passwordIdProfile.value}", "repeat_password": "${passwordIdProfileConfirme.value}", "photo":"${send_image}", "is_2fa_enabled":"${stateCheck}"}`)
 
                         const username = usernameIdProfile.value;
                         const email = emailIdProfile.value;
@@ -206,8 +206,8 @@ export function renderAll()
 
                     const UserData = {};
 
-                    console.log("photo:", photo);
-                    console.log("UserData=================: ", formData);
+                    //("photo:", photo);
+                    //("UserData=================: ", formData);
 
                     const is_upload = !!file;
 
@@ -227,13 +227,13 @@ export function renderAll()
 
                     if (!is_upload && Object.entries(UserData).length === 0) 
                         body = null;
-                    console.log("uplaod::::::::: ", is_upload);
-                    console.log("body::::::::: ", body);
+                    //("uplaod::::::::: ", is_upload);
+                    //("body::::::::: ", body);
 
                     const info = await SecureApiRequest("/api/update/profile/","PATCH", body, is_upload);
                     if (info && !info.error) 
                     {
-                        console.log("localStorage updateeeeeed", info);
+                        //("localStorage updateeeeeed", info);
 
                         updateLocalstorage(info);
 
@@ -282,9 +282,9 @@ export function renderAll()
         inputSearch.addEventListener('input', (event) => {
         //
         // async function delayedExecution() {
-        //     console.log("Waiting for 2 seconds...");
+        //     //("Waiting for 2 seconds...");
         //     await sleep(500);
-        //     console.log("This message is delayed by 2 seconds");
+        //     //("This message is delayed by 2 seconds");
         //     // Add your code here
         // }
 
@@ -296,7 +296,7 @@ export function renderAll()
                 fetch(`/api/get/${username}/`)
                     .then(response => response.json())
                     .then(data => {
-                        // console.log('Response from server:', data);
+                        // //('Response from server:', data);
                         if(data.error == "User not found")
                         {
                             nameSearch.innerHTML = "User not found";
@@ -318,16 +318,16 @@ export function renderAll()
                             buttonFriend2.style.display = "none"
                             localStorage.setItem('eachProfileUserName', data.username);
                             localStorage.setItem('eachProfileUserId', data.id);
-                            console.log("see this data===> ",data);
+                            //("see this data===> ",data);
 
 
                         }
-                        console.log("i am here in data");
+                        //("i am here in data");
                     })
                     .catch(error => {
                         // console.error('Error fetching data:', error);
                         // nameSearch.innerHTML = "NotFound";
-                        // console.log("i am there error data");
+                        // //("i am there error data");
                     });
             }
 
@@ -362,8 +362,8 @@ export function renderAll()
 
         friendsContainer.innerHTML = '';
 
-        // console.log("this all my friends => ", info.friends)
-        // console.log("this all my friends => ", info.friends.length)
+        // //("this all my friends => ", info.friends)
+        // //("this all my friends => ", info.friends.length)
         if(info.friends.length > 0)
         {
             // if(friendsContainer)
@@ -421,8 +421,8 @@ export function renderAll()
         fetch(`/api/get/${eachProfileUserName}/`)
         .then(response => response.json())
         .then(data => {
-            console.log("i am her i will ")
-            console.log('Response from server karim ok ::::', data);
+            //("i am her i will ")
+            //('Response from server karim ok ::::', data);
             if(data.error == "User not found")
             {
 
@@ -434,7 +434,7 @@ export function renderAll()
                         
                     if(!isValidUrl(photo))
                     {
-                        console.log("hello url is path:", isValidUrl(photo));
+                        //("hello url is path:", isValidUrl(photo));
                         photo = `http://127.0.0.1:8000${photo}`;
                     }
 
@@ -467,10 +467,10 @@ async function checkButtonAddFriend()
 
         let i = 0;
         let valid = 0;
-        console.log("nchofo info ====> ",info.friends, localStorage.getItem("eachProfileUserName"))
+        //("nchofo info ====> ",info.friends, localStorage.getItem("eachProfileUserName"))
         while(i < info.friends.length)
         {
-            console.log("comp ==> ",info.friends[i].username)
+            //("comp ==> ",info.friends[i].username)
             if(info.friends[i].username == localStorage.getItem("eachProfileUserName"))
                 valid = 1;
             i++;
@@ -500,7 +500,7 @@ async function sendFriend()
     const info = await SecureApiRequest("/api/friend/add/", "POST", `{"to_user": "${localStorage.getItem("eachProfileUserId")}"}`);
     // if(!info)
     //     return;
-    console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
+    //("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
 
     // localStorage.setItem('eachProfileUserName', data.username);
 
@@ -562,7 +562,7 @@ if(addFriendButton)
     //         // if(!info)
     //         //     return;
     //
-    //         console.log("i am inside checkButtonAddFriend ok bro", info)
+    //         //("i am inside checkButtonAddFriend ok bro", info)
     //         let i = 0;
     //         let valid = 0;
     //         while(i < info.friends.length)
@@ -587,7 +587,7 @@ if(addFriendButton)
     //     const info = await SecureApiRequest("/api/friend/add/", "POST", `{"to_user": "${localStorage.getItem("eachProfileUserId")}"}`);
     //     // if(!info)
     //     //     return;
-    //     console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
+    //     //("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
     //
     //     // localStorage.setItem('eachProfileUserName', data.username);
     //

@@ -15,6 +15,7 @@ export function loadTournament()
             
         </div>
         <div class="container-start"><button id="startTournament">START</button></div>
+        <div class="container-start"><button id="backToProfile">Profile</button></div>
     </div>
     </div>
     <!-- start main -->

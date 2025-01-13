@@ -144,7 +144,7 @@ export function loadGameTournament(mode, names) {
     
     displayUserInfo(); // Call the function to display user info
     startGameTournament();
-    console.log("start game called and displayUser called");
+    //("start game called and displayUser called");
 }
 
 function displayUserInfo() {

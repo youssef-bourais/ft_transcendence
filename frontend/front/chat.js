@@ -46,7 +46,7 @@ export function loadChatInterface() {
     </div>
     `;
     // content.innerHTML = `<h1>hola</h1>`;
-    // console.log("alexander");
+    // //("alexander");
     
     initializeChat();
 }
@@ -82,7 +82,7 @@ async function initializeChat() {
 
     blockUser.addEventListener("click", async function(){
         let data = await dataUser();
-        // console.log("====================remove friend==================== id:", data);
+        // //("====================remove friend==================== id:", data);
         // if (currentRecipientId != null){
             removeFriend(data.id);
             let chatAreaForif = document.querySelector('.chat-area');
@@ -98,14 +98,14 @@ async function initializeChat() {
 
 export function closeWebSocket() {
     if (socket) {
-        console.log("socket closed.....");
+        //("socket closed.....");
         socket.close();
     }
 }
 
 
 export function startChat() {
-    console.log("initializeChat===================")
+    //("initializeChat===================")
     if (!socket || socket.readyState === WebSocket.CLOSED) {
         connectWebSocket();
     }
@@ -115,7 +115,7 @@ function connectWebSocket() {
     socket = new WebSocket(`wss://${window.location.host}/ws/chat`);
 
     socket.onopen = function(e) {
-        console.log("WebSocket connection established");
+        //("WebSocket connection established");
     };
 
 
@@ -130,7 +130,7 @@ function connectWebSocket() {
 
     socket.onclose = function(e) {
         socket = null;
-        console.log("WebSocket connection closed");
+        //("WebSocket connection closed");
     };
 }
 
@@ -155,7 +155,7 @@ async function removeFriend(friendID)
     const info = await SecureApiRequest("/api/friend/remove_friend/", "POST", `{"friend_id": "${friendID}"}`);
     // if(!info)
     //     return;
-    // console.log("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
+    // //("info ==========> ",info, localStorage.getItem("eachProfileUserId"))
     // localStorage.setItem('eachProfileUserName', data.username);
     
 }
@@ -170,15 +170,15 @@ async function fetchFriends()
         photo: friend.photo  
     }));
     const usernameExists = friendData.friends.some(friend => friend.username === localStorage.getItem("openChat"));
-    // console.log("//////////////////////", usernameExists, "//////////////////////");
+    // //("//////////////////////", usernameExists, "//////////////////////");
     if (!usernameExists)
         localStorage.setItem("openChat", "");
-    // console.log("friends:", friendsToRender);
+    // //("friends:", friendsToRender);
 
 
     renderFriends(friendsToRender);
     let karim =  await dataUser();
-    // console.log("//////////////////////", localStorage.getItem("openChat"), "//////////////////////");
+    // //("//////////////////////", localStorage.getItem("openChat"), "//////////////////////");
     if(localStorage.getItem("openChat"))
     {
         // fetchConversationHistory(karim.username)
@@ -220,7 +220,7 @@ async function renderFriends(friends)
 
 
 async function selectFriend(friend) {
-    // console.log()
+    // //()
     currentRecipient = friend.username;
     currentRecipientId = friend.id;
     fetchConversationHistory(friend.username);
@@ -285,14 +285,14 @@ async function sendMessage() {
 }
 
 async function displayMessage(message) {
-    // console.log(message);
+    // //(message);
     const messagesContainer = document.getElementById('messagesContainer');
     const messageElement = document.createElement('div');
     messageElement.classList.add('messages');
     
     const isCurrentUser = message.sender__username === currentUserName;
-    // console.log(message.sender__username + "    "  +  currentUserName);
-    // console.log(isCurrentUser);
+    // //(message.sender__username + "    "  +  currentUserName);
+    // //(isCurrentUser);
     messageElement.classList.add(isCurrentUser ? 'sent' : 'received');
     
     const contentSpan = document.createElement('span');
@@ -390,7 +390,7 @@ async function displayConversationHistory(messages) {
 //     socket = new WebSocket(`ws://${window.location.host}/ws/chat`);
 
 //     socket.onopen = function(e) {
-//         console.log("WebSocket connection established");
+//         //("WebSocket connection established");
 //     };
 
 //     socket.onmessage = function(e) {
@@ -403,7 +403,7 @@ async function displayConversationHistory(messages) {
 //     };
 
 //     socket.onclose = function(e) {
-//         console.log("WebSocket connection closed");
+//         //("WebSocket connection closed");
 //     };
 // }
 
@@ -475,14 +475,14 @@ async function displayConversationHistory(messages) {
 
 
 // async function displayMessage(message) {
-//     console.log(message);
+//     //(message);
 //     const messagesContainer = document.getElementById('messagesContainer');
 //     const messageElement = document.createElement('div');
 //     messageElement.classList.add('message');
     
 //     const isCurrentUser = message.sender__username === currentUserName;
-//     console.log(message.sender__username + "    "  +  currentUserName);
-//     console.log(isCurrentUser);
+//     //(message.sender__username + "    "  +  currentUserName);
+//     //(isCurrentUser);
 //     messageElement.classList.add(isCurrentUser ? 'sent' : 'received');
     
 //     const contentSpan = document.createElement('span');

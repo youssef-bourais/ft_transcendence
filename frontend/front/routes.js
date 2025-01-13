@@ -436,7 +436,6 @@ export const routes = {
         </div>
         <!-- end main -->
             `, 
-        setup:() => console.log("eachprofile veiw...."),
     },
     "/game": {
         html: `
@@ -451,7 +450,7 @@ export const routes = {
     },
     
    "/tournament" : {
-        html : loadTournament(), 
+        html : loadTournament(),
         setup:() => console.log("Tournament veiw...."),
     },
    "/OTP" : {
@@ -491,7 +490,6 @@ export const routes = {
                 </div>
             </div>
 `,
-        setup: () => console.log("404 page loaded"),
     },
    
 };
@@ -650,10 +648,10 @@ async function getUserData(username)
 
 export function populateProfile() 
 {
-    console.log("hola.............");
+    //("hola.............");
     const photo = localStorage.getItem("photo");
     const username = localStorage.getItem("username");
-    // console.log("see this photo ==> ", photo);
+    // //("see this photo ==> ", photo);
     // const email = localStorage.getItem("email");
 
     const avatar = document.getElementsByClassName("avatars");
@@ -683,7 +681,7 @@ export function populateProfile()
     const navbarname = document.getElementById("user-username");
     if (navbarname) 
     {
-        console.log("hola")
+        //("hola")
         navbarname.innerHTML = localStorage.getItem("username");
     }
 
@@ -715,7 +713,7 @@ export function isValidUrl(string) {
 async function setupLoginPage() 
 {
     // logout();
-    // console.log("login page");
+    // //("login page");
     const form = document.getElementById("login-form");
     form.addEventListener("submit", async (event) => 
     {
@@ -746,7 +744,7 @@ async function setupLoginPage()
                 localStorage.setItem("username", UserData.username);
                 localStorage.setItem("password", UserData.password);
 
-                console.log("message: ", data.message);
+                //("message: ", data.message);
                 const userinfo = await getUserData(UserData.username); 
                 if(!userinfo)
                     console.error("An error accurred whene fetching userdata (photo)");
@@ -760,22 +758,22 @@ async function setupLoginPage()
                     localStorage.setItem("refreshToken", data.refresh);
                     localStorage.setItem("email", userinfo.email);
 
-                    console.log("photo: ", userinfo.photo);
+                    //("photo: ", userinfo.photo);
 
                     if (userinfo.photo) 
                     {
                         let photo = userinfo.photo;
-                        console.log("photo: ", photo);
+                        //("photo: ", photo);
                             
                         if(!isValidUrl(photo))
                         {
-                            console.log("hello url is path:", isValidUrl(photo));
+                            //("hello url is path:", isValidUrl(photo));
                             photo = `http://127.0.0.1:8000${photo}`;
                             localStorage.setItem("photo", photo);
                         }
                         else
                         {
-                            console.log("is url")
+                            //("is url")
                             localStorage.setItem("photo", photo);
                         }
                     }
@@ -800,7 +798,7 @@ async function setupLoginPage()
 
 async function setupRegisterPage() 
 {
-    console.log("register page");
+    //("register page");
     const form = document.getElementById("register-form");
     form.addEventListener("submit", async (event) => 
     {
@@ -836,7 +834,7 @@ async function setupRegisterPage()
             {
             
                 alert("User registered successfully!");
-                console.log("Registration successful");
+                //("Registration successful");
                 history.pushState({}, "", "/");
                 handleLocation();
             }
@@ -905,7 +903,7 @@ function decodeImage(photo)
 
 function handleRedirect() 
 {
-    console.log("bridg====================");
+    //("bridg====================");
     const access_token = getCookie('access_token');
     deleteCookie("access_token");
 
@@ -958,7 +956,7 @@ async function setupProfilepage()
     // try
     // {
     //     const info = await SecureApiRequest("/api/update/profile/","PATCH", body);
-    //     console.log("info: ", info);
+    //     //("info: ", info);
     //
     //
     //
@@ -967,7 +965,7 @@ async function setupProfilepage()
     // }
     // catch (error)
     // {
-    //     console.log("response:  ", error);
+    //     //("response:  ", error);
     // }
 }
 

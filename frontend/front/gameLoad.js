@@ -145,12 +145,12 @@ export function loadGameFront(mode) {
     if(mode == '1VAI'){
         displayUserInfo();
     } else if(mode == '4player'){
-        console.log("4 players mode");
+        //("4 players mode");
         startGame4players();
     } else {
     startGame(mode);
     }
-    console.log("start game called and displayUser called");
+    //("start game called and displayUser called");
 }
 
 function displayUserInfo() {

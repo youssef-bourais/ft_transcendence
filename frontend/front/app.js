@@ -22,7 +22,7 @@ function toggle_visibility(id)
         e.style.display = 'block';
 }
 
-const NonAuthenticated = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP"];
+const NonAuthenticated = ["/", "/register", "/forget_passwd", "/bridg", "/login_42", "/OTP", ];
 
 function toggleNavbarAndSearchBar(path) 
 {
@@ -44,15 +44,16 @@ function toggleNavbarAndSearchBar(path)
         }, 100); 
         
         populateProfile(); 
-        // if(path === "/tournament")
-            
+        
         document.getElementById("user-username").textContent = username;
         document.getElementById("user-email").textContent = email;
         document.getElementById("user-photo").src = photo;
-
+        
         navbar.style.display = 'block';
         navbar.style.opacity = '1';
         bruh.style.display = 'flex';
+        if(path === "/tournament")
+            navbar.style.display = 'none';
     }
     else 
     {
@@ -210,7 +211,7 @@ async function callForTopNav()
        
         poupapNotification.innerHTML = ``;
         
-        // console.log("poupapNotification.style.display ===> ", poupapNotification.style.display)
+        // //("poupapNotification.style.display ===> ", poupapNotification.style.display)
         if(valid == 0)
         {
             
@@ -224,7 +225,7 @@ async function callForTopNav()
                     let photo = info.incoming_requests[i].from_user_photo;
                     if(!isValidUrl(photo))
                     {
-                        console.log("hello url is path:", isValidUrl(photo));
+                        //("hello url is path:", isValidUrl(photo));
                         photo = `http://127.0.0.1:8000${photo}`;
                     }
 
@@ -243,11 +244,11 @@ async function callForTopNav()
                 while (j < button.length) {
                     let currentButton = button[j];
                     currentButton.addEventListener("click", function() {
-                        console.log("count ok ===> ",count)
+                        //("count ok ===> ",count)
                         count++
                         let requestId = this.id;
                         acceptRequest(requestId);
-                        console.log("Button clicked with request ID: ", requestId);
+                        //("Button clicked with request ID: ", requestId);
                         let grandParent = currentButton.parentElement;
                         grandParent.style.display = "none";
                         if(button.length == 1 || button.length == count)
@@ -343,7 +344,7 @@ export function intilizeNameImage2()
     namePlayer[1].textContent = localStorage.getItem(`player${2}Name`)
     namePlayer[4].textContent = localStorage.getItem(`username`)
     namePlayer[5].textContent = localStorage.getItem(`player${3}Name`)
-    console.log("i want to see if is full or no okkkkkkkkkkkkkkkkkkkkkk",localStorage.getItem(`username`))
+    //("i want to see if is full or no okkkkkkkkkkkkkkkkkkkkkk",localStorage.getItem(`username`))
     parentContainerJoinTournament.style.display = "none";
     containerFriends.innerHTML = ""
     containerFriends.style.justifyContent = "none"
@@ -367,7 +368,7 @@ function intilizeNameImage()
     namePlayer[1].textContent = localStorage.getItem(`player${2}Name`)
     namePlayer[4].textContent = localStorage.getItem(`username`)
     namePlayer[5].textContent = localStorage.getItem(`player${3}Name`)
-    console.log("i want to see if is full or no okkkkkkkkkkkkkkkkkkkkkk",localStorage.getItem(`username`))
+    //("i want to see if is full or no okkkkkkkkkkkkkkkkkkkkkk",localStorage.getItem(`username`))
     parentContainerJoinTournament.style.display = "none";
     containerFriends.innerHTML = ""
     containerFriends.style.justifyContent = "none"
@@ -386,8 +387,14 @@ export async function startTournament()
 let parentContainerJoinTournament = document.getElementsByClassName("parent-container-join-tournament")[0];
    
     let startTournament = document.getElementById("startTournament");
+    let back = document.getElementById("backToProfile");
     let containerFriend = document.getElementsByClassName("container-friend");
     let containerCount = document.getElementsByClassName("containerCount")[0];
+
+    back.addEventListener("click", function(){
+        history.pushState({}, "", "/profile");
+                handleLocation();
+    })
 
     function displayLoadingFriend(arg)
     {
@@ -454,7 +461,7 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                 {
                     // if(numbers <= 3 && buttonAdd[j].id == localStorage.getItem(`player${numbers}`))
                     // {
-                        console.log("waaaaaa heyaaaaaa ana ka 5ewiiiik hena okkk")
+                        //("waaaaaa heyaaaaaa ana ka 5ewiiiik hena okkk")
                         buttonAdd[j].style.backgroundColor = "#99185D";
                         buttonAdd[j].disabled = false;
                         numbers++;
@@ -488,7 +495,7 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                 let numbers  = 1;
                 while(j < buttonAdd.length)
                 {
-                    console.log("waaaaaa heyaaaaaa ana ka 5ewiiiik hena okkk")
+                    //("waaaaaa heyaaaaaa ana ka 5ewiiiik hena okkk")
                     buttonAdd[j].style.backgroundColor = "#99185D";
                     buttonAdd[j].disabled = false;
                     numbers++;
@@ -529,12 +536,12 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
         async function displayContainerFriends()
         {
             const info = await SecureApiRequest("/api/friend/get_friends/");
-                console.log("infoooooooooooooooooooooooo", info)
+                //("infoooooooooooooooooooooooo", info)
 
 
                 if(info.friends.length > 0)
                 {   
-                    console.log("=======================nchooofo chono kayin aderari sf========================")
+                    //("=======================nchooofo chono kayin aderari sf========================")
                     containerFriends.innerHTML = ``;
                     let i = 0;
                     while(i < info.friends.length)
@@ -580,7 +587,7 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                                     currentButton.disabled = true;
                                     currentButton.style.backgroundColor = "#66103E"
                                 }
-                                // console.log("player 1=======>", localStorage.getItem("player1"))
+                                // //("player 1=======>", localStorage.getItem("player1"))
                             })
                             j++;
                         }
@@ -620,7 +627,7 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                     fetch(`/api/get/${localStorage.getItem(`player${i}`)}/`)
                     .then(response => response.json())
                     .then(data => {
-                        console.log("n chooooooof had data chono fiha ok a dearaaaaaaaaari", data)
+                        //("n chooooooof had data chono fiha ok a dearaaaaaaaaari", data)
                         let photo = data.photo;
                         if(!isValidUrl(photo))
                             photo = `http://127.0.0.1:8000${photo}`;
@@ -654,7 +661,7 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                 {
                     if(numbers <= 3 && buttonAdd[j].id == localStorage.getItem(`player${numbers}`))
                     {
-                        console.log("waaaaaa heyaaaaaa ana ka 5ewiiiik hena okkk")
+                        //("waaaaaa heyaaaaaa ana ka 5ewiiiik hena okkk")
                         buttonAdd[j].style.backgroundColor = "#99185D";
                         buttonAdd[j].disabled = false;
                         numbers++;
@@ -695,11 +702,16 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
         }
         if(localStorage.getItem("game3") == "end")
         {
+            localStorage.setItem("tor", "end")
             // localStorage.setItem("game2", "");
             imgaePlayer[3].setAttribute('xlink:href', localStorage.getItem(`WinnerImage`))
             namePlayer[3].textContent = localStorage.getItem(`WinnerName`)
+            setTimeout(() => {
+                history.pushState({}, "", "/profile");
+                handleLocation();
+            }, 3000);
+            localStorage.setItem("game3", "")
         }
-
         if(localStorage.getItem("player1Image"))
         {
             
@@ -830,7 +842,7 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
                 index++;
             }
         } else {
-            console.log("No users found in localStorage.");
+            //("No users found in localStorage.");
         }
    }
 }
@@ -845,9 +857,9 @@ function callLocalStorageLogic() {
         if (!storedUsers) {
             const emptyArray = [];
             localStorage.setItem("users", JSON.stringify(emptyArray));
-            console.log("The 'users' array has been initialized in localStorage.");
+            //("The 'users' array has been initialized in localStorage.");
         } else {
-            console.log("The 'users' array already exists in localStorage.");
+            //("The 'users' array already exists in localStorage.");
         }
     }
 
@@ -898,7 +910,7 @@ function listHistoryEachProfile()
                     index++;
                 }
             } else {
-                console.log("No users found in localStorage.");
+                //("No users found in localStorage.");
             }
     }
 }

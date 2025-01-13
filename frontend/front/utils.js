@@ -4,7 +4,7 @@ import { closeWebSocket } from './chat.js';
 
 export function togglePass(id_name) 
 {
-    // console.log("hello");
+    // //("hello");
 
     var x = document.getElementById(id_name);
     var l1 = document.getElementById("Layer_1" + id_name);
@@ -53,8 +53,8 @@ export async function logout()
         } 
         else 
         {
-            console.log("status: ", response.status);
-            console.log('Refresh token successfully blacklisted.');
+            //("status: ", response.status);
+            //('Refresh token successfully blacklisted.');
 
             function clearLocalStorageExcept(keyToKeep) {
                 const dataToKeep = localStorage.getItem(keyToKeep);
@@ -63,9 +63,9 @@ export async function logout()
 
                 if (dataToKeep !== null) {
                     localStorage.setItem(keyToKeep, dataToKeep);
-                    console.log(`The key '${keyToKeep}' has been kept.`);
+                    //(`The key '${keyToKeep}' has been kept.`);
                 } else {
-                    console.log(`No data found for '${keyToKeep}' to restore.`);
+                    //(`No data found for '${keyToKeep}' to restore.`);
                 }
             }
 
@@ -108,7 +108,7 @@ export function SanitizeInpute(str)
 var timer = null;
 export function showError(message, elementId = "error") 
 {
-    console.log("hi");
+    //("hi");
     if (timer !== null) {
         clearTimeout(timer);
         timer = null;
