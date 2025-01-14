@@ -155,7 +155,6 @@ def login_with_42(request):
     # response.set_cookie('12345678', 'hello')
     return response
 
-
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def callback_from_42(request):
@@ -200,9 +199,15 @@ def callback_from_42(request):
         user.username = username
         user.save()
     elif user2 and not user:
-        user2.photo = photo
-        user2.username = username
-        user2.save()
+        user2.delete();
+        user = CustomUser.objects.create(
+                id=intra_id, 
+                email=email,
+                username=username,
+                photo=photo
+        )
+        user.set_unusable_password() 
+        user.save()
     else:
         user = CustomUser.objects.create(
             id=intra_id, 

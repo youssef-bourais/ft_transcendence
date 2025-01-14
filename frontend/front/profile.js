@@ -235,7 +235,7 @@ export function renderAll()
                     {
                         //("localStorage updateeeeeed", info);
 
-                        updateLocalstorage(info);
+                        // updateLocalstorage(info);
 
                         containerError.style.display = "block"
                         showError("Profile updated successfully", "error-message");

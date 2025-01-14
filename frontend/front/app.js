@@ -391,10 +391,13 @@ let parentContainerJoinTournament = document.getElementsByClassName("parent-cont
     let containerFriend = document.getElementsByClassName("container-friend");
     let containerCount = document.getElementsByClassName("containerCount")[0];
 
-    back.addEventListener("click", function(){
-        history.pushState({}, "", "/profile");
-                handleLocation();
-    })
+    if(back)
+    {
+        back.addEventListener("click", function(){
+            history.pushState({}, "", "/profile");
+                    handleLocation();
+        })
+    }
 
     function displayLoadingFriend(arg)
     {
